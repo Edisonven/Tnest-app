@@ -1,10 +1,18 @@
 import { forwardRef } from "react";
 import { TbLayoutBoard } from "react-icons/tb";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const CreateABoardModal = forwardRef<HTMLDivElement>((_, ref) => {
+  const navigate = useNavigate();
+
+  const handleNavigateToCreateBoard = (): void => {
+    navigate("/my-board");
+  };
+
   return (
     <motion.div
+      onClick={handleNavigateToCreateBoard}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}

@@ -6,6 +6,7 @@ import { AnimatePresence } from "framer-motion";
 import { forwardRef } from "react";
 import { DomRefElement, IconForwardRef } from "../../types/DomRefElement";
 import CreateABoard from "../createABoard/CreateABoard";
+import { Link } from "react-router-dom";
 
 const GearIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
   <div ref={ref}>
@@ -46,9 +47,9 @@ function Navbar(): JSX.Element {
     <section className="bg-white dark:bg-[#393C73] p-2">
       <div className="flex items-center justify-between max-w-[1400px] mx-auto">
         <div>
-          <h1 className="font-bold text-slate-800 dark:text-white">
+          <Link to="/" className="font-bold text-slate-800 dark:text-white">
             TASKMANAGEMENT
-          </h1>
+          </Link>
         </div>
         <div className="flex items-center gap-3">
           <div className="">
