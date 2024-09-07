@@ -1,4 +1,6 @@
 import { FaCircleUser } from "react-icons/fa6";
+import { BsGearFill } from "react-icons/bs";
+import ThemeMenu from "../themeMenu/ThemeMenu";
 
 function Navbar(): JSX.Element {
   return (
@@ -7,8 +9,14 @@ function Navbar(): JSX.Element {
         <div>
           <h1 className="font-bold">TASKMANAGEMENT</h1>
         </div>
-        <div className="relative">
-          <FaCircleUser className="text-[30px] text-teal-500 dark:text-slate-400 cursor-pointer select-none" />
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <FaCircleUser className="text-[30px] text-teal-500 dark:text-slate-400 cursor-pointer select-none" />
+          </div>
+          <div className="relative">
+            <BsGearFill className="text-[25px] text-teal-500 dark:text-slate-400 cursor-pointer select-none" />
+            <ThemeMenu />
+          </div>
         </div>
       </div>
     </section>
