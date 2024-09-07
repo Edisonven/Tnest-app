@@ -3,11 +3,13 @@ import CreateABoardModal from "./CreateABoardModal";
 import { useEffect, useRef, useState } from "react";
 import { DomRefElement } from "../../types/DomRefElement";
 import { AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 function CreateABoard() {
   const [openModal, setOpenModal] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<DomRefElement>(null);
+  const navigate = useNavigate();
 
   const handleOpenBoardModal = () => {
     setOpenModal(!openModal);
@@ -30,6 +32,10 @@ function CreateABoard() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setOpenModal(false);
+  }, [navigate]);
 
   return (
     <div className="relative">
