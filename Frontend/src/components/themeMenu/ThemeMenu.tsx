@@ -23,7 +23,7 @@ const ThemeMenu = forwardRef<HTMLDivElement, ThemeMenuProps>(
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.2, ease: "backInOut" }}
         style={{ originX: 1, originY: 0 }}
         className="absolute top-[45px] right-0 bg-white dark:bg-[#393C73] shadow-lg rounded"
       >
