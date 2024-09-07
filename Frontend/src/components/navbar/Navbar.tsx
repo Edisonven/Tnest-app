@@ -4,12 +4,9 @@ import ThemeMenu from "../themeMenu/ThemeMenu";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { forwardRef } from "react";
-import { DomRefElement } from "../../types/DomRefElement";
+import { DomRefElement, IconForwardRef } from "../../types/DomRefElement";
 
-const GearIcon = forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BsGearFill>
->((props, ref) => (
+const GearIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
   <div ref={ref}>
     <BsGearFill {...props} />
   </div>
