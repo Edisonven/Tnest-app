@@ -16,6 +16,7 @@ function Navbar(): JSX.Element {
   const [openThemeMenu, setOpenThemeMenu] = useState(false);
   const iconRef = useRef<DomRefElement>(null);
   const themeRef = useRef<DomRefElement>(null);
+  const [aplicationTheme, setApplicationTheme] = useState("light");
 
   const handleOpenThemeMenu = () => {
     setOpenThemeMenu(!openThemeMenu);
@@ -44,7 +45,9 @@ function Navbar(): JSX.Element {
     <section className="bg-white dark:bg-[#393C73] p-2">
       <div className="flex items-center justify-between max-w-[1400px] mx-auto">
         <div>
-          <h1 className="font-bold">TASKMANAGEMENT</h1>
+          <h1 className="font-bold text-slate-800 dark:text-white">
+            TASKMANAGEMENT
+          </h1>
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -57,7 +60,13 @@ function Navbar(): JSX.Element {
               className="text-[25px] text-teal-500 dark:text-slate-400 cursor-pointer select-none"
             />
             <AnimatePresence>
-              {openThemeMenu ? <ThemeMenu ref={themeRef} /> : null}
+              {openThemeMenu ? (
+                <ThemeMenu
+                  aplicationTheme={aplicationTheme}
+                  setApplicationTheme={setApplicationTheme}
+                  ref={themeRef}
+                />
+              ) : null}
             </AnimatePresence>
           </div>
         </div>
