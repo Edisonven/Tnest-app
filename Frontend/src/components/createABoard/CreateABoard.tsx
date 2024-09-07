@@ -15,6 +15,9 @@ function CreateABoard() {
 
   const handleOpenBoardModal = () => {
     setOpenModal(!openModal);
+    if (openModal) {
+      setOpenCreateBoardMenu(false);
+    }
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -25,9 +28,6 @@ function CreateABoard() {
       !modalRef.current.contains(event.target as Node)
     ) {
       setOpenModal(false);
-      if (!openModal) {
-        setOpenCreateBoardMenu(false);
-      }
     }
   };
 
@@ -68,7 +68,10 @@ function CreateABoard() {
       </AnimatePresence>
       <AnimatePresence>
         {openCreateBoardMenu ? (
-          <CreateNewBoardMenu setOpenCreateBoardMenu={setOpenCreateBoardMenu} />
+          <CreateNewBoardMenu
+            setOpenCreateBoardMenu={setOpenCreateBoardMenu}
+            openCreateBoardMenu={openCreateBoardMenu}
+          />
         ) : null}
       </AnimatePresence>
     </div>

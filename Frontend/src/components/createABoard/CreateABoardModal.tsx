@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 import { TbLayoutBoard } from "react-icons/tb";
 import { motion } from "framer-motion";
 import { OpenCreateBoardMenu } from "../../types/ThemeMenuProp";
@@ -7,13 +7,10 @@ const CreateABoardModal = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
   ({ openCreateBoardMenu, setOpenCreateBoardMenu, setOpenModal }, ref) => {
     const handleOpenCreateBoardMenu = () => {
       setOpenCreateBoardMenu(true);
-    };
-
-    useEffect(() => {
       if (openCreateBoardMenu && setOpenModal) {
         setOpenModal(false);
       }
-    }, [openCreateBoardMenu]);
+    };
 
     return (
       <motion.div
@@ -24,7 +21,9 @@ const CreateABoardModal = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
         transition={{ duration: 0.2, ease: "backInOut" }}
         style={{ originX: 1, originY: 0 }}
         ref={ref}
-        className="absolute top-[45px] right-0 w-[250px] bg-white dark:bg-[#393C73] rounded shadow-lg p-2"
+        className={`${
+          openCreateBoardMenu ? "hidden" : ""
+        } absolute top-[45px] right-0 w-[250px] bg-white dark:bg-[#393C73] rounded shadow-lg p-2`}
       >
         <div className="cursor-pointer hover:bg-[#00000015] p-1 rounded select-none">
           <div className="flex items-center gap-2 mb-2">
