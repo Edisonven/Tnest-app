@@ -25,7 +25,7 @@ const ThemeMenu = forwardRef<HTMLDivElement, ThemeMenuProps>(
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.2 }}
         style={{ originX: 1, originY: 0 }}
-        className="absolute top-[40px] right-0 bg-white dark:bg-[#393C73] shadow-lg rounded"
+        className="absolute top-[45px] right-0 bg-white dark:bg-[#393C73] shadow-lg rounded"
       >
         <div className="p-1 flex items-center gap-1 select-none">
           <MdLightMode

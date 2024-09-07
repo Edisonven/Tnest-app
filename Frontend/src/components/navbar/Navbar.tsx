@@ -22,7 +22,7 @@ function Navbar(): JSX.Element {
     setOpenThemeMenu(!openThemeMenu);
   };
 
-  const handleClickOutside = (event: MouseEvent | Event) => {
+  const handleClickOutside = (event: MouseEvent) => {
     if (
       iconRef.current &&
       themeRef.current &&
@@ -57,7 +57,7 @@ function Navbar(): JSX.Element {
             <GearIcon
               ref={iconRef}
               onClick={handleOpenThemeMenu}
-              className="text-[25px] text-teal-500 dark:text-slate-400 cursor-pointer select-none"
+              className="text-[35px] text-teal-500 dark:text-slate-400 cursor-pointer select-none hover:bg-[#0000001f] dark:hover:bg-[#00000054] rounded-full p-[6px] duration-300"
             />
             <AnimatePresence>
               {openThemeMenu ? (
