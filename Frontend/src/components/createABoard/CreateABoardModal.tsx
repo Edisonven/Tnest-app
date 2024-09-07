@@ -1,9 +1,15 @@
 import { forwardRef } from "react";
 import { TbLayoutBoard } from "react-icons/tb";
+import { motion } from "framer-motion";
 
 const CreateABoardModal = forwardRef<HTMLDivElement>((_, ref) => {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.2, ease: "backInOut" }}
+      style={{ originX: 1, originY: 0 }}
       ref={ref}
       className="absolute top-[45px] right-0 w-[250px] bg-white dark:bg-[#393C73] rounded shadow-lg p-2"
     >
@@ -19,7 +25,7 @@ const CreateABoardModal = forwardRef<HTMLDivElement>((_, ref) => {
           gestionar tus tareas diarias, o proyectos.
         </span>
       </div>
-    </div>
+    </motion.div>
   );
 });
 

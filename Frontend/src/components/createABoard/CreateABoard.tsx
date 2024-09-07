@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import CreateABoardModal from "./CreateABoardModal";
 import { useEffect, useRef, useState } from "react";
 import { DomRefElement } from "../../types/DomRefElement";
+import { AnimatePresence } from "framer-motion";
 
 function CreateABoard() {
   const [openModal, setOpenModal] = useState(false);
@@ -44,7 +45,9 @@ function CreateABoard() {
           Crear
         </button>
       </motion.section>
-      {openModal ? <CreateABoardModal ref={modalRef} /> : null}
+      <AnimatePresence>
+        {openModal ? <CreateABoardModal ref={modalRef} /> : null}
+      </AnimatePresence>
     </div>
   );
 }
