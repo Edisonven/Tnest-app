@@ -1,8 +1,47 @@
 import { FaCircleUser } from "react-icons/fa6";
 import { BsGearFill } from "react-icons/bs";
 import ThemeMenu from "../themeMenu/ThemeMenu";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { forwardRef } from "react";
+
+const GearIcon = forwardRef<
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<typeof BsGearFill>
+>((props, ref) => (
+  <div ref={ref}>
+    <BsGearFill {...props} />
+  </div>
+));
 
 function Navbar(): JSX.Element {
+  const [openThemeMenu, setOpenThemeMenu] = useState(false);
+  const iconRef = useRef<HTMLDivElement | null>(null);
+  const themeRef = useRef<HTMLDivElement | null>(null);
+
+  const handleOpenThemeMenu = () => {
+    setOpenThemeMenu(!openThemeMenu);
+  };
+
+  const handleClickOutside = (event: MouseEvent | Event) => {
+    if (
+      iconRef.current &&
+      themeRef.current &&
+      !iconRef.current.contains(event.target as Node) &&
+      !themeRef.current.contains(event.target as Node)
+    ) {
+      setOpenThemeMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <section className="bg-white dark:bg-[#393C73] p-2">
       <div className="flex items-center justify-between max-w-[1400px] mx-auto">
@@ -14,8 +53,14 @@ function Navbar(): JSX.Element {
             <FaCircleUser className="text-[30px] text-teal-500 dark:text-slate-400 cursor-pointer select-none" />
           </div>
           <div className="relative">
-            <BsGearFill className="text-[25px] text-teal-500 dark:text-slate-400 cursor-pointer select-none" />
-            <ThemeMenu />
+            <GearIcon
+              ref={iconRef}
+              onClick={handleOpenThemeMenu}
+              className="text-[25px] text-teal-500 dark:text-slate-400 cursor-pointer select-none"
+            />
+            <AnimatePresence>
+              {openThemeMenu ? <ThemeMenu ref={themeRef} /> : null}
+            </AnimatePresence>
           </div>
         </div>
       </div>
