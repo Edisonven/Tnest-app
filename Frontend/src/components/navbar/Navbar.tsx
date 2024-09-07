@@ -4,6 +4,7 @@ import ThemeMenu from "../themeMenu/ThemeMenu";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { forwardRef } from "react";
+import { DomRefElement } from "../../types/DomRefElement";
 
 const GearIcon = forwardRef<
   HTMLDivElement,
@@ -16,8 +17,8 @@ const GearIcon = forwardRef<
 
 function Navbar(): JSX.Element {
   const [openThemeMenu, setOpenThemeMenu] = useState(false);
-  const iconRef = useRef<HTMLDivElement | null>(null);
-  const themeRef = useRef<HTMLDivElement | null>(null);
+  const iconRef = useRef<DomRefElement>(null);
+  const themeRef = useRef<DomRefElement>(null);
 
   const handleOpenThemeMenu = () => {
     setOpenThemeMenu(!openThemeMenu);
