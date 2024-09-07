@@ -4,9 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { DomRefElement } from "../../types/DomRefElement";
 import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import CreateNewBoardMenu from "./createNewBoardMenu";
 
 function CreateABoard() {
   const [openModal, setOpenModal] = useState(false);
+  const [openCreateBoardMenu, setOpenCreateBoardMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<DomRefElement>(null);
   const navigate = useNavigate();
@@ -23,6 +25,9 @@ function CreateABoard() {
       !modalRef.current.contains(event.target as Node)
     ) {
       setOpenModal(false);
+      if (!openModal) {
+        setOpenCreateBoardMenu(false);
+      }
     }
   };
 
@@ -52,7 +57,19 @@ function CreateABoard() {
         </button>
       </motion.section>
       <AnimatePresence>
-        {openModal ? <CreateABoardModal ref={modalRef} /> : null}
+        {openModal ? (
+          <CreateABoardModal
+            openCreateBoardMenu={openCreateBoardMenu}
+            setOpenCreateBoardMenu={setOpenCreateBoardMenu}
+            setOpenModal={setOpenModal}
+            ref={modalRef}
+          />
+        ) : null}
+      </AnimatePresence>
+      <AnimatePresence>
+        {openCreateBoardMenu ? (
+          <CreateNewBoardMenu setOpenCreateBoardMenu={setOpenCreateBoardMenu} />
+        ) : null}
       </AnimatePresence>
     </div>
   );
