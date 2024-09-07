@@ -1,9 +1,10 @@
 import "./App.css";
+import Navbar from "./components/navbar/Navbar";
 
 function App(): JSX.Element {
   return (
-    <div>
-      <h1 className="">Holi</h1>
+    <div className="app__container">
+      <Navbar />
     </div>
   );
 }
