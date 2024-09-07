@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { forwardRef } from "react";
 import { DomRefElement, IconForwardRef } from "../../types/DomRefElement";
+import CreateABoard from "../createABoard/CreateABoard";
 
 const GearIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
   <div ref={ref}>
@@ -50,6 +51,9 @@ function Navbar(): JSX.Element {
           </h1>
         </div>
         <div className="flex items-center gap-3">
+          <div className="">
+            <CreateABoard />
+          </div>
           <div className="relative">
             <FaCircleUser className="text-[30px] text-teal-500 dark:text-slate-400 cursor-pointer select-none" />
           </div>
