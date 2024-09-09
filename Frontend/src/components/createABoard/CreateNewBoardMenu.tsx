@@ -1,15 +1,22 @@
 import { motion } from "framer-motion";
-import { forwardRef, useRef, useEffect, useState } from "react";
+import { forwardRef, useState } from "react";
 import { OpenCreateBoardMenu } from "../../types/ThemeMenuProp";
 import { IoClose } from "react-icons/io5";
 import board1 from "/images/application/boards-background/board-1.png";
 import skeleton from "/images/application/boards-background/skeleton-2.png";
 import { background } from "./background.ts";
+import { FormEvent } from "react";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../features/boardBackgroundSlice.ts";
+import { setTitle, setImage } from "../../features/boardBackgroundSlice.ts";
 
 const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
   ({ setOpenCreateBoardMenu, setOpenModal }, _) => {
-    const modalRef = useRef<HTMLDivElement>(null);
-    const [boardImage, setBoardImage] = useState("");
+    const [boardImage, setBoardImage] = useState(board1);
+    const { title } = useAppSelector((state) => state.background);
+    const dispatch = useAppDispatch();
 
     const handleCloseBoardMenu = () => {
       setOpenCreateBoardMenu(false);
@@ -17,22 +24,11 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
         setOpenModal(false);
       }
     };
-    console.log(boardImage);
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        setOpenCreateBoardMenu(false);
-      }
-    };
 
-    useEffect(() => {
-      document.addEventListener("click", handleClickOutside);
-      return () => {
-        document.removeEventListener("click", handleClickOutside);
-      };
-    }, []);
+    const handleSetBoardProps = (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      dispatch(setImage(boardImage));
+    };
 
     return (
       <div>
@@ -63,7 +59,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
                 />
 
                 <img
-                  className="rounded shadow w-full max-w-[190px] h-[120px] object-cover"
+                  className="rounded shadow w-full max-w-[190px] h-[120px] object-fill"
                   src={boardImage}
                   alt="fondo-tablero-1"
                 />
@@ -73,7 +69,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
               <h1 className="text-slate-800 dark:text-white font-medium text-sm mb-1">
                 Fondos
               </h1>
-              <div className="flex items-center justify-between gap-1">
+              <div className="flex items-center justify-between gap-1 mb-3">
                 {background.map((img) => (
                   <img
                     onClick={() => setBoardImage(img.href)}
@@ -83,6 +79,24 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
                     alt="fondo-tablero-1"
                   />
                 ))}
+              </div>
+              <div>
+                <h1 className="text-slate-800 dark:text-white font-medium text-sm mb-1">
+                  Título de tablero
+                </h1>
+                <form onSubmit={handleSetBoardProps}>
+                  <input
+                    value={title}
+                    onChange={(e) => dispatch(setTitle(e.target.value))}
+                    type="text"
+                    id="titulo"
+                    name="titulo"
+                    className="bg-transparent text-slate-800 dark:text-white px-2 border-none outline outline-1 outline-slate-800 dark:outline-white h-[33px] w-full rounded"
+                  />
+                  <button className="bg-teal-700 text-white font-medium rounded shadow mt-3 w-full h-[38px] dark:bg-[#131842] dark:text-white">
+                    Crear
+                  </button>
+                </form>
               </div>
             </div>
           </div>

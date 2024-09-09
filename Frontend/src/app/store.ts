@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { selectBackgroundImage } from "../features/boardBackgroundSlice";
+import { selectBackgroundProps } from "../features/boardBackgroundSlice";
 
 export const store = configureStore({
   reducer: {
-    background: selectBackgroundImage
+    background: selectBackgroundProps
 
   },
 });

@@ -49,7 +49,7 @@ function CreateABoard() {
         <button
           ref={buttonRef}
           onClick={handleOpenBoardModal}
-          className="text-slate-700 font-medium py-1 px-3 "
+          className="text-slate-700 font-medium py-1 px-3 w-full h-full"
         >
           Crear
         </button>

@@ -5,10 +5,12 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface BackgroundState {
     image: string
+    title: string
 }
 
 const initialState: BackgroundState = {
-    image: ""
+    image: "",
+    title: ""
 }
 
 export const backgroundSlice = createSlice({
@@ -18,12 +20,15 @@ export const backgroundSlice = createSlice({
         setImage: (state, action: PayloadAction<string>) => {
             state.image = action.payload;
         },
+        setTitle: (state, action: PayloadAction<string>) => {
+            state.title = action.payload;
+        },
 
     },
 });
 
-export const { setImage } = backgroundSlice.actions;
-export const selectBackgroundImage = backgroundSlice.reducer;
+export const { setImage, setTitle } = backgroundSlice.actions;
+export const selectBackgroundProps = backgroundSlice.reducer;
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
 export const useAppSelector = useSelector.withTypes<RootState>()
