@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { DomRefElement } from "../../types/DomRefElement";
 import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import CreateNewBoardMenu from "./createNewBoardMenu";
+import CreateNewBoardMenu from "./CreateNewBoardMenu";
 
 function CreateABoard() {
   const [openModal, setOpenModal] = useState(false);
@@ -15,9 +15,7 @@ function CreateABoard() {
 
   const handleOpenBoardModal = () => {
     setOpenModal(!openModal);
-    if (openModal) {
-      setOpenCreateBoardMenu(false);
-    }
+    setOpenCreateBoardMenu(false);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -71,6 +69,7 @@ function CreateABoard() {
           <CreateNewBoardMenu
             setOpenCreateBoardMenu={setOpenCreateBoardMenu}
             openCreateBoardMenu={openCreateBoardMenu}
+            setOpenModal={setOpenModal}
           />
         ) : null}
       </AnimatePresence>

@@ -3,8 +3,6 @@ import type { RootState, AppStore, AppDispatch } from '../app/store';
 import { useDispatch, useSelector, useStore, } from 'react-redux'
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-
-
 interface BackgroundState {
     image: string
 }

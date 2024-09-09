@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { OpenCreateBoardMenu } from "../../types/ThemeMenuProp";
 
 const CreateABoardModal = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
-  ({ openCreateBoardMenu, setOpenCreateBoardMenu, setOpenModal }, ref) => {
+  ({ setOpenCreateBoardMenu, setOpenModal }, ref) => {
     const handleOpenCreateBoardMenu = () => {
       setOpenCreateBoardMenu(true);
-      if (openCreateBoardMenu && setOpenModal) {
+      if (setOpenModal) {
         setOpenModal(false);
       }
     };
@@ -21,9 +21,7 @@ const CreateABoardModal = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
         transition={{ duration: 0.2, ease: "backInOut" }}
         style={{ originX: 1, originY: 0 }}
         ref={ref}
-        className={`${
-          openCreateBoardMenu ? "hidden" : ""
-        } absolute top-[45px] right-0 w-[250px] bg-white dark:bg-[#393C73] rounded shadow-lg p-2`}
+        className="absolute top-[45px] right-0 w-[250px] bg-white dark:bg-[#393C73] rounded shadow-lg p-2"
       >
         <div className="cursor-pointer hover:bg-[#00000015] p-1 rounded select-none">
           <div className="flex items-center gap-2 mb-2">
