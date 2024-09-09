@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { forwardRef, useRef, useEffect } from "react";
+import { forwardRef, useRef, useEffect, useState } from "react";
 import { OpenCreateBoardMenu } from "../../types/ThemeMenuProp";
 import { IoClose } from "react-icons/io5";
 import board1 from "/images/application/boards-background/board-1.png";
@@ -9,6 +9,7 @@ import { background } from "./background.ts";
 const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
   ({ setOpenCreateBoardMenu, setOpenModal }, _) => {
     const modalRef = useRef<HTMLDivElement>(null);
+    const [boardImage, setBoardImage] = useState("");
 
     const handleCloseBoardMenu = () => {
       setOpenCreateBoardMenu(false);
@@ -16,7 +17,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
         setOpenModal(false);
       }
     };
-
+    console.log(boardImage);
     const handleClickOutside = (event: MouseEvent) => {
       if (
         modalRef.current &&
@@ -62,8 +63,8 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
                 />
 
                 <img
-                  className="rounded shadow max-w-[200px]"
-                  src={board1}
+                  className="rounded shadow w-full max-w-[190px] h-[120px] object-cover"
+                  src={boardImage}
                   alt="fondo-tablero-1"
                 />
               </figure>
@@ -75,6 +76,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
               <div className="flex items-center justify-between gap-1">
                 {background.map((img) => (
                   <img
+                    onClick={() => setBoardImage(img.href)}
                     key={img.id}
                     className="rounded w-full max-w-[68px] h-[40px] object-fill cursor-pointer hover:brightness-125 hover:outline outline-1 outline-slate-600 hover:dark:outline-white"
                     src={img.href}
