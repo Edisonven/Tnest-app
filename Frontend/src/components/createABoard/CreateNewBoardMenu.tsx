@@ -3,7 +3,7 @@ import { forwardRef, useRef, useEffect } from "react";
 import { OpenCreateBoardMenu } from "../../types/ThemeMenuProp";
 import { IoClose } from "react-icons/io5";
 import board1 from "/images/application/boards-background/board-1.png";
-import skeleton from "/images/application/boards-background/skeleton.png";
+import skeleton from "/images/application/boards-background/skeleton-2.png";
 import { background } from "./background.ts";
 
 const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
