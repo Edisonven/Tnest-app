@@ -1,3 +1,4 @@
+import TaskList from "../../components/taskList/TaskList";
 import { useAppSelector } from "../../features/boardBackgroundSlice";
 import "./myBoard.css";
 
@@ -11,16 +12,22 @@ function MyBoard() {
         <div className=" relative z-[5]">
           {!image || !title ? (
             <div className="no-board flex items-center justify-center w-full">
-              <p>Aún no tienes tableros</p>
+              <p className="text-slate-800 dark:text-gray-300">
+                Aún no tienes tableros
+              </p>
             </div>
           ) : (
             <div className="my-board-container">
-              <div className="p-3 w-full bg-[#ebebeb5b] shadow dark:bg-[#00000034] h-[60px] backdrop-blur-sm">
-                <h1 className="text-slate-100 text-xl font-bold dark:text-white">
-                  {title}
-                </h1>
+              <div className="w-full">
+                <div className="p-3 w-full bg-[#ebebeb5b] shadow dark:bg-[#00000034] h-[60px] backdrop-blur-sm">
+                  <h1 className="text-slate-100 text-xl font-bold dark:text-white">
+                    {title}
+                  </h1>
+                </div>
+                <div className="flex items-center p-4">
+                  <TaskList />
+                </div>
               </div>
-              <div></div>
               <div className="bg-[#ebebebe5] dark:bg-[#323568ce] max-w-[260px] w-full shadow p-4 backdrop-blur-sm">
                 <h1 className="text-slate-800 dark:text-gray-300 mb-3 font-medium">
                   Mis tableros
