@@ -44,7 +44,7 @@ function Navbar(): JSX.Element {
   }, []);
 
   return (
-    <section className="bg-white dark:bg-[#393C73] p-2">
+    <section className="bg-white dark:bg-[#393C73] p-2 relative z-10">
       <div className="flex items-center justify-between max-w-[1400px] mx-auto">
         <div>
           <Link to="/" className="font-bold text-slate-800 dark:text-white">
