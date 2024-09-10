@@ -25,6 +25,10 @@ const TaskList = ({ title, id }: taskInterface) => {
     } else {
       setTaskListId("");
     }
+
+    if (taskListId === "") {
+      setTaskTitle("");
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
