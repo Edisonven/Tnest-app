@@ -20,7 +20,7 @@ function MyBoard() {
           <h1 className="text-slate-800 dark:text-gray-300 mb-3 font-medium">
             Mis tableros
           </h1>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer">
             <img
               className="max-w-[50px] h-[35px] object-cover rounded"
               src={image}

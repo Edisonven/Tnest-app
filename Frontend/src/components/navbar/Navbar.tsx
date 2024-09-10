@@ -7,6 +7,7 @@ import { forwardRef } from "react";
 import { DomRefElement, IconForwardRef } from "../../types/DomRefElement";
 import CreateABoard from "../createABoard/CreateABoard";
 import { Link } from "react-router-dom";
+import BurgerMenu from "../burgerMenu/BurgerMenu";
 
 const GearIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
   <div ref={ref}>
@@ -16,15 +17,20 @@ const GearIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
 
 function Navbar(): JSX.Element {
   const [openThemeMenu, setOpenThemeMenu] = useState(false);
+  const [openBurgerMenu, setOpenBurgerMenu] = useState(false);
   const iconRef = useRef<DomRefElement>(null);
   const themeRef = useRef<DomRefElement>(null);
   const [aplicationTheme, setApplicationTheme] = useState("light");
 
-  const handleOpenThemeMenu = () => {
+  const handleOpenThemeMenu = (): void => {
     setOpenThemeMenu(!openThemeMenu);
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleOpenBurgerMenu = (): void => {
+    setOpenBurgerMenu(!openBurgerMenu);
+  };
+
+  const handleClickOutside = (event: MouseEvent): void => {
     if (
       iconRef.current &&
       themeRef.current &&
@@ -45,7 +51,7 @@ function Navbar(): JSX.Element {
 
   return (
     <section className="bg-white dark:bg-[#393C73] p-2 relative z-10">
-      <div className="flex items-center justify-between max-w-[1400px] mx-auto">
+      <div className="flex items-center justify-between max-w-[1800px] mx-auto">
         <div>
           <Link to="/" className="font-bold text-slate-800 dark:text-white">
             TASKMANAGEMENT
@@ -56,7 +62,13 @@ function Navbar(): JSX.Element {
             <CreateABoard />
           </div>
           <div className="relative">
-            <FaCircleUser className="text-[30px] text-teal-500 dark:text-slate-400 cursor-pointer select-none" />
+            <FaCircleUser
+              onClick={handleOpenBurgerMenu}
+              className="text-[30px] text-teal-500 dark:text-slate-400 cursor-pointer select-none"
+            />
+            <AnimatePresence>
+              {openBurgerMenu ? <BurgerMenu /> : null}
+            </AnimatePresence>
           </div>
           <div className="relative">
             <GearIcon
