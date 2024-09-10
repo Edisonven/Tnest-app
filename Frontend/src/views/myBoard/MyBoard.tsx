@@ -24,10 +24,11 @@ function MyBoard() {
                     {title}
                   </h1>
                 </div>
-                <div className="flex items-center p-4 gap-4">
-                  <TaskList title="Lista de tareas" />
-                  <TaskList title="En proceso" />
-                  <TaskList title="Hecho" />
+                <div className="flex items-start p-4 gap-4 flex-wrap">
+                  <TaskList id={"1"} title="Lista de tareas" />
+                  <TaskList id={"2"} title="En proceso" />
+                  <TaskList id={"3"} title="En revisión" />
+                  <TaskList id={"4"} title="Completado" />
                 </div>
               </div>
               <div className="bg-[#ebebebe5] dark:bg-[#323568ce] max-w-[260px] w-full shadow p-4 backdrop-blur-sm">
