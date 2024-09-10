@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { IoClose } from "react-icons/io5";
 
-interface AddTaskInterface {
+export interface AddTaskInterface {
   handleChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   taskTitle: string;
   setTaskListId: React.Dispatch<React.SetStateAction<string>>;
@@ -14,15 +14,16 @@ function AddTaskCard({
 }: AddTaskInterface) {
   return (
     <div>
-      <div className="px-2 bg-slate-800 relative rounded">
+      <div className="p-2 bg-slate-800 relative rounded">
         <textarea
+          autoFocus
           onChange={handleChange}
           value={taskTitle}
           name="task"
           className="bg-transparent border-none text-slate-800 dark:text-gray-300 w-full outline-none resize-none"
         />
         {!taskTitle ? (
-          <p className="text-slate-800 dark:text-gray-300 text-sm font-normal absolute top-[3px] left-[9px] pointer-events-none">
+          <p className="text-slate-800 dark:text-gray-300 text-sm font-normal absolute top-[11px] left-[9px] pointer-events-none">
             Introduce un nombre para esta tarjeta...
           </p>
         ) : null}
