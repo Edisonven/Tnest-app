@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { forwardRef } from "react";
 
-function BurgerMenu(): JSX.Element {
+const BurgerMenu = forwardRef<HTMLDivElement>(({}, ref) => {
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
@@ -34,6 +36,6 @@ function BurgerMenu(): JSX.Element {
       </Link>
     </motion.div>
   );
-}
+});
 
 export default BurgerMenu;

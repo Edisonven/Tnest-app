@@ -15,11 +15,19 @@ const GearIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
   </div>
 ));
 
+const UserIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
+  <div ref={ref}>
+    <FaCircleUser {...props} />
+  </div>
+));
+
 function Navbar(): JSX.Element {
   const [openThemeMenu, setOpenThemeMenu] = useState(false);
   const [openBurgerMenu, setOpenBurgerMenu] = useState(false);
-  const iconRef = useRef<DomRefElement>(null);
+  const gearIconRef = useRef<DomRefElement>(null);
+  const userMenuRef = useRef<DomRefElement>(null);
   const themeRef = useRef<DomRefElement>(null);
+  const burgerRef = useRef<DomRefElement>(null);
   const [aplicationTheme, setApplicationTheme] = useState("light");
 
   const handleOpenThemeMenu = (): void => {
@@ -32,12 +40,22 @@ function Navbar(): JSX.Element {
 
   const handleClickOutside = (event: MouseEvent): void => {
     if (
-      iconRef.current &&
+      gearIconRef.current &&
       themeRef.current &&
-      !iconRef.current.contains(event.target as Node) &&
+      !gearIconRef.current.contains(event.target as Node) &&
       !themeRef.current.contains(event.target as Node)
     ) {
       setOpenThemeMenu(false);
+    }
+
+    if (
+      gearIconRef.current &&
+      userMenuRef.current &&
+      burgerRef.current &&
+      !userMenuRef.current.contains(event.target as Node) &&
+      !burgerRef.current.contains(event.target as Node)
+    ) {
+      setOpenBurgerMenu(false);
     }
   };
 
@@ -62,17 +80,18 @@ function Navbar(): JSX.Element {
             <CreateABoard />
           </div>
           <div className="relative">
-            <FaCircleUser
+            <UserIcon
+              ref={userMenuRef}
               onClick={handleOpenBurgerMenu}
               className="text-[30px] text-teal-500 dark:text-slate-400 cursor-pointer select-none"
             />
             <AnimatePresence>
-              {openBurgerMenu ? <BurgerMenu /> : null}
+              {openBurgerMenu ? <BurgerMenu ref={burgerRef} /> : null}
             </AnimatePresence>
           </div>
           <div className="relative">
             <GearIcon
-              ref={iconRef}
+              ref={gearIconRef}
               onClick={handleOpenThemeMenu}
               className="text-[35px] text-teal-500 dark:text-slate-400 cursor-pointer select-none hover:bg-[#0000001f] dark:hover:bg-[#00000054] rounded-full p-[6px] duration-300"
             />
