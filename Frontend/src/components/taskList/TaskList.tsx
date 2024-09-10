@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CgMathPlus } from "react-icons/cg";
 import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
+import TaskCard from "../taskCard/TaskCard";
 
 export interface taskInterface {
   id: string;
@@ -45,16 +46,7 @@ const TaskList = ({ title, id }: taskInterface) => {
       </h1>
       <div className="flex flex-col gap-3">
         {id === "1"
-          ? tasks.map((task) => (
-              <div
-                key={task.id}
-                className="bg-slate-800 px-3 py-[6px] rounded cursor-pointer hover:brightness-125 hover:outline outline-1 outline-white "
-              >
-                <p className="text-slate-800 dark:text-gray-300 font-normal">
-                  {task.title}
-                </p>
-              </div>
-            ))
+          ? tasks.map((task) => <TaskCard id={task.id} title={task.title} />)
           : null}
         <div>
           {id === taskListId ? (
