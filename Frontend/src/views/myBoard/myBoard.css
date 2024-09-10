@@ -1,0 +1,6 @@
+.my-board-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  min-height: calc(100vh - 51px);
+}

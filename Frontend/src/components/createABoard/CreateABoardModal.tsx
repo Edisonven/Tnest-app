@@ -26,11 +26,11 @@ const CreateABoardModal = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
         <div className="cursor-pointer hover:bg-[#00000015] p-1 rounded select-none">
           <div className="flex items-center gap-2 mb-2">
             <TbLayoutBoard className="text-[20px] text-slate-800 dark:text-white" />
-            <h1 className="text-sm text-slate-800 dark:text-white">
+            <h1 className="text-sm text-slate-800 dark:text-gray-300">
               Crea un tablero
             </h1>
           </div>
-          <span className="text-xs font-normal text-slate-800 dark:text-white">
+          <span className="text-xs font-normal text-slate-800 dark:text-gray-300">
             Un tablero es un conjunto de tarjetas ordenadas como lista, úsalo
             para gestionar tus tareas diarias, o proyectos.
           </span>

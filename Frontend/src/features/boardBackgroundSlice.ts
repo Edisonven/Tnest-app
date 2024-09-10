@@ -23,11 +23,16 @@ export const backgroundSlice = createSlice({
         setTitle: (state, action: PayloadAction<string>) => {
             state.title = action.payload;
         },
+        resetBoardProps: (state) => {
+            state.image = ""
+            state.title = ""
+
+        }
 
     },
 });
 
-export const { setImage, setTitle } = backgroundSlice.actions;
+export const { setImage, setTitle, resetBoardProps } = backgroundSlice.actions;
 export const selectBackgroundProps = backgroundSlice.reducer;
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
