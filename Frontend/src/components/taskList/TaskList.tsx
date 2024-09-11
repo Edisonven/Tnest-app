@@ -50,7 +50,7 @@ const TaskList = ({ title, id }: taskInterface) => {
   return (
     <div
       id={id}
-      className="bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg"
+      className="bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg"
     >
       <h1 className="text-slate-800 dark:text-gray-300 mb-2 px-5 font-medium">
         {title}

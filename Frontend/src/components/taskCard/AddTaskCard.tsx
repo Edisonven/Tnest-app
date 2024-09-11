@@ -16,7 +16,7 @@ function AddTaskCard({
 }: AddTaskInterface) {
   return (
     <div>
-      <div className="p-2 bg-slate-800 relative rounded">
+      <div className="p-2 bg-gray-300 dark:bg-slate-800 relative rounded">
         <textarea
           autoFocus
           onChange={handleChange}
@@ -33,13 +33,13 @@ function AddTaskCard({
       <div className="flex items-center gap-1">
         <button
           onClick={handleSendNewTask}
-          className="bg-[#383e9e] text-slate-800 dark:text-gray-300 px-2 py-[6px] rounded shadow text-sm font-medium my-2 hover:brightness-125"
+          className="bg-teal-500 dark:bg-[#383e9e] text-slate-800 dark:text-gray-300 px-2 py-[6px] rounded shadow text-sm font-medium my-2 hover:brightness-125"
         >
           Añadir tarjeta
         </button>
         <IoClose
           onClick={() => setTaskListId("")}
-          className="text-slate-800 dark:text-gray-300 cursor-pointer text-[30px] hover:bg-[#333333] rounded-full p-1"
+          className="text-slate-800 dark:text-gray-300 cursor-pointer text-[30px] hover:bg-slate-300 hover:dark:bg-[#333333] rounded-full p-1"
         />
       </div>
     </div>
