@@ -6,10 +6,7 @@ import board1 from "/images/application/boards-background/board-1.png";
 import skeleton from "/images/application/boards-background/skeleton-2.png";
 import { background } from "./background.ts";
 import { FormEvent } from "react";
-import {
-  useAppSelector,
-  useAppDispatch,
-} from "../../features/boardBackgroundSlice.ts";
+import { useAppDispatch } from "../../features/boardBackgroundSlice.ts";
 import { setTitle, setImage } from "../../features/boardBackgroundSlice.ts";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +15,6 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
     const [boardImage, setBoardImage] = useState(board1);
     const [boardTitle, setBoardTitle] = useState("");
     const [error, setError] = useState("");
-    const { title } = useAppSelector((state) => state.background);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -48,6 +44,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
 
       localStorage.setItem("board", JSON.stringify(boardData));
       setBoardTitle("");
+      setOpenCreateBoardMenu(false);
     };
 
     const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>): void => {
