@@ -38,6 +38,13 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
       } else {
         navigate("/my-board");
       }
+
+      const boardData = {
+        image: boardImage,
+        title: title.trim(),
+      };
+
+      localStorage.setItem("board", JSON.stringify(boardData));
     };
 
     useEffect(() => {

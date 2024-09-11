@@ -9,14 +9,14 @@ const ThemeMenu = forwardRef<HTMLDivElement, ThemeMenuProps>(
       const newTheme = "dark";
       setApplicationTheme(newTheme);
       document.documentElement.setAttribute("class", newTheme);
-      localStorage.setItem("theme", newTheme); // Solo guardar el tema cuando el usuario lo cambia
+      localStorage.setItem("theme", newTheme);
     };
 
     const handleSetLightTheme = () => {
       const newTheme = "light";
       setApplicationTheme(newTheme);
       document.documentElement.setAttribute("class", newTheme);
-      localStorage.setItem("theme", newTheme); // Solo guardar el tema cuando el usuario lo cambia
+      localStorage.setItem("theme", newTheme);
     };
 
     return (
