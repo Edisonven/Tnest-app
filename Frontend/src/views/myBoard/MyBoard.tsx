@@ -6,6 +6,7 @@ import {
 } from "../../features/boardBackgroundSlice";
 import { setImage, setTitle } from "../../features/boardBackgroundSlice";
 import "./myBoard.css";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 function MyBoard() {
   const { image, title } = useAppSelector((state) => state.background);
@@ -50,15 +51,19 @@ function MyBoard() {
                 <h1 className="text-slate-800 dark:text-gray-300 mb-3 font-medium">
                   Mis tableros
                 </h1>
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <img
-                    className="max-w-[50px] h-[35px] object-cover rounded"
-                    src={image}
-                    alt=""
-                  />
-                  <span className="text-slate-800 dark:text-gray-300 font-medium">
-                    {title}
-                  </span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <img
+                      className="max-w-[50px] h-[35px] object-cover rounded"
+                      src={image}
+                      alt=""
+                    />
+                    <span className="text-slate-800 dark:text-gray-300 font-medium">
+                      {title}
+                    </span>
+                  </div>
+
+                  <BsThreeDotsVertical className="text-slate-800 dark:text-gray-300 text-[27px] p-1 hover:bg-[#00000050] rounded-full duration-200 cursor-pointer" />
                 </div>
               </div>
             </div>
