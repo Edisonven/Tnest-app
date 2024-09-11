@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { ChangeEvent, forwardRef, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChangeEvent, forwardRef, useEffect, useRef, useState } from "react";
 import { OpenCreateBoardMenu } from "../../types/ThemeMenuProp";
 import { IoClose } from "react-icons/io5";
 import board1 from "/images/application/boards-background/board-1.png";
@@ -14,6 +14,8 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
   ({ setOpenCreateBoardMenu, setOpenModal }, _) => {
     const [boardImage, setBoardImage] = useState(board1);
     const [boardTitle, setBoardTitle] = useState("");
+    const [boardCreatedAltert, setBoardCreatedAlert] = useState("");
+    const alertTimeoutRef = useRef<number | null>(null);
     const [error, setError] = useState("");
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -27,6 +29,18 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
 
     const handleSendBoardProps = (e: FormEvent<HTMLFormElement>): void => {
       e.preventDefault();
+
+      const { image, title } = JSON.parse(
+        localStorage.getItem("board") || "{}"
+      );
+
+      if (image || title) {
+        setBoardCreatedAlert(
+          "Para crear más de un tablero, registrate e inicia sesión"
+        );
+        restartAlertTimeout();
+        return;
+      }
 
       if (boardTitle.trim() === "") {
         return setError("El título es obligatorio *");
@@ -52,6 +66,23 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
       setBoardTitle(newTitle);
     };
 
+    const restartAlertTimeout = () => {
+      if (alertTimeoutRef.current) {
+        clearTimeout(alertTimeoutRef.current);
+      }
+      alertTimeoutRef.current = window.setTimeout(() => {
+        setBoardCreatedAlert("");
+      }, 3000);
+    };
+
+    useEffect(() => {
+      return () => {
+        if (alertTimeoutRef.current) {
+          clearTimeout(alertTimeoutRef.current);
+        }
+      };
+    }, []);
+
     useEffect(() => {
       setError("");
     }, [boardTitle]);
@@ -66,7 +97,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
           style={{ originX: 1, originY: 0 }}
           className="absolute top-[45px] right-0 w-[320px] bg-white dark:bg-[#393C73] rounded-md shadow-lg p-2"
         >
-          <div className="p-1 rounded select-none">
+          <div className="p-1 rounded select-none relative">
             <div className="flex items-center justify-center gap-2 mb-5 relative">
               <h1 className="font-medium text-slate-800 dark:text-gray-300">
                 Crear tablero
@@ -129,6 +160,20 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
               </div>
             </div>
           </div>
+          <AnimatePresence>
+            {boardCreatedAltert ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                className="absolute top-[102%] w-[320px] left-0 bg-slate-800 rounded shadow-lg p-4"
+              >
+                <p className="text-center text-slate-800 dark:text-gray-300">
+                  {boardCreatedAltert}
+                </p>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
         </motion.div>
       </div>
     );

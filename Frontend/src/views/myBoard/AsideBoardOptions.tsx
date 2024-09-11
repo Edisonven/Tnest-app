@@ -23,7 +23,7 @@ const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.2, ease: "backInOut" }}
+      transition={{ duration: 0.3, ease: "backInOut" }}
       style={{ originX: 1, originY: 0 }}
       ref={ref}
       className="absolute top-[100%] left-[20px] dark:bg-[#393C73] bg-white px-5 py-2 rounded shadow-xl w-[300px]"
@@ -48,13 +48,13 @@ const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
               />
             ))}
           </div>
-          <div className="flex justify-center mb-4">
-            <button className="bg-teal-700 text-gray-300 font-medium rounded shadow mt-3 w-full h-[38px] dark:bg-[#131842] dark:text-gray-300 hover:brightness-125">
-              Cambiar
-            </button>
-          </div>
+          <hr className="my-2" />
         </div>
-        <hr className="my-2" />
+        <div className="mb-4">
+          <button className="text-slate-800 dark:text-gray-300 font-medium text-sm">
+            Eliminar tablero
+          </button>
+        </div>
       </div>
     </motion.div>
   );
