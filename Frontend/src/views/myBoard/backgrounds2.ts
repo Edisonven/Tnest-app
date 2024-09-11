@@ -27,15 +27,15 @@ export const background: BackgroundModel[] = [
     },
     {
         "id": 6,
-        "href": "/images/application/boards-background/board-6.webp"
+        "href": "/images/application/boards-background/board-6.jpg"
     },
     {
         "id": 7,
-        "href": "/images/application/boards-background/board-7.webp"
+        "href": "/images/application/boards-background/board-7.jpg"
     },
     {
         "id": 8,
-        "href": "/images/application/boards-background/board-8.webp"
+        "href": "/images/application/boards-background/board-8.jpg"
     }
 ]
 
