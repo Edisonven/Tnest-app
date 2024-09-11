@@ -1,9 +1,6 @@
-
 interface BackgroundModel {
   id: number,
   href: string
-
-
 }
 
 
