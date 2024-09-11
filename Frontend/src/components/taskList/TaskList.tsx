@@ -3,16 +3,11 @@ import { CgMathPlus } from "react-icons/cg";
 import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
 import TaskCard from "../taskCard/TaskCard";
+import { TaskArray } from "../../types/TaskArray";
 
 export interface taskInterface {
   id: string;
   title: string;
-}
-
-interface TaskArray {
-  id: number;
-  title: string;
-  taskListId: string;
 }
 
 const TaskList = ({ title, id }: taskInterface) => {

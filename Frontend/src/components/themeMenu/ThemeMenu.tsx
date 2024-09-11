@@ -9,12 +9,14 @@ const ThemeMenu = forwardRef<HTMLDivElement, ThemeMenuProps>(
       const newTheme = "dark";
       setApplicationTheme(newTheme);
       document.documentElement.setAttribute("class", newTheme);
+      localStorage.setItem("theme", newTheme); // Solo guardar el tema cuando el usuario lo cambia
     };
 
     const handleSetLightTheme = () => {
       const newTheme = "light";
       setApplicationTheme(newTheme);
       document.documentElement.setAttribute("class", newTheme);
+      localStorage.setItem("theme", newTheme); // Solo guardar el tema cuando el usuario lo cambia
     };
 
     return (
@@ -32,7 +34,7 @@ const ThemeMenu = forwardRef<HTMLDivElement, ThemeMenuProps>(
             onClick={handleSetLightTheme}
             className={`${
               aplicationTheme === "light"
-                ? "text-yellow-400 "
+                ? "text-yellow-400"
                 : "text-gray-400 hover:bg-[#22264ba2]"
             } text-[35px] cursor-pointer hover:bg-slate-200 p-1 rounded`}
           />
@@ -41,7 +43,7 @@ const ThemeMenu = forwardRef<HTMLDivElement, ThemeMenuProps>(
             className={`${
               aplicationTheme === "dark"
                 ? "text-gray-200 hover:bg-[#22264ba2]"
-                : "text-slate-800 "
+                : "text-slate-800"
             } text-[35px] cursor-pointer hover:bg-slate-200 p-1 rounded`}
           />
         </div>

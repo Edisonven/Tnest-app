@@ -8,6 +8,7 @@ import { DomRefElement, IconForwardRef } from "../../types/DomRefElement";
 import CreateABoard from "../createABoard/CreateABoard";
 import { Link } from "react-router-dom";
 import BurgerMenu from "../burgerMenu/BurgerMenu";
+import { ThemeMenuProps } from "../../types/ThemeMenuProp";
 
 const GearIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
   <div ref={ref}>
@@ -21,14 +22,16 @@ const UserIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
   </div>
 ));
 
-function Navbar(): JSX.Element {
+function Navbar({
+  setApplicationTheme,
+  aplicationTheme,
+}: ThemeMenuProps): JSX.Element {
   const [openThemeMenu, setOpenThemeMenu] = useState(false);
   const [openBurgerMenu, setOpenBurgerMenu] = useState(false);
   const gearIconRef = useRef<DomRefElement>(null);
   const userMenuRef = useRef<DomRefElement>(null);
   const themeRef = useRef<DomRefElement>(null);
   const burgerRef = useRef<DomRefElement>(null);
-  const [aplicationTheme, setApplicationTheme] = useState("light");
 
   const handleOpenThemeMenu = (): void => {
     setOpenThemeMenu(!openThemeMenu);
