@@ -71,7 +71,7 @@ function Navbar({
   }, []);
 
   return (
-    <section className="bg-white dark:bg-[#393C73] p-2 relative z-10">
+    <section className="bg-white dark:bg-[#141826] p-2 relative z-10 outline outline-1 outline-gray-800">
       <div className="flex items-center justify-between max-w-[1800px] mx-auto">
         <div>
           <Link to="/" className="font-bold text-slate-800 dark:text-white">
@@ -96,7 +96,7 @@ function Navbar({
             <GearIcon
               ref={gearIconRef}
               onClick={handleOpenThemeMenu}
-              className="text-[35px] text-teal-500 dark:text-slate-400 cursor-pointer select-none hover:bg-[#0000001f] dark:hover:bg-[#00000054] rounded-full p-[6px] duration-300"
+              className="text-[35px] text-teal-500 dark:text-slate-400 cursor-pointer select-none hover:bg-[#0000001f] dark:hover:bg-[#72727254] rounded-full p-[6px] duration-300"
             />
             <AnimatePresence>
               {openThemeMenu ? (

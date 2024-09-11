@@ -95,7 +95,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ duration: 0.2, ease: "backInOut" }}
           style={{ originX: 1, originY: 0 }}
-          className="absolute top-[45px] right-0 w-[320px] bg-white dark:bg-[#393C73] rounded-md shadow-lg p-2"
+          className="absolute top-[45px] right-0 w-[320px] bg-white dark:bg-[#2f354e] outline outline-1 outline-gray-800 rounded-md shadow-lg p-2"
         >
           <div className="p-1 rounded select-none relative">
             <div className="flex items-center justify-center gap-2 mb-5 relative">
@@ -153,7 +153,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
                   <span className="mt-2 block font-bold text-sm text-red-600">
                     {error}
                   </span>
-                  <button className="bg-teal-700 text-gray-300 font-medium rounded shadow mt-3 w-full h-[38px] dark:bg-[#131842] dark:text-gray-300">
+                  <button className="bg-teal-700 text-gray-300 font-medium rounded shadow mt-3 hover:brightness-125 w-full h-[38px] dark:bg-[#4d59b3] dark:text-gray-300">
                     Crear
                   </button>
                 </form>

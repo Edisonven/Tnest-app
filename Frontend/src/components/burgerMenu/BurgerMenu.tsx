@@ -11,7 +11,7 @@ const BurgerMenu = forwardRef<HTMLDivElement>(({}, ref) => {
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.2, ease: "backInOut" }}
       style={{ originX: 1, originY: 0 }}
-      className="bg-white shadow-lg rounded dark:bg-[#393C73] p-3 absolute top-[45px] right-0 w-[150px]"
+      className="bg-white shadow-lg rounded dark:bg-[#141826] p-3 absolute top-[45px] right-0 w-[150px]"
     >
       <div className="flex flex-col items-center gap-3 w-full">
         <Link

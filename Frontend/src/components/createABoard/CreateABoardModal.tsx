@@ -21,9 +21,9 @@ const CreateABoardModal = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
         transition={{ duration: 0.2, ease: "backInOut" }}
         style={{ originX: 1, originY: 0 }}
         ref={ref}
-        className="absolute top-[45px] right-0 w-[250px] bg-white dark:bg-[#393C73] rounded shadow-lg p-2"
+        className="absolute top-[45px] right-0 w-[250px] bg-white dark:bg-[#141826] outline outline-1 outline-gray-800 rounded shadow-lg p-2"
       >
-        <div className="cursor-pointer hover:bg-[#00000015] p-1 rounded select-none">
+        <div className="cursor-pointer hover:bg-[#72727250] p-1 rounded select-none">
           <div className="flex items-center gap-2 mb-2">
             <TbLayoutBoard className="text-[20px] text-slate-800 dark:text-white" />
             <h1 className="text-sm text-slate-800 dark:text-gray-300">

@@ -4,6 +4,7 @@ import { background } from "./backgrounds2";
 import { setImage } from "../../features/boardBackgroundSlice";
 import { useAppDispatch } from "../../features/boardBackgroundSlice";
 import { Img } from "react-image";
+import { TbTrashXFilled } from "react-icons/tb";
 
 const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,10 @@ const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
     localStorage.setItem("board", JSON.stringify(updatedBoardData));
   };
 
+  const handleDeleteCurrentBoard = () => {
+    localStorage.removeItem("board");
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -26,13 +31,13 @@ const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
       transition={{ duration: 0.3, ease: "backInOut" }}
       style={{ originX: 1, originY: 0 }}
       ref={ref}
-      className="absolute top-[100%] left-[20px] dark:bg-[#393C73] bg-white px-5 py-2 rounded shadow-xl w-[300px]"
+      className="absolute top-[100%] left-[20px] dark:bg-[#141826] bg-white px-5 py-2 rounded shadow-xl w-[300px] outline outline-1 outline-gray-800"
     >
       <h1 className="text-slate-800 dark:text-gray-300 text-center font-bold">
         Opciones del tablero
       </h1>
       <div className="mt-3">
-        <hr className="my-2" />
+        <hr className="my-2 border-gray-400" />
         <p className="text-slate-800 dark:text-gray-300 font-medium text-sm">
           Cambiar fondo
         </p>
@@ -48,11 +53,15 @@ const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
               />
             ))}
           </div>
-          <hr className="my-2" />
+          <hr className="my-2 border-gray-400" />
         </div>
         <div className="mb-4">
-          <button className="text-slate-800 dark:text-gray-300 font-medium text-sm">
+          <button
+            onClick={handleDeleteCurrentBoard}
+            className="text-slate-800 dark:text-gray-300 mt-4 font-medium text-sm flex items-center gap-2 hover:bg-[#0000004b] px-2 py-1 rounded"
+          >
             Eliminar tablero
+            <TbTrashXFilled className="text-slate-800 dark:text-gray-300" />
           </button>
         </div>
       </div>
