@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { forwardRef, useEffect, useState } from "react";
+import { ChangeEvent, forwardRef, useEffect, useState } from "react";
 import { OpenCreateBoardMenu } from "../../types/ThemeMenuProp";
 import { IoClose } from "react-icons/io5";
 import board1 from "/images/application/boards-background/board-1.png";
@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
   ({ setOpenCreateBoardMenu, setOpenModal }, _) => {
     const [boardImage, setBoardImage] = useState(board1);
+    const [boardTitle, setBoardTitle] = useState("");
     const [error, setError] = useState("");
     const { title } = useAppSelector((state) => state.background);
     const dispatch = useAppDispatch();
@@ -31,25 +32,32 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
     const handleSendBoardProps = (e: FormEvent<HTMLFormElement>): void => {
       e.preventDefault();
 
-      dispatch(setImage(boardImage));
-
-      if (title.trim() === "") {
-        setError("El título es obligatorio *");
+      if (boardTitle.trim() === "") {
+        return setError("El título es obligatorio *");
       } else {
         navigate("/my-board");
       }
 
+      dispatch(setImage(boardImage));
+      dispatch(setTitle(boardTitle));
+
       const boardData = {
         image: boardImage,
-        title: title.trim(),
+        title: boardTitle.trim(),
       };
 
       localStorage.setItem("board", JSON.stringify(boardData));
+      setBoardTitle("");
+    };
+
+    const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>): void => {
+      const newTitle = e.target.value;
+      setBoardTitle(newTitle);
     };
 
     useEffect(() => {
       setError("");
-    }, [title]);
+    }, [boardTitle]);
 
     return (
       <div>
@@ -107,8 +115,8 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
                 </h1>
                 <form onSubmit={handleSendBoardProps}>
                   <input
-                    value={title}
-                    onChange={(e) => dispatch(setTitle(e.target.value))}
+                    value={boardTitle}
+                    onChange={handleChangeTitle}
                     type="text"
                     id="titulo"
                     name="titulo"
