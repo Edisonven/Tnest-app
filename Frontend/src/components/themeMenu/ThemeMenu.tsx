@@ -27,7 +27,7 @@ const ThemeMenu = forwardRef<HTMLDivElement, ThemeMenuProps>(
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.2, ease: "backInOut" }}
         style={{ originX: 1, originY: 0 }}
-        className="absolute top-[45px] right-0 bg-white dark:bg-[#141826] shadow-lg rounded"
+        className="absolute top-[47px] right-0 bg-white dark:bg-[#141826] shadow-lg rounded outline outline-1 outline-gray-800"
       >
         <div className="p-1 flex items-center gap-1 select-none">
           <MdLightMode
@@ -35,16 +35,16 @@ const ThemeMenu = forwardRef<HTMLDivElement, ThemeMenuProps>(
             className={`${
               aplicationTheme === "light"
                 ? "text-yellow-400"
-                : "text-gray-400 hover:bg-[#22264ba2]"
-            } text-[35px] cursor-pointer hover:bg-slate-200 p-1 rounded`}
+                : "text-gray-400"
+            } text-[35px] cursor-pointer p-1 rounded hover:bg-[#7575753a]`}
           />
           <MdDarkMode
             onClick={handleSetDarkTheme}
             className={`${
               aplicationTheme === "dark"
-                ? "text-gray-200 hover:bg-[#22264ba2]"
+                ? "text-gray-200"
                 : "text-slate-800"
-            } text-[35px] cursor-pointer hover:bg-slate-200 p-1 rounded`}
+            } text-[35px] cursor-pointer p-1 rounded hover:bg-[#7575753a]`}
           />
         </div>
       </motion.div>
