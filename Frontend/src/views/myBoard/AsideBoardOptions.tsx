@@ -61,7 +61,7 @@ const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
             className="text-slate-800 dark:text-gray-300 mt-4 font-medium text-sm flex items-center gap-2 hover:bg-[#0000004b] px-2 py-1 rounded"
           >
             Eliminar tablero
-            <TbTrashXFilled className="text-slate-800 dark:text-gray-300" />
+            <TbTrashXFilled className="text-slate-800 dark:text-gray-300 text-[16px]" />
           </button>
         </div>
       </div>
