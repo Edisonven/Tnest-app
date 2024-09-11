@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import TaskList from "../../components/taskList/TaskList";
 import {
   useAppSelector,
@@ -7,10 +7,25 @@ import {
 import { setImage, setTitle } from "../../features/boardBackgroundSlice";
 import "./myBoard.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import AsideBoardOptions from "./AsideBoardOptions";
+import { forwardRef } from "react";
+import { ThreeDotsIconForwardRef } from "../../types/DomRefElement";
+import { AnimatePresence } from "framer-motion";
+
+const ThreeDotsIcon = forwardRef<HTMLDivElement, ThreeDotsIconForwardRef>(
+  (props, ref) => (
+    <div ref={ref}>
+      <BsThreeDotsVertical {...props} />
+    </div>
+  )
+);
 
 function MyBoard() {
   const { image, title } = useAppSelector((state) => state.background);
+  const [openModalOptions, setOpenModalOptions] = useState(false);
   const dispatch = useAppDispatch();
+  const modalAsideRef = useRef<HTMLDivElement>(null);
+  const modalIconAsideRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const storedBoard = localStorage.getItem("board");
@@ -20,6 +35,28 @@ function MyBoard() {
       dispatch(setTitle(title));
     }
   }, [dispatch]);
+
+  const handleOpenModalOptions = () => {
+    setOpenModalOptions(!openModalOptions);
+  };
+
+  const handleClickOutside = (event: MouseEvent): void => {
+    if (
+      modalAsideRef.current &&
+      modalIconAsideRef.current &&
+      !modalAsideRef.current.contains(event.target as Node) &&
+      !modalIconAsideRef.current.contains(event.target as Node)
+    ) {
+      setOpenModalOptions(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <section className="select-none">
@@ -62,8 +99,18 @@ function MyBoard() {
                       {title}
                     </span>
                   </div>
-
-                  <BsThreeDotsVertical className="text-slate-800 dark:text-gray-300 text-[27px] p-1 hover:bg-[#00000050] rounded-full duration-200 cursor-pointer" />
+                  <div className="relative">
+                    <ThreeDotsIcon
+                      ref={modalIconAsideRef}
+                      onClick={handleOpenModalOptions}
+                      className="text-slate-800 dark:text-gray-300 text-[27px] p-1 hover:bg-[#00000050] rounded-full duration-200 cursor-pointer"
+                    />
+                    <AnimatePresence>
+                      {openModalOptions ? (
+                        <AsideBoardOptions ref={modalAsideRef} />
+                      ) : null}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </div>
             </div>
