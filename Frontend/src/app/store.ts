@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { selectBackgroundProps } from "../features/boardBackgroundSlice";
+import { tasksProps } from "../features/tasksSlice";
 
 export const store = configureStore({
   reducer: {
-    background: selectBackgroundProps
-
+    background: selectBackgroundProps,
+    tasksProps: tasksProps
   },
 });
 
