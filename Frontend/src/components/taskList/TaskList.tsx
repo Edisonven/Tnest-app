@@ -16,7 +16,7 @@ const TaskList = ({ title, id }: taskInterface) => {
     {
       id: 1,
       title: "Nueva tarjeta",
-      desc: "Esta es una descripción de prueba",
+      taskListId: "1",
     },
   ]);
 
@@ -32,6 +32,18 @@ const TaskList = ({ title, id }: taskInterface) => {
     }
   };
 
+  const handleSendNewTask = () => {
+    const newTask = {
+      id: tasks.length + 1,
+      title: taskTitle,
+      taskListId: taskListId,
+      desc: "Hola soy una desc",
+    };
+
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+    setTaskTitle("");
+  };
+
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTaskTitle(e.target.value);
   };
@@ -45,12 +57,15 @@ const TaskList = ({ title, id }: taskInterface) => {
         {title}
       </h1>
       <div className="flex flex-col gap-3">
-        {id === "1"
-          ? tasks.map((task) => <TaskCard id={task.id} title={task.title} />)
-          : null}
+        {tasks.map((task) =>
+          task.taskListId === id ? (
+            <TaskCard key={task.id} id={task.id} title={task.title} />
+          ) : null
+        )}
         <div>
           {id === taskListId ? (
             <AddTaskCard
+              handleSendNewTask={handleSendNewTask}
               handleChange={handleChange}
               taskTitle={taskTitle}
               setTaskListId={setTaskListId}

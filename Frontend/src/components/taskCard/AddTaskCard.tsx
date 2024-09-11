@@ -5,12 +5,14 @@ export interface AddTaskInterface {
   handleChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   taskTitle: string;
   setTaskListId: React.Dispatch<React.SetStateAction<string>>;
+  handleSendNewTask: () => void;
 }
 
 function AddTaskCard({
   handleChange,
   taskTitle,
   setTaskListId,
+  handleSendNewTask,
 }: AddTaskInterface) {
   return (
     <div>
@@ -29,7 +31,10 @@ function AddTaskCard({
         ) : null}
       </div>
       <div className="flex items-center gap-1">
-        <button className="bg-[#383e9e] text-slate-800 dark:text-gray-300 px-2 py-[6px] rounded shadow text-sm font-medium my-2 hover:brightness-125">
+        <button
+          onClick={handleSendNewTask}
+          className="bg-[#383e9e] text-slate-800 dark:text-gray-300 px-2 py-[6px] rounded shadow text-sm font-medium my-2 hover:brightness-125"
+        >
           Añadir tarjeta
         </button>
         <IoClose
