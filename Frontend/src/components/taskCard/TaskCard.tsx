@@ -1,10 +1,10 @@
-export interface taskIterface {
+export interface TaskIterface {
   id: number;
   title: string;
   desc?: string;
 }
 
-function TaskCard({ id, title }: taskIterface) {
+function TaskCard({ id, title }: TaskIterface) {
   return (
     <div
       key={id}

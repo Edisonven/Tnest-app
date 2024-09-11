@@ -9,16 +9,16 @@ export interface taskInterface {
   title: string;
 }
 
+interface TaskArray {
+  id: number;
+  title: string;
+  taskListId: string;
+}
+
 const TaskList = ({ title, id }: taskInterface) => {
   const [taskListId, setTaskListId] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Nueva tarjeta",
-      taskListId: "1",
-    },
-  ]);
+  const [tasks, setTasks] = useState<TaskArray[]>([]);
 
   const handleAddNewTask = (id: string) => {
     if (id) {
@@ -37,11 +37,15 @@ const TaskList = ({ title, id }: taskInterface) => {
       id: tasks.length + 1,
       title: taskTitle,
       taskListId: taskListId,
-      desc: "Hola soy una desc",
     };
 
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-    setTaskTitle("");
+    if (taskTitle === "") {
+      setTaskListId("");
+    } else {
+      setTasks((prevTasks) => [...prevTasks, newTask]);
+      setTaskTitle("");
+      setTaskListId("");
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
