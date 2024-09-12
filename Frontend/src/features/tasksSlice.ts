@@ -2,31 +2,33 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { RootState, AppStore, AppDispatch } from '../app/store';
 import { useDispatch, useSelector, useStore, } from 'react-redux'
 
-interface InitialStateInterface {
-    title: string,
-    comments: string
-    description: string
-    cover: string
+const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+
+
+interface TaskInterface {
+    id: number;
+    title: string;
+    comments: string;
+    description: string;
+    cover: string;
     taskListId: string;
 }
 
-const initialState: InitialStateInterface = {
-    title: "",
-    comments: "",
-    description: "",
-    cover: "",
-    taskListId: ""
-}
+const initialState: TaskInterface[] = storedTasks.length > 0 ? storedTasks.map((task: TaskInterface) => ({
+    id: task.id,
+    title: task.title,
+    comments: task.comments,
+    description: task.description,
+    cover: task.cover,
+    taskListId: task.taskListId
+})) : [];
 
 export const tasksSlice = createSlice({
     name: "tasks",
     initialState,
     reducers: {
         setTaskInfo: (state, action) => {
-            state.title = action.payload
-            state.comments = action.payload
-            state.description = action.payload
-            state.cover = action.payload
+            state.push(action.payload);
         }
     }
 })

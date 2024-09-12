@@ -4,6 +4,8 @@ import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
 import TaskCard from "../taskCard/TaskCard";
 import { TaskArray } from "../../types/TaskArray";
+import { useAppDispatch, useAppSelector } from "../../features/tasksSlice";
+import { setTaskInfo } from "../../features/tasksSlice";
 
 export interface taskInterface {
   id: string;
@@ -15,6 +17,8 @@ const TaskList = ({ title, id }: taskInterface) => {
   const [taskListId, setTaskListId] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [tasks, setTasks] = useState<TaskArray[]>(storedTasks);
+  const dispatch = useAppDispatch();
+  const globalStateTasks = useAppSelector((state) => state.tasksProps);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -43,6 +47,13 @@ const TaskList = ({ title, id }: taskInterface) => {
       setTaskListId("");
     } else {
       setTasks((prevTasks) => [...prevTasks, newTask]);
+      dispatch(
+        setTaskInfo({
+          title: taskTitle,
+          taskListId: taskListId,
+          id: tasks.length + 1,
+        })
+      );
       setTaskTitle("");
       setTaskListId("");
     }
@@ -61,7 +72,7 @@ const TaskList = ({ title, id }: taskInterface) => {
         {title}
       </h1>
       <div className="flex flex-col gap-3">
-        {tasks.map((task) =>
+        {globalStateTasks.map((task) =>
           task.taskListId === id ? (
             <TaskCard key={task.id} id={task.id} title={task.title} />
           ) : null

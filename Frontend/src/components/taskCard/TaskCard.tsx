@@ -10,15 +10,17 @@ export interface TaskIterface {
 
 function TaskCard({ id, title }: TaskIterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
+  const [taskId, setTaskId] = useState<number>(0);
 
-  const handleOpenTaskOptions = (): void => {
+  const handleOpenTaskOptions = (id: number): void => {
     setOpenTaskOptions(!openTaskOptions);
+    setTaskId(id);
   };
 
   return (
     <div>
       <div
-        onClick={handleOpenTaskOptions}
+        onClick={() => handleOpenTaskOptions(id)}
         key={id}
         className="bg-slate-800 px-3 py-[6px] rounded cursor-pointer hover:brightness-125 hover:outline outline-1 outline-white"
       >
@@ -26,7 +28,10 @@ function TaskCard({ id, title }: TaskIterface) {
       </div>
       <AnimatePresence>
         {openTaskOptions ? (
-          <TaskCardOptions setOpenTaskOptions={setOpenTaskOptions} />
+          <TaskCardOptions
+            setOpenTaskOptions={setOpenTaskOptions}
+            taskId={taskId}
+          />
         ) : null}
       </AnimatePresence>
     </div>

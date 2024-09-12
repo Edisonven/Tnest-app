@@ -84,7 +84,7 @@ function MyBoard() {
                   <TaskList id={"4"} title="Completado" />
                 </div>
               </div>
-              <div className="bg-[#ebebebe5] dark:bg-[#141826cb] max-w-[260px] w-full shadow p-4 backdrop-blur-sm">
+              <div className="bg-[#ebebebe5] dark:bg-[#141826ee] max-w-[260px] w-full shadow p-4 backdrop-blur-sm">
                 <h1 className="text-slate-800 dark:text-gray-300 mb-3 font-medium">
                   Mis tableros
                 </h1>
