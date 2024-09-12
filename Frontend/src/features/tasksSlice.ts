@@ -7,13 +7,15 @@ interface InitialStateInterface {
     comments: string
     description: string
     cover: string
+    taskListId: string;
 }
 
 const initialState: InitialStateInterface = {
     title: "",
     comments: "",
     description: "",
-    cover: ""
+    cover: "",
+    taskListId: ""
 }
 
 export const tasksSlice = createSlice({

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CgMathPlus } from "react-icons/cg";
 import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
@@ -9,11 +9,16 @@ export interface taskInterface {
   id: string;
   title: string;
 }
+const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 
 const TaskList = ({ title, id }: taskInterface) => {
   const [taskListId, setTaskListId] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
-  const [tasks, setTasks] = useState<TaskArray[]>([]);
+  const [tasks, setTasks] = useState<TaskArray[]>(storedTasks);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleAddNewTask = (id: string) => {
     if (id) {
