@@ -5,9 +5,11 @@ import { setImage } from "../../features/boardBackgroundSlice";
 import { useAppDispatch } from "../../features/boardBackgroundSlice";
 import { Img } from "react-image";
 import { TbTrashXFilled } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
 const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleChangeBoardBackground = (href: string): void => {
     dispatch(setImage(href));
@@ -19,8 +21,10 @@ const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
     localStorage.setItem("board", JSON.stringify(updatedBoardData));
   };
 
-  const handleDeleteCurrentBoard = () => {
+  const handleDeleteCurrentBoard = (): void => {
     localStorage.removeItem("board");
+    localStorage.removeItem("tasks");
+    navigate("/");
   };
 
   return (
