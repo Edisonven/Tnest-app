@@ -16,7 +16,6 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const [openDescriptionMenu, setOpenDescriptionMenu] = useState(false);
 
   const filteredTask = taskOptions.find((task) => task.id === taskId);
-  console.log(filteredTask);
 
   const handleAddATaskDescription = () => {
     setOpenDescriptionMenu(!openDescriptionMenu);
