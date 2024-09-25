@@ -41,6 +41,7 @@ const TaskList = ({ title, id }: taskInterface) => {
 
       // Actualizamos el estado global directamente
       dispatch(setReOrderTaks(updatedTasks));
+
       setDraggedTaskId(null);
     }
   };
@@ -68,6 +69,10 @@ const TaskList = ({ title, id }: taskInterface) => {
       };
 
       dispatch(setTaskInfo(newTask)); // Añadimos la tarea al estado global
+      localStorage.setItem(
+        "tasks",
+        JSON.stringify([...globalStateTasks, newTask])
+      );
       setTaskTitle("");
       setTaskListId(null);
     }
