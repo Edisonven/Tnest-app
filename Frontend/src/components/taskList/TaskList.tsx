@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CgMathPlus } from "react-icons/cg";
 import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
 import TaskCard from "../taskCard/TaskCard";
-import { TaskArray } from "../../types/TaskArray";
 import { useAppDispatch, useAppSelector } from "../../features/tasksSlice";
 import { setTaskInfo, setReOrderTaks } from "../../features/tasksSlice";
 
@@ -11,76 +10,69 @@ export interface taskInterface {
   id: string;
   title: string;
 }
-const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 
 const TaskList = ({ title, id }: taskInterface) => {
-  const [taskListId, setTaskListId] = useState("");
+  const [taskListId, setTaskListId] = useState<string | null>(null);
   const [taskTitle, setTaskTitle] = useState("");
-  const [tasks, setTasks] = useState<TaskArray[]>(storedTasks);
   const dispatch = useAppDispatch();
-  const globalStateTasks = useAppSelector((state) => state.tasksProps);
+  const globalStateTasks = useAppSelector((state) => state.tasksProps); 
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
+
 
   const handleDragStart = (id: string) => {
     setDraggedTaskId(id);
   };
 
+  // Manejar la operación de soltar para reordenar
   const handleDrop = (targetId: string) => {
     if (draggedTaskId !== null) {
-      const updatedTasks = [...tasks];
-      const draggedTaskIndex = tasks.findIndex(
+      const updatedTasks = [...globalStateTasks];
+      const draggedTaskIndex = globalStateTasks.findIndex(
         (task) => task.id === draggedTaskId
       );
-      const targetTaskIndex = tasks.findIndex((task) => task.id === targetId);
+      const targetTaskIndex = globalStateTasks.findIndex(
+        (task) => task.id === targetId
+      );
 
+      // Reordenar tareas
       const [draggedTask] = updatedTasks.splice(draggedTaskIndex, 1);
       updatedTasks.splice(targetTaskIndex, 0, draggedTask);
 
+      // Actualizamos el estado global directamente
       dispatch(setReOrderTaks(updatedTasks));
-      setTasks(updatedTasks);
       setDraggedTaskId(null);
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
-
+  // Manejar el cambio de lista activa para añadir nueva tarea
   const handleAddNewTask = (id: string) => {
     if (id) {
       setTaskListId(id);
     } else {
-      setTaskListId("");
+      setTaskListId(null);
     }
 
-    if (taskListId === "") {
+    if (taskListId === null) {
       setTaskTitle("");
     }
   };
 
+  // Enviar una nueva tarea y agregarla al estado global
   const handleSendNewTask = () => {
-    const newTask = {
-      id: crypto.randomUUID(),
-      title: taskTitle,
-      taskListId: taskListId,
-    };
+    if (taskTitle.trim() !== "" && taskListId) {
+      const newTask = {
+        id: crypto.randomUUID(),
+        title: taskTitle,
+        taskListId: taskListId,
+      };
 
-    if (taskTitle === "") {
-      setTaskListId("");
-    } else {
-      setTasks((prevTasks) => [...prevTasks, newTask]);
-      dispatch(
-        setTaskInfo({
-          title: taskTitle,
-          taskListId: taskListId,
-          id: crypto.randomUUID(),
-        })
-      );
+      dispatch(setTaskInfo(newTask)); // Añadimos la tarea al estado global
       setTaskTitle("");
-      setTaskListId("");
+      setTaskListId(null);
     }
   };
 
+  // Manejar cambios en el input
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTaskTitle(e.target.value);
   };

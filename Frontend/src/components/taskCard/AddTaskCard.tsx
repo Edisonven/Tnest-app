@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 export interface AddTaskInterface {
   handleChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   taskTitle: string;
-  setTaskListId: React.Dispatch<React.SetStateAction<string>>;
+  setTaskListId: React.Dispatch<React.SetStateAction<string | null>>;
   handleSendNewTask: () => void;
 }
 
