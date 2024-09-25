@@ -15,16 +15,18 @@ const TaskList = ({ title, id }: taskInterface) => {
   const [taskListId, setTaskListId] = useState<string | null>(null);
   const [taskTitle, setTaskTitle] = useState("");
   const dispatch = useAppDispatch();
-  const globalStateTasks = useAppSelector((state) => state.tasksProps); 
+  const globalStateTasks = useAppSelector((state) => state.tasksProps);
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState("");
 
-
-  const handleDragStart = (id: string) => {
-    setDraggedTaskId(id);
+  const handleDragStart = (draggedTaskId: string) => {
+    setDraggedTaskId(draggedTaskId);
+    setActiveCard(id);
   };
 
   // Manejar la operación de soltar para reordenar
   const handleDrop = (targetId: string) => {
+    setActiveCard("");
     if (draggedTaskId !== null) {
       const updatedTasks = [...globalStateTasks];
       const draggedTaskIndex = globalStateTasks.findIndex(
@@ -80,7 +82,9 @@ const TaskList = ({ title, id }: taskInterface) => {
   return (
     <div
       id={id}
-      className="bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg"
+      className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
+        activeCard === id ? "outline outline-1 outline-white" : ""
+      }`}
     >
       <h1 className="text-slate-800 dark:text-gray-300 mb-2 px-5 font-medium">
         {title}
