@@ -5,6 +5,7 @@ import AddTaskCard from "../taskCard/AddTaskCard";
 import TaskCard from "../taskCard/TaskCard";
 import { useAppDispatch, useAppSelector } from "../../features/tasksSlice";
 import { setTaskInfo, setReOrderTaks } from "../../features/tasksSlice";
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface taskInterface {
   id: string;
@@ -24,42 +25,38 @@ const TaskList = ({ title, id }: taskInterface) => {
     setActiveCard(id);
   };
 
-  // Manejar la operación de soltar para reordenar
   const handleDrop = (targetId: string) => {
-    if (draggedTaskId !== null) {
+    if (draggedTaskId !== null && draggedTaskId !== targetId) {
       const updatedTasks = [...globalStateTasks];
-      const draggedTaskIndex = globalStateTasks.findIndex(
+      const draggedTaskIndex = updatedTasks.findIndex(
         (task) => task.id === draggedTaskId
       );
-      const targetTaskIndex = globalStateTasks.findIndex(
+      const targetTaskIndex = updatedTasks.findIndex(
         (task) => task.id === targetId
       );
 
-      // Reordenar tareas
-      const [draggedTask] = updatedTasks.splice(draggedTaskIndex, 1);
-      updatedTasks.splice(targetTaskIndex, 0, draggedTask);
+      // Verifica que los índices sean válidos
+      if (draggedTaskIndex >= 0 && targetTaskIndex >= 0) {
+        // Reordenar tareas
+        const [draggedTask] = updatedTasks.splice(draggedTaskIndex, 1);
+        updatedTasks.splice(targetTaskIndex, 0, draggedTask);
 
-      // Actualizamos el estado global directamente
-      dispatch(setReOrderTaks(updatedTasks));
-      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        // Actualizamos el estado global
+        dispatch(setReOrderTaks(updatedTasks));
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      }
+
       setDraggedTaskId(null);
     }
   };
 
-  // Manejar el cambio de lista activa para añadir nueva tarea
   const handleAddNewTask = (id: string) => {
-    if (id) {
-      setTaskListId(id);
-    } else {
-      setTaskListId(null);
-    }
-
+    setTaskListId(id || null);
     if (taskListId === null) {
       setTaskTitle("");
     }
   };
 
-  // Enviar una nueva tarea y agregarla al estado global
   const handleSendNewTask = () => {
     if (taskTitle.trim() !== "" && taskListId) {
       const newTask = {
@@ -68,7 +65,7 @@ const TaskList = ({ title, id }: taskInterface) => {
         taskListId: taskListId,
       };
 
-      dispatch(setTaskInfo(newTask)); // Añadimos la tarea al estado global
+      dispatch(setTaskInfo(newTask));
       localStorage.setItem(
         "tasks",
         JSON.stringify([...globalStateTasks, newTask])
@@ -78,7 +75,6 @@ const TaskList = ({ title, id }: taskInterface) => {
     }
   };
 
-  // Manejar cambios en el input
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTaskTitle(e.target.value);
   };
@@ -94,18 +90,30 @@ const TaskList = ({ title, id }: taskInterface) => {
         {title}
       </h1>
       <div className="flex flex-col gap-3">
-        {globalStateTasks.map((task) =>
-          task.taskListId === id ? (
-            <TaskCard
-              setActiveCard={setActiveCard}
-              onDragStart={handleDragStart}
-              onDrop={handleDrop}
-              key={task.id}
-              id={task.id}
-              title={task.title}
-            />
-          ) : null
-        )}
+        <AnimatePresence>
+          {globalStateTasks.map((task) =>
+            task.taskListId === id ? (
+              <motion.div
+                key={task.id}
+                layout 
+                onDragStart={() => handleDragStart(task.id)}
+                onDrop={() => handleDrop(task.id)}
+                dragConstraints={{ top: 0, bottom: 0 }} 
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <TaskCard
+                  setActiveCard={setActiveCard} 
+                  onDragStart={() => handleDragStart(task.id)}
+                  onDrop={() => handleDrop(task.id)}
+                  id={task.id}
+                  title={task.title}
+                />
+              </motion.div>
+            ) : null
+          )}
+        </AnimatePresence>
         <div>
           {id === taskListId ? (
             <AddTaskCard
