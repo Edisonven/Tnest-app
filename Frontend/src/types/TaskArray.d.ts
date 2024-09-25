@@ -1,5 +1,5 @@
 export interface TaskArray {
-    id: number;
+    id: string;
     title: string;
     taskListId: string;
 }

@@ -19,13 +19,13 @@ const TaskList = ({ title, id }: taskInterface) => {
   const [tasks, setTasks] = useState<TaskArray[]>(storedTasks);
   const dispatch = useAppDispatch();
   const globalStateTasks = useAppSelector((state) => state.tasksProps);
-  const [draggedTaskId, setDraggedTaskId] = useState<number | null>(null);
+  const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
 
-  const handleDragStart = (id: number) => {
+  const handleDragStart = (id: string) => {
     setDraggedTaskId(id);
   };
 
-  const handleDrop = (targetId: number) => {
+  const handleDrop = (targetId: string) => {
     if (draggedTaskId !== null) {
       const updatedTasks = [...tasks];
       const draggedTaskIndex = tasks.findIndex(
@@ -60,7 +60,7 @@ const TaskList = ({ title, id }: taskInterface) => {
 
   const handleSendNewTask = () => {
     const newTask = {
-      id: tasks.length + 1,
+      id: crypto.randomUUID(),
       title: taskTitle,
       taskListId: taskListId,
     };
@@ -73,7 +73,7 @@ const TaskList = ({ title, id }: taskInterface) => {
         setTaskInfo({
           title: taskTitle,
           taskListId: taskListId,
-          id: tasks.length + 1,
+          id: crypto.randomUUID(),
         })
       );
       setTaskTitle("");

@@ -6,7 +6,7 @@ const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 
 
 interface TaskInterface {
-    id: number;
+    id: string;
     title: string;
     comments: string;
     description: string;

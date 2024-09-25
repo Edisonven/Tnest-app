@@ -5,7 +5,7 @@ import { useState } from "react";
 
 interface TaskCardOptionsProps {
   setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
-  taskId: number;
+  taskId: string;
 }
 
 const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({

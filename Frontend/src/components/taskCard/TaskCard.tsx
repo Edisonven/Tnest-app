@@ -3,18 +3,18 @@ import TaskCardOptions from "./TaskCardOptions";
 import { AnimatePresence } from "framer-motion";
 
 export interface TaskIterface {
-  id: number;
+  id: string;
   title: string;
   desc?: string;
-  onDragStart: (id: number) => void;
-  onDrop: (id: number) => void;
+  onDragStart: (id: string) => void;
+  onDrop: (id: string) => void;
 }
 
 function TaskCard({ id, title, onDragStart, onDrop }: TaskIterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
-  const [taskId, setTaskId] = useState<number>(0);
+  const [taskId, setTaskId] = useState<string>("");
 
-  const handleOpenTaskOptions = (id: number): void => {
+  const handleOpenTaskOptions = (id: string): void => {
     setOpenTaskOptions(!openTaskOptions);
     setTaskId(id);
   };
