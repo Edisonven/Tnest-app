@@ -5,7 +5,7 @@ import AddTaskCard from "../taskCard/AddTaskCard";
 import TaskCard from "../taskCard/TaskCard";
 import { TaskArray } from "../../types/TaskArray";
 import { useAppDispatch, useAppSelector } from "../../features/tasksSlice";
-import { setTaskInfo } from "../../features/tasksSlice";
+import { setTaskInfo, setReOrderTaks } from "../../features/tasksSlice";
 
 export interface taskInterface {
   id: string;
@@ -19,6 +19,28 @@ const TaskList = ({ title, id }: taskInterface) => {
   const [tasks, setTasks] = useState<TaskArray[]>(storedTasks);
   const dispatch = useAppDispatch();
   const globalStateTasks = useAppSelector((state) => state.tasksProps);
+  const [draggedTaskId, setDraggedTaskId] = useState<number | null>(null);
+
+  const handleDragStart = (id: number) => {
+    setDraggedTaskId(id);
+  };
+
+  const handleDrop = (targetId: number) => {
+    if (draggedTaskId !== null) {
+      const updatedTasks = [...tasks];
+      const draggedTaskIndex = tasks.findIndex(
+        (task) => task.id === draggedTaskId
+      );
+      const targetTaskIndex = tasks.findIndex((task) => task.id === targetId);
+
+      const [draggedTask] = updatedTasks.splice(draggedTaskIndex, 1);
+      updatedTasks.splice(targetTaskIndex, 0, draggedTask);
+
+      dispatch(setReOrderTaks(updatedTasks));
+      setTasks(updatedTasks);
+      setDraggedTaskId(null);
+    }
+  };
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -74,7 +96,13 @@ const TaskList = ({ title, id }: taskInterface) => {
       <div className="flex flex-col gap-3">
         {globalStateTasks.map((task) =>
           task.taskListId === id ? (
-            <TaskCard key={task.id} id={task.id} title={task.title} />
+            <TaskCard
+              onDragStart={handleDragStart}
+              onDrop={handleDrop}
+              key={task.id}
+              id={task.id}
+              title={task.title}
+            />
           ) : null
         )}
         <div>

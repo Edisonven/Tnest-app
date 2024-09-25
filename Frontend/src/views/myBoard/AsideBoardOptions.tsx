@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../features/boardBackgroundSlice";
 import { Img } from "react-image";
 import { TbTrashXFilled } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { setReOrderTaks } from "../../features/tasksSlice";
 
 const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ const AsideBoardOptions = forwardRef<HTMLDivElement>(({}, ref) => {
   const handleDeleteCurrentBoard = (): void => {
     localStorage.removeItem("board");
     localStorage.removeItem("tasks");
+    dispatch(setReOrderTaks([]));
     navigate("/");
   };
 

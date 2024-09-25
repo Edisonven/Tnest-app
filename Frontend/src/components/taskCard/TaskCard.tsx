@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import TaskCardOptions from "./TaskCardOptions";
 import { AnimatePresence } from "framer-motion";
 
@@ -6,9 +6,11 @@ export interface TaskIterface {
   id: number;
   title: string;
   desc?: string;
+  onDragStart: (id: number) => void;
+  onDrop: (id: number) => void;
 }
 
-function TaskCard({ id, title }: TaskIterface) {
+function TaskCard({ id, title, onDragStart, onDrop }: TaskIterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
   const [taskId, setTaskId] = useState<number>(0);
 
@@ -17,8 +19,17 @@ function TaskCard({ id, title }: TaskIterface) {
     setTaskId(id);
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
   return (
-    <div>
+    <div
+      onDragStart={() => onDragStart(id)}
+      onDrop={() => onDrop(id)}
+      onDragOver={handleDragOver}
+      draggable
+    >
       <div
         onClick={() => handleOpenTaskOptions(id)}
         key={id}

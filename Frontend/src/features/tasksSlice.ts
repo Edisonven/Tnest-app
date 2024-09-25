@@ -29,11 +29,15 @@ export const tasksSlice = createSlice({
     reducers: {
         setTaskInfo: (state, action) => {
             state.push(action.payload);
+        },
+        setReOrderTaks: (_, action) => {
+            return action.payload
+
         }
     }
 })
 
-export const { setTaskInfo } = tasksSlice.actions
+export const { setTaskInfo, setReOrderTaks } = tasksSlice.actions
 export const tasksProps = tasksSlice.reducer
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
