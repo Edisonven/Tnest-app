@@ -17,7 +17,7 @@ const TaskList = ({ title, id }: taskInterface) => {
   const dispatch = useAppDispatch();
   const globalStateTasks = useAppSelector((state) => state.tasksProps);
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
-  const [activeCard, setActiveCard] = useState("");
+  const [activeCard, setActiveCard] = useState<string | "">("");
 
   const handleDragStart = (draggedTaskId: string) => {
     setDraggedTaskId(draggedTaskId);
@@ -26,7 +26,6 @@ const TaskList = ({ title, id }: taskInterface) => {
 
   // Manejar la operación de soltar para reordenar
   const handleDrop = (targetId: string) => {
-    setActiveCard("");
     if (draggedTaskId !== null) {
       const updatedTasks = [...globalStateTasks];
       const draggedTaskIndex = globalStateTasks.findIndex(
@@ -93,6 +92,7 @@ const TaskList = ({ title, id }: taskInterface) => {
         {globalStateTasks.map((task) =>
           task.taskListId === id ? (
             <TaskCard
+              setActiveCard={setActiveCard}
               onDragStart={handleDragStart}
               onDrop={handleDrop}
               key={task.id}

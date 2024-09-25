@@ -8,9 +8,16 @@ export interface TaskIterface {
   desc?: string;
   onDragStart: (id: string) => void;
   onDrop: (id: string) => void;
+  setActiveCard: React.Dispatch<React.SetStateAction<string | "">>;
 }
 
-function TaskCard({ id, title, onDragStart, onDrop }: TaskIterface) {
+function TaskCard({
+  id,
+  title,
+  onDragStart,
+  onDrop,
+  setActiveCard,
+}: TaskIterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
   const [taskId, setTaskId] = useState<string>("");
 
@@ -28,6 +35,7 @@ function TaskCard({ id, title, onDragStart, onDrop }: TaskIterface) {
       onDragStart={() => onDragStart(id)}
       onDrop={() => onDrop(id)}
       onDragOver={handleDragOver}
+      onDragEnd={() => setActiveCard("")}
       draggable
     >
       <div
