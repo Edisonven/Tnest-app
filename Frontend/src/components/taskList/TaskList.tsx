@@ -41,7 +41,7 @@ const TaskList = ({ title, id }: taskInterface) => {
 
       // Actualizamos el estado global directamente
       dispatch(setReOrderTaks(updatedTasks));
-
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
       setDraggedTaskId(null);
     }
   };
