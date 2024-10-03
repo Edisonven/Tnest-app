@@ -93,11 +93,26 @@ const TaskList = ({ title, id }: taskInterface) => {
   const handleColumnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const itemID = event.dataTransfer.getData("itemID");
+    const itemFoundIndex = globalStateTasks.findIndex(
+      (task) => task.id === itemID
+    );
 
-    // Despacha la acción para mover la tarea a la nueva columna
-    dispatch(moveTaskToColumn({ taskId: itemID, newColumnId: id }));
+    if (itemFoundIndex !== -1) {
+      const itemFound = { ...globalStateTasks[itemFoundIndex] };
 
-    // Si también necesitas actualizar el estado local, hazlo aquí
+      itemFound.taskListId = id;
+
+      const newGlobalTaskState = globalStateTasks.map((task, index) => {
+        if (index === itemFoundIndex) {
+          return itemFound;
+        }
+        return task;
+      });
+
+      dispatch(moveTaskToColumn({ taskId: itemID, newColumnId: id }));
+
+      localStorage.setItem("tasks", JSON.stringify(newGlobalTaskState));
+    }
   };
 
   return (

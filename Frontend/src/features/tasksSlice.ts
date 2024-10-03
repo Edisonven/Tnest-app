@@ -39,7 +39,7 @@ export const tasksSlice = createSlice({
 
             const taskIndex = state.findIndex((task) => task.id === taskId);
             if (taskIndex !== -1) {
-                // Actualiza el taskListId de la tarea
+
                 state[taskIndex].taskListId = newColumnId;
             }
         },
