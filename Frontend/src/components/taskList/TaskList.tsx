@@ -5,7 +5,7 @@ import AddTaskCard from "../taskCard/AddTaskCard";
 import TaskCard from "../taskCard/TaskCard";
 import { useAppDispatch, useAppSelector } from "../../features/tasksSlice";
 import { setTaskInfo, setReOrderTaks } from "../../features/tasksSlice";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 export interface taskInterface {
   id: string;
@@ -20,14 +20,17 @@ const TaskList = ({ title, id }: taskInterface) => {
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
   const [activeCard, setActiveCard] = useState<string | "">("");
 
-  const handleDragStart = (draggedTaskId: string) => {
+  const handleDragStart = (
+    event: React.DragEvent<HTMLDivElement>,
+    draggedTaskId: string
+  ) => {
     setDraggedTaskId(draggedTaskId);
-    setActiveCard(id);
+    event.dataTransfer?.setData("itemID", draggedTaskId);
   };
 
   const handleDrop = (targetId: string) => {
+    const updatedTasks = [...globalStateTasks];
     if (draggedTaskId !== null && draggedTaskId !== targetId) {
-      const updatedTasks = [...globalStateTasks];
       const draggedTaskIndex = updatedTasks.findIndex(
         (task) => task.id === draggedTaskId
       );
@@ -79,8 +82,37 @@ const TaskList = ({ title, id }: taskInterface) => {
     setTaskTitle(e.target.value);
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleColumnDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const itemID = event.dataTransfer.getData("itemID");
+    const itemFoundIndex = globalStateTasks.findIndex(
+      (task) => task.id === itemID
+    );
+
+    if (itemFoundIndex !== -1) {
+      const itemFound = { ...globalStateTasks[itemFoundIndex] };
+
+      itemFound.taskListId = id;
+
+      const newGlobalTaskState = globalStateTasks.map((task, index) => {
+        if (index === itemFoundIndex) {
+          return itemFound;
+        }
+        return task;
+      });
+
+      dispatch(setReOrderTaks(newGlobalTaskState));
+    }
+  };
+
   return (
     <div
+      onDrop={(event) => handleColumnDrop(event)}
+      onDragOver={handleDragOver}
       id={id}
       className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
         activeCard === id ? "outline outline-1 outline-white" : ""
@@ -93,24 +125,14 @@ const TaskList = ({ title, id }: taskInterface) => {
         <AnimatePresence>
           {globalStateTasks.map((task) =>
             task.taskListId === id ? (
-              <motion.div
+              <TaskCard
                 key={task.id}
-                layout 
-                onDragStart={() => handleDragStart(task.id)}
+                setActiveCard={setActiveCard}
+                onDragStart={(event) => handleDragStart(event, task.id)}
                 onDrop={() => handleDrop(task.id)}
-                dragConstraints={{ top: 0, bottom: 0 }} 
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                <TaskCard
-                  setActiveCard={setActiveCard} 
-                  onDragStart={() => handleDragStart(task.id)}
-                  onDrop={() => handleDrop(task.id)}
-                  id={task.id}
-                  title={task.title}
-                />
-              </motion.div>
+                id={task.id}
+                title={task.title}
+              />
             ) : null
           )}
         </AnimatePresence>

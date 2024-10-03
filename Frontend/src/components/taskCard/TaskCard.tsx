@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import TaskCardOptions from "./TaskCardOptions";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export interface TaskIterface {
   id: string;
   title: string;
   desc?: string;
-  onDragStart: (id: string) => void;
+  onDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
   onDrop: (id: string) => void;
   setActiveCard: React.Dispatch<React.SetStateAction<string | "">>;
 }
@@ -31,8 +31,13 @@ function TaskCard({
   };
 
   return (
-    <div
-      onDragStart={() => onDragStart(id)}
+    <motion.div
+      layout
+      dragConstraints={{ top: 0, bottom: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.2 }}
+      onDragStart={onDragStart}
       onDrop={() => onDrop(id)}
       onDragOver={handleDragOver}
       onDragEnd={() => setActiveCard("")}
@@ -53,7 +58,7 @@ function TaskCard({
           />
         ) : null}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
 
