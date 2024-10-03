@@ -4,7 +4,11 @@ import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
 import TaskCard from "../taskCard/TaskCard";
 import { useAppDispatch, useAppSelector } from "../../features/tasksSlice";
-import { setTaskInfo, setReOrderTaks } from "../../features/tasksSlice";
+import {
+  setTaskInfo,
+  setReOrderTaks,
+  moveTaskToColumn,
+} from "../../features/tasksSlice";
 import { AnimatePresence } from "framer-motion";
 
 export interface taskInterface {
@@ -44,8 +48,8 @@ const TaskList = ({ title, id }: taskInterface) => {
         const [draggedTask] = updatedTasks.splice(draggedTaskIndex, 1);
         updatedTasks.splice(targetTaskIndex, 0, draggedTask);
 
-        // Actualizamos el estado global
         dispatch(setReOrderTaks(updatedTasks));
+        // Actualizamos el estado global
         localStorage.setItem("tasks", JSON.stringify(updatedTasks));
       }
 
@@ -89,24 +93,11 @@ const TaskList = ({ title, id }: taskInterface) => {
   const handleColumnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const itemID = event.dataTransfer.getData("itemID");
-    const itemFoundIndex = globalStateTasks.findIndex(
-      (task) => task.id === itemID
-    );
 
-    if (itemFoundIndex !== -1) {
-      const itemFound = { ...globalStateTasks[itemFoundIndex] };
+    // Despacha la acción para mover la tarea a la nueva columna
+    dispatch(moveTaskToColumn({ taskId: itemID, newColumnId: id }));
 
-      itemFound.taskListId = id;
-
-      const newGlobalTaskState = globalStateTasks.map((task, index) => {
-        if (index === itemFoundIndex) {
-          return itemFound;
-        }
-        return task;
-      });
-
-      dispatch(setReOrderTaks(newGlobalTaskState));
-    }
+    // Si también necesitas actualizar el estado local, hazlo aquí
   };
 
   return (

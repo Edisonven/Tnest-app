@@ -31,25 +31,25 @@ function TaskCard({
   };
 
   return (
-    <motion.div
-      layout
-      dragConstraints={{ top: 0, bottom: 0 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.2 }}
+    <div
       onDragStart={onDragStart}
       onDrop={() => onDrop(id)}
       onDragOver={handleDragOver}
       onDragEnd={() => setActiveCard("")}
       draggable
     >
-      <div
+      <motion.div
+        layout
+        dragConstraints={{ top: 0, bottom: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.2 }}
         onClick={() => handleOpenTaskOptions(id)}
         key={id}
         className="bg-slate-800 px-3 py-[6px] rounded cursor-pointer hover:brightness-125 hover:outline outline-1 outline-white"
       >
         <p className="text-slate-800 dark:text-gray-300 font-normal">{title}</p>
-      </div>
+      </motion.div>
       <AnimatePresence>
         {openTaskOptions ? (
           <TaskCardOptions
@@ -58,7 +58,7 @@ function TaskCard({
           />
         ) : null}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 

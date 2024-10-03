@@ -33,11 +33,20 @@ export const tasksSlice = createSlice({
         setReOrderTaks: (_, action) => {
             return action.payload
 
-        }
+        },
+        moveTaskToColumn: (state, action) => {
+            const { taskId, newColumnId } = action.payload;
+
+            const taskIndex = state.findIndex((task) => task.id === taskId);
+            if (taskIndex !== -1) {
+                // Actualiza el taskListId de la tarea
+                state[taskIndex].taskListId = newColumnId;
+            }
+        },
     }
 })
 
-export const { setTaskInfo, setReOrderTaks } = tasksSlice.actions
+export const { setTaskInfo, setReOrderTaks, moveTaskToColumn } = tasksSlice.actions
 export const tasksProps = tasksSlice.reducer
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
