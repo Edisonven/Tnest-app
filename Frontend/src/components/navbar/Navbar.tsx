@@ -9,6 +9,7 @@ import CreateABoard from "../createABoard/CreateABoard";
 import { Link } from "react-router-dom";
 import BurgerMenu from "../burgerMenu/BurgerMenu";
 import { ThemeMenuProps } from "../../types/ThemeMenuProp";
+import { MdDashboard } from "react-icons/md";
 
 const GearIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
   <div ref={ref}>
@@ -73,9 +74,13 @@ function Navbar({
   return (
     <section className="bg-white dark:bg-[#141826] p-2 relative z-10 outline outline-1 outline-gray-800">
       <div className="flex items-center justify-between max-w-[1800px] mx-auto">
-        <div>
-          <Link to="/" className="font-bold text-slate-800 dark:text-white">
-            TASKMANAGEMENT
+        <div className="">
+          <Link
+            to="/"
+            className="font-bold text-slate-800 px-2 dark:text-white text-[23px] flex items-center gap-1 hover:bg-slate-700 rounded duration-300"
+          >
+            TNest
+            <MdDashboard className="text-slate-800 dark:text-gray-300 text-[23px]" />
           </Link>
         </div>
         <div className="flex items-center gap-3">
