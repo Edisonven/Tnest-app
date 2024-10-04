@@ -1,8 +1,8 @@
 import { IoCloseOutline } from "react-icons/io5";
 import { motion } from "framer-motion";
 import { useAppSelector, useAppDispatch } from "../../features/tasksSlice";
-import { useState } from "react";
-import { sendTaskDescription } from "../../features/tasksSlice";
+import { ChangeEvent, useState } from "react";
+import { sendTaskDescription, sendTaskTitle } from "../../features/tasksSlice";
 
 interface TaskCardOptionsProps {
   setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,12 +14,12 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   taskId,
 }) => {
   const taskOptions = useAppSelector((state) => state.tasksProps);
+  const filteredTask = taskOptions.find((task) => task.id === taskId);
   const [openDescriptionMenu, setOpenDescriptionMenu] = useState(false);
   const [taskDescription, setTaskDescription] = useState("");
   const [isDescriptionModified, setIsDescriptionModified] = useState(false);
+  const [taskTitle, setTaskTitle] = useState(filteredTask?.title);
   const dispatch = useAppDispatch();
-
-  const filteredTask = taskOptions.find((task) => task.id === taskId);
 
   const handleAddATaskDescription = () => {
     setOpenDescriptionMenu(!openDescriptionMenu);
@@ -62,15 +62,33 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     setIsDescriptionModified(false);
   };
 
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTaskTitle(e.target.value);
+  };
+
+  const handleTitleBlur = () => {
+    if (filteredTask) {
+      const updatedTasksTitle = taskOptions.map((task) =>
+        task.id === filteredTask.id ? { ...task, title: taskTitle } : task
+      );
+      dispatch(sendTaskTitle({ title: taskTitle, taskId: filteredTask.id }));
+      localStorage.setItem("tasks", JSON.stringify(updatedTasksTitle));
+    }
+  };
+
   return (
     <motion.div className="bg-[#25334A] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] min-h-[500px] rounded shadow outline outline-1 outline-gray-700 p-4">
       <IoCloseOutline
         onClick={() => setOpenTaskOptions(false)}
         className="absolute top-[8px] right-[8px] text-slate-800 dark:text-gray-300 text-[40px] cursor-pointer p-1 hover:bg-[#b4b4b42c] rounded-md duration-200"
       />
-      <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
-        {filteredTask?.title}
-      </h1>
+      <input
+        onChange={handleTitleChange}
+        onBlur={handleTitleBlur} 
+        className="text-slate-800 dark:text-gray-300 text-[20px] bg-transparent w-[90%]"
+        type="text"
+        value={taskTitle}
+      />
       <div className="mt-3">
         <p className="text-slate-800 dark:text-gray-300 text-sm font-normal">
           En la lista {filteredTask?.taskListId}
