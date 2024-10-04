@@ -132,6 +132,7 @@ const TaskList = ({ title, id }: taskInterface) => {
           {globalStateTasks.map((task) =>
             task.taskListId === id ? (
               <TaskCard
+                desc={task.description}
                 key={task.id}
                 setActiveCard={setActiveCard}
                 onDragStart={(event) => handleDragStart(event, task.id)}

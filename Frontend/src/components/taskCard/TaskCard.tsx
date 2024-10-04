@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TaskCardOptions from "./TaskCardOptions";
 import { AnimatePresence, motion } from "framer-motion";
+import { LuText } from "react-icons/lu";
 
 export interface TaskIterface {
   id: string;
@@ -17,6 +18,7 @@ function TaskCard({
   onDragStart,
   onDrop,
   setActiveCard,
+  desc,
 }: TaskIterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
   const [taskId, setTaskId] = useState<string>("");
@@ -49,6 +51,13 @@ function TaskCard({
         className="bg-slate-800 px-3 py-[6px] rounded cursor-pointer hover:brightness-125 hover:outline outline-1 outline-white"
       >
         <p className="text-slate-800 dark:text-gray-300 font-normal">{title}</p>
+        <div className="">
+          {desc ? (
+            <div className="mt-3">
+              <LuText className="text-[20px] text-slate-800 dark:text-gray-300" />
+            </div>
+          ) : null}
+        </div>
       </motion.div>
       <AnimatePresence>
         {openTaskOptions ? (
