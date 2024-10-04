@@ -2,7 +2,11 @@ import { IoCloseOutline } from "react-icons/io5";
 import { motion } from "framer-motion";
 import { useAppSelector, useAppDispatch } from "../../features/tasksSlice";
 import { ChangeEvent, useState } from "react";
-import { sendTaskDescription, sendTaskTitle } from "../../features/tasksSlice";
+import {
+  sendTaskDescription,
+  sendTaskTitle,
+  sendTaskComments,
+} from "../../features/tasksSlice";
 import TaskDescription from "./TaskDescription";
 
 interface TaskCardOptionsProps {
@@ -21,6 +25,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const [taskDescription, setTaskDescription] = useState("");
   const [isDescriptionModified, setIsDescriptionModified] = useState(false);
   const [taskTitle, setTaskTitle] = useState(filteredTask?.title);
+  const [taskComments, setTaskComments] = useState("");
   const dispatch = useAppDispatch();
 
   const handleAddATaskDescription = () => {
@@ -81,8 +86,24 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     }
   };
 
+  const handleCommentsChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setTaskComments(e.target.value);
+  };
+
+  const handleSendTaskComments = () => {
+    if (filteredTask) {
+      dispatch(
+        sendTaskComments({
+          comments: taskComments,
+          id: crypto.randomUUID(),
+          taskId: filteredTask.id,
+        })
+      );
+    }
+  };
+
   return (
-    <motion.div className="bg-[#25334A] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] min-h-[500px] rounded shadow outline outline-1 outline-gray-700 p-4">
+    <motion.div className="bg-[#25334A] fixed top-[380px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] min-h-[500px] rounded shadow outline outline-1 outline-gray-700 p-4">
       <IoCloseOutline
         onClick={() => setOpenTaskOptions(false)}
         className="absolute top-[8px] right-[8px] text-slate-800 dark:text-gray-300 text-[40px] cursor-pointer p-1 hover:bg-[#b4b4b42c] rounded-md duration-200"
@@ -150,10 +171,26 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
             {openActivityMenu ? (
               <div className="mt-3 w-full">
                 <input
+                  onChange={handleCommentsChange}
+                  value={taskComments}
                   autoFocus
                   type="text"
                   className="w-full bg-[#22212E] border-none outline-none p-2 rounded shadow text-slate-800 dark:text-gray-300"
                 />
+                <div className="flex items-center gap-3 mt-2">
+                  <button
+                    onClick={handleSendTaskComments}
+                    className="text-slate-800 dark:text-gray-300 bg-[#4D59B3] px-3 py-[7px] rounded shadow hover:brightness-125 font-medium"
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    onClick={() => setOpenActivityMenu(false)}
+                    className="text-slate-800 dark:text-gray-300 px-3 py-[7px] rounded shadow font-medium hover:bg-[#00000034]"
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </div>
             ) : (
               <div
@@ -165,6 +202,13 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                 </p>
               </div>
             )}
+            <div>
+              <div>
+                {filteredTask?.comments?.map((comment) => (
+                  <p>{comment.comment}</p>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

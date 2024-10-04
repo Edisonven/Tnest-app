@@ -8,7 +8,10 @@ const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 interface TaskInterface {
     id: string;
     title: string;
-    comments: string;
+    comments: Array<{
+        id: string;
+        comment: string;
+    }>;
     description: string;
     cover: string;
     taskListId: string;
@@ -56,11 +59,25 @@ export const tasksSlice = createSlice({
             if (taskFinded) {
                 taskFinded.title = title;
             }
+        },
+        sendTaskComments: (state, action) => {
+            const { comments, id, taskId } = action.payload;
+            const taskFinded = state.find((task) => task.id === taskId);
+            if (taskFinded) {
+                if (!taskFinded.comments) {
+
+                    taskFinded.comments = [];
+                }
+                taskFinded.comments.push({
+                    id: id,
+                    comment: comments
+                });
+            }
         }
     }
 })
 
-export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle } = tasksSlice.actions
+export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle, sendTaskComments } = tasksSlice.actions
 export const tasksProps = tasksSlice.reducer
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
