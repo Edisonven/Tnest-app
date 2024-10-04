@@ -73,11 +73,18 @@ export const tasksSlice = createSlice({
                     comment: comments
                 });
             }
+        },
+        deleteComment: (state, action) => {
+            const { taskId, id } = action.payload;
+            const taskFinded = state.find((task) => task.id === taskId);
+            if (taskFinded) {
+                taskFinded.comments = taskFinded.comments.filter((comment) => comment.id !== id);
+            }
         }
     }
 })
 
-export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle, sendTaskComments } = tasksSlice.actions
+export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle, sendTaskComments, deleteComment } = tasksSlice.actions
 export const tasksProps = tasksSlice.reducer
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
