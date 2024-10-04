@@ -62,7 +62,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     setIsDescriptionModified(false);
   };
 
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTaskTitle(e.target.value);
   };
 
@@ -84,7 +84,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
       />
       <input
         onChange={handleTitleChange}
-        onBlur={handleTitleBlur} 
+        onBlur={handleTitleBlur}
         className="text-slate-800 dark:text-gray-300 text-[20px] bg-transparent w-[90%]"
         type="text"
         value={taskTitle}

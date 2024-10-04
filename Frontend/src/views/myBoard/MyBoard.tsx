@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, ChangeEvent } from "react";
 import TaskList from "../../components/taskList/TaskList";
 import {
   useAppSelector,
@@ -26,6 +26,7 @@ function MyBoard() {
   const dispatch = useAppDispatch();
   const modalAsideRef = useRef<HTMLDivElement>(null);
   const modalIconAsideRef = useRef<HTMLDivElement>(null);
+  const [boardTitle, setBoardTitle] = useState(title);
 
   useEffect(() => {
     const storedBoard = localStorage.getItem("board");
@@ -58,6 +59,22 @@ function MyBoard() {
     };
   }, []);
 
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setBoardTitle(e.target.value);
+  };
+
+  const handleTitleBlur = () => {
+    const storedBoard = localStorage.getItem("board");
+    const parsedBoard = storedBoard ? JSON.parse(storedBoard) : {};
+    if (boardTitle && boardTitle.trim() !== "") {
+      dispatch(setTitle(boardTitle));
+      localStorage.setItem(
+        "board",
+        JSON.stringify({ ...parsedBoard, title: boardTitle })
+      );
+    }
+  };
+
   return (
     <section className="select-none">
       <div>
@@ -73,9 +90,13 @@ function MyBoard() {
             <div className="my-board-container">
               <div className="w-full">
                 <div className="p-3 w-full bg-[#ebebeb5b] shadow dark:bg-[#00000034] h-[60px] backdrop-blur-sm">
-                  <h1 className="text-slate-100 text-xl font-bold dark:text-white">
-                    {title}
-                  </h1>
+                  <input
+                    onBlur={handleTitleBlur}
+                    onChange={handleTitleChange}
+                    className="text-slate-100 text-xl font-bold dark:text-white bg-transparent w-max px-2"
+                    type="text"
+                    value={boardTitle}
+                  />
                 </div>
                 <div className="flex items-start p-4 gap-4 flex-wrap">
                   <TaskList id={"1"} title="Lista de tareas" />

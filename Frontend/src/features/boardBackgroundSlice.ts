@@ -3,14 +3,17 @@ import type { RootState, AppStore, AppDispatch } from '../app/store';
 import { useDispatch, useSelector, useStore, } from 'react-redux'
 import type { PayloadAction } from '@reduxjs/toolkit';
 
+
+const { image, title } = JSON.parse(localStorage.getItem("board") || "{}");
+
 interface BackgroundState {
     image: string
     title: string
 }
 
 const initialState: BackgroundState = {
-    image: "",
-    title: ""
+    image: image,
+    title: title
 }
 
 export const backgroundSlice = createSlice({
