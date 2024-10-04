@@ -16,6 +16,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const taskOptions = useAppSelector((state) => state.tasksProps);
   const [openDescriptionMenu, setOpenDescriptionMenu] = useState(false);
   const [taskDescription, setTaskDescription] = useState("");
+  const [isDescriptionModified, setIsDescriptionModified] = useState(false);
   const dispatch = useAppDispatch();
 
   const filteredTask = taskOptions.find((task) => task.id === taskId);
@@ -40,12 +41,26 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
         );
 
         localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        setIsDescriptionModified(false);
       }
     } else {
       setOpenDescriptionMenu(false);
     }
   };
-  console.log(filteredTask);
+
+  const handleEditDescription = () => {
+    setOpenDescriptionMenu(true);
+    setIsDescriptionModified(true);
+    if (filteredTask) {
+      const editDescription = filteredTask.description;
+      setTaskDescription(editDescription);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setOpenDescriptionMenu(false);
+    setIsDescriptionModified(false);
+  };
 
   return (
     <motion.div className="bg-[#25334A] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] min-h-[500px] rounded shadow outline outline-1 outline-gray-700 p-4">
@@ -65,13 +80,18 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
         <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
           Descripción
         </h1>
-        {filteredTask?.description ? (
-          <div>
+        {filteredTask?.description && !isDescriptionModified ? (
+          <div className="flex items-center justify-between">
             <p className="text-slate-800 dark:text-gray-300 mt-4">
               {filteredTask.description}
             </p>
-            <div>
-              <button className="">Editar</button>
+            <div className="">
+              <button
+                onClick={handleEditDescription}
+                className="text-slate-800 dark:text-gray-300 px-3 py-1 dark:bg-slate-600 rounded shadow dark:hover:brightness-125"
+              >
+                Editar
+              </button>
             </div>
           </div>
         ) : (
@@ -92,7 +112,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                     Guardar
                   </button>
                   <button
-                    onClick={() => setOpenDescriptionMenu(false)}
+                    onClick={handleCancelEdit}
                     className="text-slate-800 dark:text-gray-300 px-3 py-[7px] rounded shadow font-medium hover:bg-[#00000034]"
                   >
                     Cancelar

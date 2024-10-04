@@ -33,32 +33,36 @@ function TaskCard({
   };
 
   return (
-    <div
-      onDragStart={onDragStart}
-      onDrop={() => onDrop(id)}
-      onDragOver={handleDragOver}
-      onDragEnd={() => setActiveCard("")}
-      draggable
-    >
-      <motion.div
-        layout
-        dragConstraints={{ top: 0, bottom: 0 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        transition={{ duration: 0.2 }}
-        onClick={() => handleOpenTaskOptions(id)}
-        key={id}
-        className="bg-slate-800 px-3 py-[6px] rounded cursor-pointer hover:brightness-125 hover:outline outline-1 outline-white"
+    <div>
+      <div
+        onDragStart={onDragStart}
+        onDrop={() => onDrop(id)}
+        onDragOver={handleDragOver}
+        onDragEnd={() => setActiveCard("")}
+        draggable
       >
-        <p className="text-slate-800 dark:text-gray-300 font-normal">{title}</p>
-        <div className="">
-          {desc ? (
-            <div className="mt-3">
-              <LuText className="text-[20px] text-slate-800 dark:text-gray-300" />
-            </div>
-          ) : null}
-        </div>
-      </motion.div>
+        <motion.div
+          layout
+          dragConstraints={{ top: 0, bottom: 0 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+          onClick={() => handleOpenTaskOptions(id)}
+          key={id}
+          className="bg-slate-800 px-3 py-[6px] rounded cursor-pointer hover:brightness-125 hover:outline outline-1 outline-white"
+        >
+          <p className="text-slate-800 dark:text-gray-300 font-normal">
+            {title}
+          </p>
+          <div className="">
+            {desc ? (
+              <div className="mt-3">
+                <LuText className="text-[20px] text-slate-800 dark:text-gray-300" />
+              </div>
+            ) : null}
+          </div>
+        </motion.div>
+      </div>
       <AnimatePresence>
         {openTaskOptions ? (
           <TaskCardOptions
