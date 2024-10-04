@@ -43,10 +43,17 @@ export const tasksSlice = createSlice({
                 state[taskIndex].taskListId = newColumnId;
             }
         },
+        sendTaskDescription: (state, action) => {
+            const { taskId, description } = action.payload;
+            const taskFinded = state.find((task) => task.id === taskId);
+            if (taskFinded) {
+                taskFinded.description = description;
+            }
+        }
     }
 })
 
-export const { setTaskInfo, setReOrderTaks, moveTaskToColumn } = tasksSlice.actions
+export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription } = tasksSlice.actions
 export const tasksProps = tasksSlice.reducer
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
