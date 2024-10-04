@@ -17,6 +17,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const taskOptions = useAppSelector((state) => state.tasksProps);
   const filteredTask = taskOptions.find((task) => task.id === taskId);
   const [openDescriptionMenu, setOpenDescriptionMenu] = useState(false);
+  const [openActivityMenu, setOpenActivityMenu] = useState(false);
   const [taskDescription, setTaskDescription] = useState("");
   const [isDescriptionModified, setIsDescriptionModified] = useState(false);
   const [taskTitle, setTaskTitle] = useState(filteredTask?.title);
@@ -26,6 +27,9 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     setOpenDescriptionMenu(!openDescriptionMenu);
   };
 
+  const handleOpenActivityMenu = () => {
+    setOpenActivityMenu(!openActivityMenu);
+  };
   const handleSendTaskDescription = () => {
     if (taskDescription) {
       dispatch(
@@ -95,7 +99,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
           En la lista {filteredTask?.taskListId}
         </p>
       </div>
-      <div className="mt-5">
+      <div className="mt-7">
         <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
           Descripción
         </h1>
@@ -129,14 +133,40 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                 onClick={handleAddATaskDescription}
                 className="relative mt-2 hover:brightness-125"
               >
-                <div className="border-none outline-none  w-full bg-[#22212E] p-2 text-slate-800 dark:text-gray-300 rounded-md shadow cursor-pointer h-[70px]"></div>
-                <p className="text-slate-800 dark:text-gray-300 absolute top-[10px] left-[20px] pointer-events-none text-sm">
-                  Añade una descripción para tu tarea...
-                </p>
+                <div className="border-none outline-none  w-full bg-[#22212E] p-2 text-slate-800 dark:text-gray-300 rounded-md shadow cursor-pointer h-[70px]">
+                  <p className="text-slate-800 dark:text-gray-300 absolute top-[10px] left-[20px] pointer-events-none text-sm">
+                    Añade una descripción para tu tarea...
+                  </p>
+                </div>
               </div>
             )}
           </div>
         )}
+        <div className="mt-7">
+          <div>
+            <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
+              Actividad
+            </h1>
+            {openActivityMenu ? (
+              <div className="mt-3 w-full">
+                <input
+                  autoFocus
+                  type="text"
+                  className="w-full bg-[#22212E] border-none outline-none p-2 rounded shadow text-slate-800 dark:text-gray-300"
+                />
+              </div>
+            ) : (
+              <div
+                onClick={handleOpenActivityMenu}
+                className="mt-3 w-full cursor-pointer bg-[#22212E] border-none outline-none p-2 rounded shadow hover:brightness-125"
+              >
+                <p className="text-slate-800 dark:text-gray-300">
+                  Escribe un comentario...
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </motion.div>
   );
