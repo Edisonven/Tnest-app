@@ -99,11 +99,13 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
           taskId: filteredTask.id,
         })
       );
+      setOpenActivityMenu(false);
+      setTaskComments("");
     }
   };
 
   return (
-    <motion.div className="bg-[#25334A] fixed top-[380px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] min-h-[500px] rounded shadow outline outline-1 outline-gray-700 p-4">
+    <motion.div className="bg-[#25334A] fixed top-[120px] left-1/2 transform -translate-x-1/2  w-[600px] min-h-[500px] max-h-[780px] overflow-y-auto rounded shadow outline outline-1 outline-gray-700 p-4">
       <IoCloseOutline
         onClick={() => setOpenTaskOptions(false)}
         className="absolute top-[8px] right-[8px] text-slate-800 dark:text-gray-300 text-[40px] cursor-pointer p-1 hover:bg-[#b4b4b42c] rounded-md duration-200"
@@ -205,7 +207,11 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
             <div>
               <div>
                 {filteredTask?.comments?.map((comment) => (
-                  <p>{comment.comment}</p>
+                  <div className="mt-5 w-max bg-[#1d1b29] border-none outline-none px-3 py-2 rounded-3xl shadow">
+                    <p className="text-slate-800 dark:text-gray-300">
+                      {comment.comment}
+                    </p>
+                  </div>
                 ))}
               </div>
             </div>
