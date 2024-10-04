@@ -93,13 +93,28 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
 
   const handleSendTaskComments = () => {
     if (filteredTask) {
+      const id = crypto.randomUUID();
+      const updatedTasksComments = taskOptions.map((task) => {
+        if (task.id === filteredTask.id) {
+          // Concatenar los nuevos comentarios con los anteriores
+          const newComments = [
+            ...(task.comments || []),
+            { id, comment: taskComments },
+          ];
+          return { ...task, comments: newComments };
+        }
+        return task;
+      });
+
       dispatch(
         sendTaskComments({
           comments: taskComments,
-          id: crypto.randomUUID(),
+          id: id,
           taskId: filteredTask.id,
         })
       );
+
+      localStorage.setItem("tasks", JSON.stringify(updatedTasksComments));
       setOpenActivityMenu(false);
       setTaskComments("");
     }
@@ -107,6 +122,17 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
 
   const handleDeleteTaskComment = (commentId: string) => {
     if (filteredTask) {
+      const updatedTasksComments = taskOptions.map((task) => {
+        if (task.id === filteredTask.id) {
+          const updatedComments = task.comments?.filter(
+            (comment) => comment.id !== commentId
+          );
+          return { ...task, comments: updatedComments };
+        }
+        return task;
+      });
+
+      localStorage.setItem("tasks", JSON.stringify(updatedTasksComments));
       dispatch(deleteComment({ taskId: filteredTask.id, id: commentId }));
     }
   };
