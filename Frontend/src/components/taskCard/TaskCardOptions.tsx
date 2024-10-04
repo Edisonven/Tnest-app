@@ -41,6 +41,8 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
 
         localStorage.setItem("tasks", JSON.stringify(updatedTasks));
       }
+    } else {
+      setOpenDescriptionMenu(false);
     }
   };
   console.log(filteredTask);
@@ -68,6 +70,9 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
             <p className="text-slate-800 dark:text-gray-300 mt-4">
               {filteredTask.description}
             </p>
+            <div>
+              <button className="">Editar</button>
+            </div>
           </div>
         ) : (
           <div>
