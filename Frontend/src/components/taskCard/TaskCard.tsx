@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import TaskCardOptions from "./TaskCardOptions";
 import { AnimatePresence, motion } from "framer-motion";
 import { LuText } from "react-icons/lu";
+import { BiCommentDetail } from "react-icons/bi";
 
 export interface TaskIterface {
   id: string;
   title: string;
   desc?: string;
+  comments: Array<{
+    id: string;
+    comment: string;
+  }>;
   onDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
   onDrop: (id: string) => void;
   setActiveCard: React.Dispatch<React.SetStateAction<string | "">>;
@@ -19,6 +24,7 @@ function TaskCard({
   onDrop,
   setActiveCard,
   desc,
+  comments,
 }: TaskIterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
   const [taskId, setTaskId] = useState<string>("");
@@ -54,10 +60,16 @@ function TaskCard({
           <p className="text-slate-800 dark:text-gray-300 font-normal">
             {title}
           </p>
-          <div className="">
+          <div className="flex items-center gap-4">
             {desc ? (
               <div className="mt-3">
                 <LuText className="text-[20px] text-slate-800 dark:text-gray-300" />
+              </div>
+            ) : null}
+            {comments?.length > 0 ? (
+              <div className="mt-3 flex items-center gap-1">
+                <BiCommentDetail className="text-[20px] text-slate-800 dark:text-gray-300" />
+                <p className="text-slate-800 dark:text-gray-300 text-xs mb-1">{comments.length}</p>
               </div>
             ) : null}
           </div>

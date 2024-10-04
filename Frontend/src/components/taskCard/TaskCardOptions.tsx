@@ -96,7 +96,6 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
       const id = crypto.randomUUID();
       const updatedTasksComments = taskOptions.map((task) => {
         if (task.id === filteredTask.id) {
-          // Concatenar los nuevos comentarios con los anteriores
           const newComments = [
             ...(task.comments || []),
             { id, comment: taskComments },

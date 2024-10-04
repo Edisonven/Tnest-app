@@ -133,6 +133,7 @@ const TaskList = ({ title, id }: taskInterface) => {
             task.taskListId === id ? (
               <TaskCard
                 desc={task.description}
+                comments={task.comments}
                 key={task.id}
                 setActiveCard={setActiveCard}
                 onDragStart={(event) => handleDragStart(event, task.id)}
