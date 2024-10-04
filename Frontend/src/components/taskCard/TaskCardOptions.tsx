@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useAppSelector, useAppDispatch } from "../../features/tasksSlice";
 import { ChangeEvent, useState } from "react";
 import { sendTaskDescription, sendTaskTitle } from "../../features/tasksSlice";
+import TaskDescription from "./TaskDescription";
 
 interface TaskCardOptionsProps {
   setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
@@ -116,26 +117,12 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
           <div>
             {openDescriptionMenu ? (
               <div className="mt-2">
-                <textarea
-                  value={taskDescription}
-                  onChange={(e) => setTaskDescription(e.target.value)}
-                  autoFocus
-                  className="border-none outline-none  w-full bg-[#22212E] p-2 text-slate-800 dark:text-gray-300 rounded-md shadow h-[70px] resize-none"
-                ></textarea>
-                <div className="flex items-center gap-3 mt-2">
-                  <button
-                    onClick={handleSendTaskDescription}
-                    className="text-slate-800 dark:text-gray-300 bg-[#4D59B3] px-3 py-[7px] rounded shadow hover:brightness-125 font-medium"
-                  >
-                    Guardar
-                  </button>
-                  <button
-                    onClick={handleCancelEdit}
-                    className="text-slate-800 dark:text-gray-300 px-3 py-[7px] rounded shadow font-medium hover:bg-[#00000034]"
-                  >
-                    Cancelar
-                  </button>
-                </div>
+                <TaskDescription
+                  taskDescription={taskDescription}
+                  setTaskDescription={setTaskDescription}
+                  handleSendTaskDescription={handleSendTaskDescription}
+                  handleCancelEdit={handleCancelEdit}
+                />
               </div>
             ) : (
               <div
