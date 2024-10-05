@@ -1,14 +1,17 @@
 import { motion } from "framer-motion";
 import CreateABoardModal from "./CreateABoardModal";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DomRefElement } from "../../types/DomRefElement";
 import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import CreateNewBoardMenu from "./CreateNewBoardMenu";
+import { CreateBoardMenuContext } from "../../context/CreateBoardContext";
 
 function CreateABoard() {
   const [openModal, setOpenModal] = useState(false);
-  const [openCreateBoardMenu, setOpenCreateBoardMenu] = useState(false);
+  const { openCreateBoardMenu, setOpenCreateBoardMenu } = useContext(
+    CreateBoardMenuContext
+  );
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<DomRefElement>(null);
   const navigate = useNavigate();
