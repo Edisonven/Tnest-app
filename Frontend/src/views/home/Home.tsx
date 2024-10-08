@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import background_1 from "/images/application/background-1.svg";
 import { CreateBoardMenuContext } from "../../context/CreateBoardContext";
+import Button from "@mui/material/Button";
 
 function Home(): JSX.Element {
   const { setOpenCreateBoardMenu } = useContext(CreateBoardMenuContext);
@@ -16,12 +17,29 @@ function Home(): JSX.Element {
             Crea un tablero y comienza a trabajar
           </p>
           <div className="mt-6">
-            <button
+            {/*  <button
               onClick={() => setOpenCreateBoardMenu(true)}
               className="text-slate-800 dark:text-gray-300 px-3 py-2 bg-black shadow rounded-3xl font-medium"
             >
               Crear Tablero
-            </button>
+            </button> */}
+            <Button
+              onClick={() => setOpenCreateBoardMenu(true)}
+              sx={{
+                borderRadius: 30,
+                fontWeight: 700,
+                backgroundColor: "#ffffff",
+                height: 45,
+                color: "#141826",
+                "&:hover": {
+                  filter: "brightness(70%)",
+                },
+                transition: "all 0.3s ease",
+              }}
+              variant="contained"
+            >
+              Crear Tablero
+            </Button>
           </div>
         </div>
         <div>
