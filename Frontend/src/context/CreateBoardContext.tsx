@@ -11,7 +11,6 @@ interface CreateBoardMenuContextType {
   setOpenCreateBoardMenu: Dispatch<SetStateAction<boolean>>;
 }
 
-// Proporciona un valor predeterminado
 const defaultContextValue: CreateBoardMenuContextType = {
   openCreateBoardMenu: false,
   setOpenCreateBoardMenu: () => {},
