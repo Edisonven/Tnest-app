@@ -92,10 +92,7 @@ const TaskList = ({ title, id }: taskInterface) => {
     }
   };
 
-  const handleDragOver = (
-    e: React.DragEvent<HTMLDivElement>,
-    columnID: string
-  ) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
@@ -131,8 +128,7 @@ const TaskList = ({ title, id }: taskInterface) => {
 
   return (
     <div
-      onDrop={(event) => handleColumnDrop(event)}
-      onDragOver={(e) => handleDragOver(e, id)}
+      onDragOver={(event) => handleColumnDrop(event)}
       id={id}
       className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
         activeCard === id ? "outline outline-1 outline-white" : ""
