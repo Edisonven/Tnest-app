@@ -9,11 +9,15 @@ import {
 interface CreateBoardMenuContextType {
   openCreateBoardMenu: boolean;
   setOpenCreateBoardMenu: Dispatch<SetStateAction<boolean>>;
+  setDraggedTaskId: Dispatch<SetStateAction<string | null>>;
+  draggedTaskId: string | null;
 }
 
 const defaultContextValue: CreateBoardMenuContextType = {
   openCreateBoardMenu: false,
   setOpenCreateBoardMenu: () => {},
+  draggedTaskId: null,
+  setDraggedTaskId: () => {},
 };
 
 export const CreateBoardMenuContext =
@@ -28,10 +32,16 @@ const CreateBoardMenuProvider = ({
 }: CreateBoardMenuProviderProps) => {
   const [openCreateBoardMenu, setOpenCreateBoardMenu] =
     useState<boolean>(false);
+  const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
 
   return (
     <CreateBoardMenuContext.Provider
-      value={{ openCreateBoardMenu, setOpenCreateBoardMenu }}
+      value={{
+        openCreateBoardMenu,
+        setOpenCreateBoardMenu,
+        draggedTaskId,
+        setDraggedTaskId,
+      }}
     >
       {children}
     </CreateBoardMenuContext.Provider>

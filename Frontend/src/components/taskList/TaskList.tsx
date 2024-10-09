@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CgMathPlus } from "react-icons/cg";
 import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
@@ -10,6 +10,7 @@ import {
   moveTaskToColumn,
 } from "../../features/tasksSlice";
 import { AnimatePresence } from "framer-motion";
+import { CreateBoardMenuContext } from "../../context/CreateBoardContext";
 
 export interface taskInterface {
   id: string;
@@ -21,18 +22,16 @@ const TaskList = ({ title, id }: taskInterface) => {
   const [taskTitle, setTaskTitle] = useState("");
   const dispatch = useAppDispatch();
   const globalStateTasks = useAppSelector((state) => state.tasksProps);
-  const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
+  const { draggedTaskId, setDraggedTaskId } = useContext(
+    CreateBoardMenuContext
+  );
   const [activeCard, setActiveCard] = useState<string | "">("");
   const [draggingTaskIndex, setDraggingTaskIndex] = useState<number | null>(
     null
   );
 
-  const handleDragStart = (
-    event: React.DragEvent<HTMLDivElement>,
-    draggedTaskId: string
-  ) => {
+  const handleDragStart = (draggedTaskId: string) => {
     setDraggedTaskId(draggedTaskId);
-    event.dataTransfer?.setData("itemID", draggedTaskId);
   };
 
   const handleDrop = () => {
@@ -70,9 +69,9 @@ const TaskList = ({ title, id }: taskInterface) => {
 
   const handleColumnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-    const itemID = event.dataTransfer.getData("itemID");
+
     const itemFoundIndex = globalStateTasks.findIndex(
-      (task) => task.id === itemID
+      (task) => task.id === draggedTaskId
     );
 
     if (itemFoundIndex !== -1) {
@@ -87,13 +86,16 @@ const TaskList = ({ title, id }: taskInterface) => {
         return task;
       });
 
-      dispatch(moveTaskToColumn({ taskId: itemID, newColumnId: id }));
+      dispatch(moveTaskToColumn({ taskId: draggedTaskId, newColumnId: id }));
 
       localStorage.setItem("tasks", JSON.stringify(newGlobalTaskState));
     }
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (
+    e: React.DragEvent<HTMLDivElement>,
+    columnID: string
+  ) => {
     e.preventDefault();
   };
 
@@ -130,7 +132,7 @@ const TaskList = ({ title, id }: taskInterface) => {
   return (
     <div
       onDrop={(event) => handleColumnDrop(event)}
-      onDragOver={handleDragOver}
+      onDragOver={(e) => handleDragOver(e, id)}
       id={id}
       className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
         activeCard === id ? "outline outline-1 outline-white" : ""
@@ -149,7 +151,7 @@ const TaskList = ({ title, id }: taskInterface) => {
                   desc={task.description}
                   comments={task.comments}
                   setActiveCard={setActiveCard}
-                  onDragStart={(event) => handleDragStart(event, task.id)}
+                  onDragStart={() => handleDragStart(task.id)}
                   onDrop={handleDrop}
                   id={task.id}
                   title={task.title}
