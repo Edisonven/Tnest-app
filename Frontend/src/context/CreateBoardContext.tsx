@@ -11,6 +11,8 @@ interface CreateBoardMenuContextType {
   setOpenCreateBoardMenu: Dispatch<SetStateAction<boolean>>;
   setDraggedTaskId: Dispatch<SetStateAction<string | null>>;
   draggedTaskId: string | null;
+  draggingTaskIndex: number | null;
+  setDraggingTaskIndex: Dispatch<SetStateAction<number | null>>;
 }
 
 const defaultContextValue: CreateBoardMenuContextType = {
@@ -18,6 +20,8 @@ const defaultContextValue: CreateBoardMenuContextType = {
   setOpenCreateBoardMenu: () => {},
   draggedTaskId: null,
   setDraggedTaskId: () => {},
+  draggingTaskIndex: null,
+  setDraggingTaskIndex: () => {},
 };
 
 export const CreateBoardMenuContext =
@@ -33,6 +37,9 @@ const CreateBoardMenuProvider = ({
   const [openCreateBoardMenu, setOpenCreateBoardMenu] =
     useState<boolean>(false);
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
+  const [draggingTaskIndex, setDraggingTaskIndex] = useState<number | null>(
+    null
+  );
 
   return (
     <CreateBoardMenuContext.Provider
@@ -41,6 +48,8 @@ const CreateBoardMenuProvider = ({
         setOpenCreateBoardMenu,
         draggedTaskId,
         setDraggedTaskId,
+        draggingTaskIndex,
+        setDraggingTaskIndex,
       }}
     >
       {children}

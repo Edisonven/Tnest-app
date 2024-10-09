@@ -22,13 +22,13 @@ const TaskList = ({ title, id }: taskInterface) => {
   const [taskTitle, setTaskTitle] = useState("");
   const dispatch = useAppDispatch();
   const globalStateTasks = useAppSelector((state) => state.tasksProps);
-  const { draggedTaskId, setDraggedTaskId } = useContext(
-    CreateBoardMenuContext
-  );
+  const {
+    draggedTaskId,
+    setDraggedTaskId,
+    draggingTaskIndex,
+    setDraggingTaskIndex,
+  } = useContext(CreateBoardMenuContext);
   const [activeCard, setActiveCard] = useState<string | "">("");
-  const [draggingTaskIndex, setDraggingTaskIndex] = useState<number | null>(
-    null
-  );
 
   const handleDragStart = (draggedTaskId: string) => {
     setDraggedTaskId(draggedTaskId);
@@ -92,7 +92,7 @@ const TaskList = ({ title, id }: taskInterface) => {
     }
   };
 
-  const handleDragEnter = (
+  const handleDragOver = (
     e: React.DragEvent<HTMLDivElement>,
     targetIndex: number
   ) => {
@@ -125,6 +125,7 @@ const TaskList = ({ title, id }: taskInterface) => {
   return (
     <div
       onDrop={() => setDraggingTaskIndex(null)}
+      onDragEnd={() => setDraggingTaskIndex(null)}
       onDragOver={(event) => handleColumnDrop(event)}
       id={id}
       className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
@@ -138,7 +139,7 @@ const TaskList = ({ title, id }: taskInterface) => {
         <AnimatePresence>
           {globalStateTasks.map((task, index) =>
             task.taskListId === id ? (
-              <div key={task.id} onDragOver={(e) => handleDragEnter(e, index)}>
+              <div key={task.id} onDragOver={(e) => handleDragOver(e, index)}>
                 <TaskCard
                   draggedTaskId={draggedTaskId}
                   desc={task.description}
