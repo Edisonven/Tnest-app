@@ -26,7 +26,6 @@ const TaskList = ({ title, id }: taskInterface) => {
   const [draggingTaskIndex, setDraggingTaskIndex] = useState<number | null>(
     null
   );
-  const [taskIndex, setTaskIndex] = useState<number | null>(null);
 
   const handleDragStart = (
     event: React.DragEvent<HTMLDivElement>,
@@ -96,22 +95,29 @@ const TaskList = ({ title, id }: taskInterface) => {
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+  };
 
+  const handleDragEnter = (
+    e: React.DragEvent<HTMLDivElement>,
+    targetIndex: number
+  ) => {
+    e.preventDefault();
+    // Si no hay tarea arrastrada, salir
     if (!draggedTaskId) return;
 
-    setDraggingTaskIndex(taskIndex);
-
+    setDraggingTaskIndex(targetIndex);
     const updatedTasks = [...globalStateTasks];
     const draggedTaskIndex = updatedTasks.findIndex(
       (task) => task.id === draggedTaskId
     );
 
-    if (draggedTaskIndex !== -1 && draggedTaskIndex !== draggedTaskIndex) {
+    // Si el índice de la tarea arrastrada es válido y diferente del destino
+    if (draggedTaskIndex !== -1 && draggedTaskIndex !== targetIndex) {
       // Sacar la tarea arrastrada de su posición original
       const [draggedTask] = updatedTasks.splice(draggedTaskIndex, 1);
 
       // Insertar la tarea arrastrada en la nueva posición
-      updatedTasks.splice(draggedTaskIndex, 0, draggedTask);
+      updatedTasks.splice(targetIndex, 0, draggedTask);
 
       // Despachar la acción para actualizar el estado global
       dispatch(setReOrderTaks(updatedTasks));
@@ -124,7 +130,7 @@ const TaskList = ({ title, id }: taskInterface) => {
   return (
     <div
       onDrop={(event) => handleColumnDrop(event)}
-      onDragOver={(e) => handleDragOver(e)}
+      onDragOver={handleDragOver}
       id={id}
       className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
         activeCard === id ? "outline outline-1 outline-white" : ""
@@ -137,7 +143,7 @@ const TaskList = ({ title, id }: taskInterface) => {
         <AnimatePresence>
           {globalStateTasks.map((task, index) =>
             task.taskListId === id ? (
-              <div key={task.id} onDragOver={() => setTaskIndex(index)}>
+              <div key={task.id} onDragOver={(e) => handleDragEnter(e, index)}>
                 <TaskCard
                   draggedTaskId={draggedTaskId}
                   desc={task.description}
