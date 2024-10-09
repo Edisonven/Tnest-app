@@ -23,6 +23,7 @@ const TaskList = ({ title, id }: taskInterface) => {
   const globalStateTasks = useAppSelector((state) => state.tasksProps);
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
   const [activeCard, setActiveCard] = useState<string | "">("");
+  const [draggedTaskIndex, setDraggedTaskIndex] = useState<number | null>(null);
 
   const handleDragStart = (
     event: React.DragEvent<HTMLDivElement>,
@@ -102,6 +103,7 @@ const TaskList = ({ title, id }: taskInterface) => {
 
     if (!draggedTaskId) return;
 
+    setDraggedTaskIndex(targetIndex);
     const updatedTasks = [...globalStateTasks];
     const draggedTaskIndex = updatedTasks.findIndex(
       (task) => task.id === draggedTaskId
@@ -148,6 +150,9 @@ const TaskList = ({ title, id }: taskInterface) => {
                   onDrop={handleDrop}
                   id={task.id}
                   title={task.title}
+                  index={index}
+                  draggedTaskIndex={draggedTaskIndex}
+                  setDraggedTaskIndex={setDraggedTaskIndex}
                 />
               </div>
             ) : null

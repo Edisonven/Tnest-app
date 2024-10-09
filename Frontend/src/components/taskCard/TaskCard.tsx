@@ -16,6 +16,9 @@ export interface TaskIterface {
   onDrop: (id: string) => void;
   setActiveCard: React.Dispatch<React.SetStateAction<string | "">>;
   draggedTaskId: string | null;
+  index: number;
+  draggedTaskIndex: number | null;
+  setDraggedTaskIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 function TaskCard({
@@ -27,6 +30,9 @@ function TaskCard({
   desc,
   comments,
   draggedTaskId,
+  index,
+  draggedTaskIndex,
+  setDraggedTaskIndex,
 }: TaskIterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
   const [taskId, setTaskId] = useState<string>("");
@@ -46,13 +52,18 @@ function TaskCard({
         onDragStart={onDragStart}
         onDrop={() => onDrop(id)}
         onDragOver={handleDragOver}
-        onDragEnd={() => setActiveCard("")}
+        onDragEnd={() => {
+          setDraggedTaskIndex(null);
+          setActiveCard("");
+        }}
         draggable
       >
         <div
           onClick={() => handleOpenTaskOptions(id)}
           key={id}
-          className={`bg-slate-800 px-3 py-[6px] rounded cursor-pointer hover:brightness-125 ${
+          className={`${
+            draggedTaskIndex === index ? "bg-black" : "bg-slate-800"
+          } px-3 py-[6px] rounded cursor-pointer hover:brightness-125 ${
             !draggedTaskId ? "hover:outline outline-1 outline-white" : ""
           }`}
         >
