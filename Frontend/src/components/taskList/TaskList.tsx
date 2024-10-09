@@ -92,16 +92,12 @@ const TaskList = ({ title, id }: taskInterface) => {
     }
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
-
   const handleDragEnter = (
     e: React.DragEvent<HTMLDivElement>,
     targetIndex: number
   ) => {
     e.preventDefault();
-    // Si no hay tarea arrastrada, salir
+
     if (!draggedTaskId) return;
 
     setDraggingTaskIndex(targetIndex);
@@ -128,6 +124,7 @@ const TaskList = ({ title, id }: taskInterface) => {
 
   return (
     <div
+      onDrop={() => setDraggingTaskIndex(null)}
       onDragOver={(event) => handleColumnDrop(event)}
       id={id}
       className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
