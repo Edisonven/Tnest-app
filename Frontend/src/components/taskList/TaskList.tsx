@@ -32,29 +32,8 @@ const TaskList = ({ title, id }: taskInterface) => {
     event.dataTransfer?.setData("itemID", draggedTaskId);
   };
 
-  const handleDrop = (targetId: string) => {
-    const updatedTasks = [...globalStateTasks];
-    if (draggedTaskId !== null && draggedTaskId !== targetId) {
-      const draggedTaskIndex = updatedTasks.findIndex(
-        (task) => task.id === draggedTaskId
-      );
-      const targetTaskIndex = updatedTasks.findIndex(
-        (task) => task.id === targetId
-      );
-
-      // Verifica que los índices sean válidos
-      if (draggedTaskIndex >= 0 && targetTaskIndex >= 0) {
-        // Reordenar tareas
-        const [draggedTask] = updatedTasks.splice(draggedTaskIndex, 1);
-        updatedTasks.splice(targetTaskIndex, 0, draggedTask);
-
-        dispatch(setReOrderTaks(updatedTasks));
-        // Actualizamos el estado global
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-      }
-
-      setDraggedTaskId(null);
-    }
+  const handleDrop = () => {
+    setDraggedTaskId(null);
   };
 
   const handleAddNewTask = (id: string) => {
@@ -115,6 +94,34 @@ const TaskList = ({ title, id }: taskInterface) => {
     }
   };
 
+  const handleDragEnter = (
+    e: React.DragEvent<HTMLDivElement>,
+    targetIndex: number
+  ) => {
+    e.preventDefault();
+
+    if (!draggedTaskId) return;
+
+    const updatedTasks = [...globalStateTasks];
+    const draggedTaskIndex = updatedTasks.findIndex(
+      (task) => task.id === draggedTaskId
+    );
+
+    if (draggedTaskIndex !== -1 && draggedTaskIndex !== targetIndex) {
+      // Sacar la tarea arrastrada de su posición original
+      const [draggedTask] = updatedTasks.splice(draggedTaskIndex, 1);
+
+      // Insertar la tarea arrastrada en la nueva posición
+      updatedTasks.splice(targetIndex, 0, draggedTask);
+
+      // Despachar la acción para actualizar el estado global
+      dispatch(setReOrderTaks(updatedTasks));
+
+      // Guardar los cambios en localStorage
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    }
+  };
+
   return (
     <div
       onDrop={(event) => handleColumnDrop(event)}
@@ -129,18 +136,20 @@ const TaskList = ({ title, id }: taskInterface) => {
       </h1>
       <div className="flex flex-col gap-3">
         <AnimatePresence>
-          {globalStateTasks.map((task) =>
+          {globalStateTasks.map((task, index) =>
             task.taskListId === id ? (
-              <TaskCard
-                desc={task.description}
-                comments={task.comments}
-                key={task.id}
-                setActiveCard={setActiveCard}
-                onDragStart={(event) => handleDragStart(event, task.id)}
-                onDrop={() => handleDrop(task.id)}
-                id={task.id}
-                title={task.title}
-              />
+              <div key={task.id} onDragOver={(e) => handleDragEnter(e, index)}>
+                <TaskCard
+                  draggedTaskId={draggedTaskId}
+                  desc={task.description}
+                  comments={task.comments}
+                  setActiveCard={setActiveCard}
+                  onDragStart={(event) => handleDragStart(event, task.id)}
+                  onDrop={handleDrop}
+                  id={task.id}
+                  title={task.title}
+                />
+              </div>
             ) : null
           )}
         </AnimatePresence>
