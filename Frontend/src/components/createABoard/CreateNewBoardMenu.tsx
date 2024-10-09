@@ -143,6 +143,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
                 </h1>
                 <form onSubmit={handleSendBoardProps}>
                   <input
+                    autoFocus
                     value={boardTitle}
                     onChange={handleChangeTitle}
                     type="text"
