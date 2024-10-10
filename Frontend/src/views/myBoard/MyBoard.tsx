@@ -12,6 +12,7 @@ import { forwardRef } from "react";
 import { ThreeDotsIconForwardRef } from "../../types/DomRefElement";
 import { AnimatePresence } from "framer-motion";
 import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 
 const ThreeDotsIcon = forwardRef<HTMLDivElement, ThreeDotsIconForwardRef>(
   (props, ref) => (
@@ -28,6 +29,8 @@ function MyBoard() {
   const modalAsideRef = useRef<HTMLDivElement>(null);
   const modalIconAsideRef = useRef<HTMLDivElement>(null);
   const [boardTitle, setBoardTitle] = useState(title);
+  const [hideSidebarClass, setHideSidebarClass] = useState("");
+  const [showSidebarMenu, setShowSidebarMenu] = useState(false);
 
   useEffect(() => {
     const storedBoard = localStorage.getItem("board");
@@ -76,6 +79,18 @@ function MyBoard() {
     }
   };
 
+  const handleAddSidebarClass = () => {
+    const className = "fixed h-full translate-x-[-245px]";
+    setHideSidebarClass(className);
+    setShowSidebarMenu(true);
+  };
+
+  const handleRemoveSidebarClass = () => {
+    const className = "";
+    setHideSidebarClass(className);
+    setShowSidebarMenu(false);
+  };
+
   return (
     <section className="select-none">
       <div>
@@ -90,7 +105,7 @@ function MyBoard() {
           ) : (
             <div className="my-board-container">
               <div className="w-full">
-                <div className="p-3 w-full bg-[#ebebeb5b] shadow dark:bg-[#00000034] h-[60px] backdrop-blur-sm">
+                <div className="py-3 px-5 w-full bg-[#ebebeb5b] shadow dark:bg-[#00000034] h-[60px] backdrop-blur-sm">
                   <input
                     onBlur={handleTitleBlur}
                     onChange={handleTitleChange}
@@ -99,18 +114,31 @@ function MyBoard() {
                     value={boardTitle}
                   />
                 </div>
-                <div className="flex items-start p-4 gap-4 flex-wrap">
+                <div className="flex items-start py-4 px-6 gap-4 flex-wrap">
                   <TaskList id={"1"} title="Lista de tareas" />
                   <TaskList id={"2"} title="En proceso" />
                   <TaskList id={"3"} title="En revisión" />
                   <TaskList id={"4"} title="Completado" />
                 </div>
               </div>
-              <div className="bg-[#ebebebe5] dark:bg-[#141826ee] max-w-[260px] w-full shadow p-4 backdrop-blur-sm relative flex flex-col">
-                <div className="self-end border border-gray-800 rounded shadow p-1 hover:brightness-125 cursor-pointer">
-                  <IoIosArrowBack className="text-slate-800 dark:text-gray-300 text-[22px]"/>
+              <div
+                className={`bg-[#ebebebe5] dark:bg-[#141826ee] max-w-[260px] w-full shadow p-4 backdrop-blur-sm flex flex-col ${hideSidebarClass} duration-150`}
+              >
+                <div
+                  onClick={handleAddSidebarClass}
+                  className="self-end border border-gray-800 rounded shadow p-1 hover:brightness-125 cursor-pointer"
+                >
+                  <IoIosArrowBack className="text-slate-800 dark:text-gray-300 text-[20px]" />
                 </div>
-                <hr className="my-4 border-none h-[1px] bg-slate-800 dark:bg-gray-800"/>
+                <div
+                  onClick={handleRemoveSidebarClass}
+                  className={`absolute left-[246px] top-[45px] border border-gray-600 rounded-full dark:bg-[#141826] p-1 cursor-pointer ${
+                    showSidebarMenu ? "" : "hidden"
+                  }`}
+                >
+                  <IoIosArrowForward className="text-slate-800 dark:text-gray-300 text-[18px]" />
+                </div>
+                <hr className="my-4 border-none h-[1px] bg-slate-800 dark:bg-gray-800" />
                 <div className="">
                   <h1 className="text-slate-800 dark:text-gray-300 mb-3 font-medium">
                     Mis tableros
