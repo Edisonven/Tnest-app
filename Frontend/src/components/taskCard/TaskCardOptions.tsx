@@ -1,3 +1,4 @@
+import "./taskCard.css";
 import { IoCloseOutline } from "react-icons/io5";
 import { useAppSelector, useAppDispatch } from "../../features/tasksSlice";
 import { ChangeEvent, useState } from "react";
@@ -11,6 +12,7 @@ import TaskDescription from "./TaskDescription";
 import TaskOptions from "../taskOptions/TaskOptions";
 import { BiSolidDockTop } from "react-icons/bi";
 import { TbTrashX } from "react-icons/tb";
+import TaskCoverMenu from "../taskOptions/TaskCoverMenu";
 
 interface TaskCardOptionsProps {
   setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
@@ -139,7 +141,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   };
 
   return (
-    <div className="bg-[#25334A] fixed top-[120px] left-1/2 z-50 transform -translate-x-1/2  w-[750px] min-h-[560px] max-h-[780px] overflow-y-auto rounded shadow outline outline-1 outline-gray-700 p-4">
+    <div className="bg-[#25334A] fixed top-[70px] left-1/2 z-50 transform -translate-x-1/2  w-[850px] min-h-[560px] max-h-[900px]  rounded shadow outline outline-1 outline-gray-700 p-4">
       <IoCloseOutline
         onClick={() => setOpenTaskOptions(false)}
         className="absolute top-[8px] right-[8px] text-slate-800 dark:text-gray-300 text-[40px] cursor-pointer p-1 hover:bg-[#b4b4b42c] rounded-md duration-200"
@@ -162,8 +164,8 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
             Descripción
           </h1>
           {filteredTask?.description && !isDescriptionModified ? (
-            <div className="flex items-center justify-between">
-              <p className="text-slate-800 dark:text-gray-300 mt-4">
+            <div className="flex items-center justify-between gap-3">
+              <p className="task-desc-paragraph text-slate-800 dark:text-gray-300 mt-4 max-h-[100px] overflow-y-auto">
                 {filteredTask.description}
               </p>
               <div className="">
@@ -239,7 +241,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                 </div>
               )}
               <div>
-                <div>
+                <div className="task-comments-container max-h-[400px] overflow-y-auto overflow-x-hidden">
                   {filteredTask?.comments?.map((comment) => (
                     <div key={comment.id} className="mt-5">
                       <div className="min-w-[120px] w-max max-w-[570px] bg-[#1d1b29] border-none outline-none px-3 py-2 rounded-3xl shadow">
@@ -264,8 +266,13 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <TaskOptions icon={BiSolidDockTop} title="Portada" />
-          <TaskOptions icon={TbTrashX} title="Eliminar tarjeta" />
+          <div className="relative">
+            <TaskOptions icon={BiSolidDockTop} title="Portada" />
+            <TaskCoverMenu />
+          </div>
+          <div>
+            <TaskOptions icon={TbTrashX} title="Eliminar tarjeta" />
+          </div>
         </div>
       </div>
     </div>

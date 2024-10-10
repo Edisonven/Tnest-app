@@ -67,8 +67,12 @@ function TaskCard({
             !draggedTaskId ? "hover:outline outline-1 outline-white" : ""
           }`}
         >
-         {/*  <div className="bg-yellow-600 h-[30px]"></div> */}
-          <div className={`${draggingTaskIndex === index ? "opacity-0" : ""} px-3 py-[6px]`}>
+          {/*     <div className="bg-yellow-600 h-[30px]"></div> */}
+          <div
+            className={`${
+              draggingTaskIndex === index ? "opacity-0" : ""
+            } px-3 py-[6px]`}
+          >
             <p className="text-slate-800 dark:text-gray-300 font-normal">
               {title}
             </p>
