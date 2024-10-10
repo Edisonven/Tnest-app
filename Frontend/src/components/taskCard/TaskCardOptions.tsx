@@ -17,11 +17,13 @@ import TaskCoverMenu from "../taskOptions/TaskCoverMenu";
 interface TaskCardOptionsProps {
   setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
   taskId: string;
+  columnTitle: string;
 }
 
 const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   setOpenTaskOptions,
   taskId,
+  columnTitle,
 }) => {
   const taskOptions = useAppSelector((state) => state.tasksProps);
   const filteredTask = taskOptions.find((task) => task.id === taskId);
@@ -155,10 +157,11 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
       />
       <div className="mt-3">
         <p className="text-slate-800 dark:text-gray-300 text-sm font-normal">
-          En la lista {filteredTask?.taskListId}
+          En la lista{" "}
+          <span className="uppercase font-medium bg-[#425b81] rounded px-1">{columnTitle}</span>
         </p>
       </div>
-      <div className="mt-7 flex justify-between gap-5">
+      <div className="mt-4 flex justify-between gap-5">
         <div className="w-full">
           <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
             Descripción
@@ -268,7 +271,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
         <div className="flex flex-col gap-2">
           <div className="relative">
             <TaskOptions icon={BiSolidDockTop} title="Portada" />
-            <TaskCoverMenu />
+            {/*    <TaskCoverMenu /> */}
           </div>
           <div>
             <TaskOptions icon={TbTrashX} title="Eliminar tarjeta" />

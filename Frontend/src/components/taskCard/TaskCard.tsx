@@ -19,6 +19,7 @@ export interface TaskIterface {
   index: number;
   draggingTaskIndex: number | null;
   setDraggingTaskIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  columnTitle: string;
 }
 
 function TaskCard({
@@ -33,6 +34,7 @@ function TaskCard({
   index,
   draggingTaskIndex,
   setDraggingTaskIndex,
+  columnTitle,
 }: TaskIterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
   const [taskId, setTaskId] = useState<string>("");
@@ -97,6 +99,7 @@ function TaskCard({
       <AnimatePresence>
         {openTaskOptions ? (
           <TaskCardOptions
+            columnTitle={columnTitle}
             setOpenTaskOptions={setOpenTaskOptions}
             taskId={taskId}
           />

@@ -167,6 +167,7 @@ const TaskList = ({ title, id }: taskInterface) => {
                   id={task.id}
                   title={task.title}
                   index={index}
+                  columnTitle={title}
                   draggingTaskIndex={draggingTaskIndex}
                   setDraggingTaskIndex={setDraggingTaskIndex}
                 />
