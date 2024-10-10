@@ -123,11 +123,29 @@ const TaskList = ({ title, id }: taskInterface) => {
     }
   };
 
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    const newTarget = e.relatedTarget as HTMLElement;
+
+    // Verificar si `relatedTarget` es nulo o si es un elemento fuera del contenedor actual
+    if (!newTarget || !e.currentTarget.contains(newTarget)) {
+      console.log("dejando el área de drop");
+      setActiveCard("");
+    }
+  };
+
   return (
     <div
-      onDrop={() => setDraggingTaskIndex(null)}
-      onDragEnd={() => setDraggingTaskIndex(null)}
+      onDrop={() => {
+        setActiveCard("");
+        setDraggingTaskIndex(null);
+      }}
+      onDragEnd={() => {
+        setActiveCard("");
+        setDraggingTaskIndex(null);
+      }}
       onDragOver={(event) => handleColumnDrop(event)}
+      onDragEnter={() => setActiveCard(id)}
+      onDragLeave={(e) => handleDragLeave(e)}
       id={id}
       className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
         activeCard === id ? "outline outline-1 outline-white" : ""
