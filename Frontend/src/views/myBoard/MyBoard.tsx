@@ -11,6 +11,7 @@ import AsideBoardOptions from "./AsideBoardOptions";
 import { forwardRef } from "react";
 import { ThreeDotsIconForwardRef } from "../../types/DomRefElement";
 import { AnimatePresence } from "framer-motion";
+import { IoIosArrowBack } from "react-icons/io";
 
 const ThreeDotsIcon = forwardRef<HTMLDivElement, ThreeDotsIconForwardRef>(
   (props, ref) => (
@@ -105,32 +106,38 @@ function MyBoard() {
                   <TaskList id={"4"} title="Completado" />
                 </div>
               </div>
-              <div className="bg-[#ebebebe5] dark:bg-[#141826ee] max-w-[260px] w-full shadow p-4 backdrop-blur-sm">
-                <h1 className="text-slate-800 dark:text-gray-300 mb-3 font-medium">
-                  Mis tableros
-                </h1>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <img
-                      className="max-w-[50px] h-[35px] object-cover rounded"
-                      src={image}
-                      alt=""
-                    />
-                    <span className="text-slate-800 dark:text-gray-300 font-medium">
-                      {title}
-                    </span>
-                  </div>
-                  <div className="relative">
-                    <ThreeDotsIcon
-                      ref={modalIconAsideRef}
-                      onClick={handleOpenModalOptions}
-                      className="text-slate-800 dark:text-gray-300 text-[27px] p-1 hover:bg-[#00000050] rounded-full duration-200 cursor-pointer"
-                    />
-                    <AnimatePresence>
-                      {openModalOptions ? (
-                        <AsideBoardOptions ref={modalAsideRef} />
-                      ) : null}
-                    </AnimatePresence>
+              <div className="bg-[#ebebebe5] dark:bg-[#141826ee] max-w-[260px] w-full shadow p-4 backdrop-blur-sm relative flex flex-col">
+                <div className="self-end border border-gray-800 rounded shadow p-1 hover:brightness-125 cursor-pointer">
+                  <IoIosArrowBack className="text-slate-800 dark:text-gray-300 text-[22px]"/>
+                </div>
+                <hr className="my-4 border-none h-[1px] bg-slate-800 dark:bg-gray-800"/>
+                <div className="">
+                  <h1 className="text-slate-800 dark:text-gray-300 mb-3 font-medium">
+                    Mis tableros
+                  </h1>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <img
+                        className="max-w-[50px] h-[35px] object-cover rounded"
+                        src={image}
+                        alt=""
+                      />
+                      <span className="text-slate-800 dark:text-gray-300 font-medium">
+                        {title}
+                      </span>
+                    </div>
+                    <div className="relative">
+                      <ThreeDotsIcon
+                        ref={modalIconAsideRef}
+                        onClick={handleOpenModalOptions}
+                        className="text-slate-800 dark:text-gray-300 text-[27px] p-1 hover:bg-[#00000050] rounded-full duration-200 cursor-pointer"
+                      />
+                      <AnimatePresence>
+                        {openModalOptions ? (
+                          <AsideBoardOptions ref={modalAsideRef} />
+                        ) : null}
+                      </AnimatePresence>
+                    </div>
                   </div>
                 </div>
               </div>
