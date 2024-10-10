@@ -9,6 +9,8 @@ import {
 } from "../../features/tasksSlice";
 import TaskDescription from "./TaskDescription";
 import TaskOptions from "../taskOptions/TaskOptions";
+import { BiSolidDockTop } from "react-icons/bi";
+import { TbTrashX } from "react-icons/tb";
 
 interface TaskCardOptionsProps {
   setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
@@ -137,7 +139,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   };
 
   return (
-    <div className="bg-[#25334A] fixed top-[120px] left-1/2 z-50 transform -translate-x-1/2  w-[700px] min-h-[560px] max-h-[780px] overflow-y-auto rounded shadow outline outline-1 outline-gray-700 p-4">
+    <div className="bg-[#25334A] fixed top-[120px] left-1/2 z-50 transform -translate-x-1/2  w-[750px] min-h-[560px] max-h-[780px] overflow-y-auto rounded shadow outline outline-1 outline-gray-700 p-4">
       <IoCloseOutline
         onClick={() => setOpenTaskOptions(false)}
         className="absolute top-[8px] right-[8px] text-slate-800 dark:text-gray-300 text-[40px] cursor-pointer p-1 hover:bg-[#b4b4b42c] rounded-md duration-200"
@@ -261,8 +263,9 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
             </div>
           </div>
         </div>
-        <div>
-          <TaskOptions title="Portada" />
+        <div className="flex flex-col gap-2">
+          <TaskOptions icon={BiSolidDockTop} title="Portada" />
+          <TaskOptions icon={TbTrashX} title="Eliminar tarjeta" />
         </div>
       </div>
     </div>
