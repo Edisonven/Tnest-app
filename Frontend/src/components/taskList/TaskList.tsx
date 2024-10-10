@@ -28,7 +28,7 @@ const TaskList = ({ title, id }: taskInterface) => {
     draggingTaskIndex,
     setDraggingTaskIndex,
   } = useContext(CreateBoardMenuContext);
-  const [activeCard, setActiveCard] = useState<string | "">("");
+  const [activeColumn, setActiveColumn] = useState<string | "">("");
 
   const handleDragStart = (draggedTaskId: string) => {
     setDraggedTaskId(draggedTaskId);
@@ -126,29 +126,27 @@ const TaskList = ({ title, id }: taskInterface) => {
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     const newTarget = e.relatedTarget as HTMLElement;
 
-    // Verificar si `relatedTarget` es nulo o si es un elemento fuera del contenedor actual
     if (!newTarget || !e.currentTarget.contains(newTarget)) {
-      console.log("dejando el área de drop");
-      setActiveCard("");
+      setActiveColumn("");
     }
   };
 
   return (
     <div
       onDrop={() => {
-        setActiveCard("");
+        setActiveColumn("");
         setDraggingTaskIndex(null);
       }}
       onDragEnd={() => {
-        setActiveCard("");
+        setActiveColumn("");
         setDraggingTaskIndex(null);
       }}
       onDragOver={(event) => handleColumnDrop(event)}
-      onDragEnter={() => setActiveCard(id)}
+      onDragEnter={() => setActiveColumn(id)}
       onDragLeave={(e) => handleDragLeave(e)}
       id={id}
       className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
-        activeCard === id ? "outline outline-1 outline-white" : ""
+        activeColumn === id ? "outline outline-1 outline-white" : ""
       }`}
     >
       <h1 className="text-slate-800 dark:text-gray-300 mb-2 px-5 font-medium">
@@ -163,7 +161,7 @@ const TaskList = ({ title, id }: taskInterface) => {
                   draggedTaskId={draggedTaskId}
                   desc={task.description}
                   comments={task.comments}
-                  setActiveCard={setActiveCard}
+                  setActiveColumn={setActiveColumn}
                   onDragStart={() => handleDragStart(task.id)}
                   onDrop={handleDrop}
                   id={task.id}

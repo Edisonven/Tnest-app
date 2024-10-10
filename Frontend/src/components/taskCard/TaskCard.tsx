@@ -14,7 +14,7 @@ export interface TaskIterface {
   }>;
   onDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
   onDrop: (id: string) => void;
-  setActiveCard: React.Dispatch<React.SetStateAction<string | "">>;
+  setActiveColumn: React.Dispatch<React.SetStateAction<string | "">>;
   draggedTaskId: string | null;
   index: number;
   draggingTaskIndex: number | null;
@@ -26,7 +26,7 @@ function TaskCard({
   title,
   onDragStart,
   onDrop,
-  setActiveCard,
+  setActiveColumn,
   desc,
   comments,
   draggedTaskId,
@@ -54,7 +54,7 @@ function TaskCard({
         onDragOver={handleDragOver}
         onDragEnd={() => {
           setDraggingTaskIndex(null);
-          setActiveCard("");
+          setActiveColumn("");
         }}
         draggable
       >
