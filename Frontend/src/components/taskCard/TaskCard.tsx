@@ -45,7 +45,6 @@ function TaskCard({
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
-  console.log(draggingTaskIndex);
 
   return (
     <div>

@@ -38,7 +38,7 @@ function AddTaskCard({
           Añadir tarjeta
         </button>
         <IoClose
-          onClick={() => setTaskListId("")}
+          onClick={() => setTaskListId(null)}
           className="text-slate-800 dark:text-gray-300 cursor-pointer text-[30px] hover:bg-slate-300 hover:dark:bg-[#333333] rounded-full p-1"
         />
       </div>

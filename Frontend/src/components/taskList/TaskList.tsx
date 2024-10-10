@@ -39,7 +39,8 @@ const TaskList = ({ title, id }: taskInterface) => {
   };
 
   const handleAddNewTask = (id: string) => {
-    setTaskListId(id || null);
+    setTaskListId(id);
+
     if (taskListId === null) {
       setTaskTitle("");
     }
