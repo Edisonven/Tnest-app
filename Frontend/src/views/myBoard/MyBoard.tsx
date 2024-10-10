@@ -104,7 +104,7 @@ function MyBoard() {
             </div>
           ) : (
             <div className="my-board-container">
-              <div className="w-full">
+              <div className="w-full overflow-hidden">
                 <div className="py-3 px-5 w-full bg-[#ebebeb5b] shadow dark:bg-[#00000034] h-[60px] backdrop-blur-sm">
                   <input
                     onBlur={handleTitleBlur}
@@ -114,7 +114,7 @@ function MyBoard() {
                     value={boardTitle}
                   />
                 </div>
-                <div className="flex items-start py-4 px-6 gap-4 flex-wrap">
+                <div className="flex items-start py-4 px-6 gap-4">
                   <TaskList id={"1"} title="Lista de tareas" />
                   <TaskList id={"2"} title="En proceso" />
                   <TaskList id={"3"} title="En revisión" />
