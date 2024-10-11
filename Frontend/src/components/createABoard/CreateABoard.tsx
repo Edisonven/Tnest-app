@@ -5,13 +5,12 @@ import { DomRefElement } from "../../types/DomRefElement";
 import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import CreateNewBoardMenu from "./CreateNewBoardMenu";
-import { CreateBoardMenuContext } from "../../context/CreateBoardContext";
+import { BoardMenuContext } from "../../context/BoardContext";
 
 function CreateABoard() {
   const [openModal, setOpenModal] = useState(false);
-  const { openCreateBoardMenu, setOpenCreateBoardMenu } = useContext(
-    CreateBoardMenuContext
-  );
+  const { openCreateBoardMenu, setOpenCreateBoardMenu } =
+    useContext(BoardMenuContext);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<DomRefElement>(null);
   const navigate = useNavigate();

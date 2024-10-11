@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import background_1 from "/images/application/background-1.svg";
-import { CreateBoardMenuContext } from "../../context/CreateBoardContext";
+import { BoardMenuContext } from "../../context/BoardContext";
 import Button from "@mui/material/Button";
 
 function Home(): JSX.Element {
-  const { setOpenCreateBoardMenu } = useContext(CreateBoardMenuContext);
+  const { setOpenCreateBoardMenu } = useContext(BoardMenuContext);
 
   return (
     <section className="flex items-center justify-center mt-[80px]">

@@ -5,16 +5,16 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { store } from "./app/store.ts";
 import { BrowserRouter } from "react-router-dom";
-import CreateBoardMenuProvider from "./context/CreateBoardContext.tsx";
+import BoardMenuProvider from "./context/BoardContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <CreateBoardMenuProvider>
+      <BoardMenuProvider>
         <Provider store={store}>
           <App />
         </Provider>
-      </CreateBoardMenuProvider>
+      </BoardMenuProvider>
     </BrowserRouter>
   </StrictMode>
 );

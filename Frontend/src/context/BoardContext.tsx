@@ -6,7 +6,7 @@ import {
   SetStateAction,
 } from "react";
 
-interface CreateBoardMenuContextType {
+interface  BoardMenuContextType {
   openCreateBoardMenu: boolean;
   setOpenCreateBoardMenu: Dispatch<SetStateAction<boolean>>;
   setDraggedTaskId: Dispatch<SetStateAction<string | null>>;
@@ -15,7 +15,7 @@ interface CreateBoardMenuContextType {
   setDraggingTaskIndex: Dispatch<SetStateAction<number | null>>;
 }
 
-const defaultContextValue: CreateBoardMenuContextType = {
+const defaultContextValue:  BoardMenuContextType = {
   openCreateBoardMenu: false,
   setOpenCreateBoardMenu: () => {},
   draggedTaskId: null,
@@ -24,16 +24,16 @@ const defaultContextValue: CreateBoardMenuContextType = {
   setDraggingTaskIndex: () => {},
 };
 
-export const CreateBoardMenuContext =
-  createContext<CreateBoardMenuContextType>(defaultContextValue);
+export const  BoardMenuContext =
+  createContext< BoardMenuContextType>(defaultContextValue);
 
-interface CreateBoardMenuProviderProps {
+interface BoardMenuProviderProps {
   children: ReactNode;
 }
 
-const CreateBoardMenuProvider = ({
+const BoardMenuProvider = ({
   children,
-}: CreateBoardMenuProviderProps) => {
+}: BoardMenuProviderProps) => {
   const [openCreateBoardMenu, setOpenCreateBoardMenu] =
     useState<boolean>(false);
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
@@ -42,7 +42,7 @@ const CreateBoardMenuProvider = ({
   );
 
   return (
-    <CreateBoardMenuContext.Provider
+    < BoardMenuContext.Provider
       value={{
         openCreateBoardMenu,
         setOpenCreateBoardMenu,
@@ -53,8 +53,8 @@ const CreateBoardMenuProvider = ({
       }}
     >
       {children}
-    </CreateBoardMenuContext.Provider>
+    </ BoardMenuContext.Provider>
   );
 };
 
-export default CreateBoardMenuProvider;
+export default BoardMenuProvider;

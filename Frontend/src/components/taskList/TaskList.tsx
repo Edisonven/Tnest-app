@@ -4,7 +4,7 @@ import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
 import TaskCard from "../taskCard/TaskCard";
 import { AnimatePresence } from "framer-motion";
-import { CreateBoardMenuContext } from "../../context/CreateBoardContext";
+import { BoardMenuContext } from "../../context/BoardContext";
 import useTaskList from "../../hooks/useTaskList";
 import { useAppSelector } from "../../features/tasksSlice";
 import useDragAndDrop from "../../hooks/useDragAndDrop";
@@ -24,9 +24,8 @@ const TaskList = ({ title, id }: taskInterface) => {
   } = useTaskList();
   const { handleDragStart, handleDrop, handleColumnDrop, handleDragOver } =
     useDragAndDrop(id);
-  const { draggedTaskId, draggingTaskIndex, setDraggingTaskIndex } = useContext(
-    CreateBoardMenuContext
-  );
+  const { draggedTaskId, draggingTaskIndex, setDraggingTaskIndex } =
+    useContext(BoardMenuContext);
   const [activeColumn, setActiveColumn] = useState<string | "">("");
   const globalStateTasks = useAppSelector((state) => state.tasksProps);
 

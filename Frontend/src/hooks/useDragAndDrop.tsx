@@ -1,14 +1,13 @@
 import { useContext } from "react";
 import { useAppSelector, useAppDispatch } from "../features/tasksSlice";
 import { moveTaskToColumn, setReOrderTaks } from "../features/tasksSlice";
-import { CreateBoardMenuContext } from "../context/CreateBoardContext";
+import { BoardMenuContext } from "../context/BoardContext";
 
 const useDragAndDrop = (id: string) => {
   const dispatch = useAppDispatch();
   const globalStateTasks = useAppSelector((state) => state.tasksProps);
-  const { draggedTaskId, setDraggedTaskId, setDraggingTaskIndex } = useContext(
-    CreateBoardMenuContext
-  );
+  const { draggedTaskId, setDraggedTaskId, setDraggingTaskIndex } =
+    useContext(BoardMenuContext);
 
   const handleDragStart = (draggedTaskId: string) => {
     setDraggedTaskId(draggedTaskId);
