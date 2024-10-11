@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TaskCardOptions from "./TaskCardOptions";
-import { LuText } from "react-icons/lu";
-import { BiCommentDetail } from "react-icons/bi";
+import { PiTextAlignLeft } from "react-icons/pi";
+import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
 import Overlay from "../overlay/Overlay";
 import { TaskCardInterface } from "../../types/TaskCard";
 
@@ -61,16 +61,16 @@ function TaskCard({
             <p className="text-slate-800 dark:text-gray-300 font-normal">
               {title}
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               {desc ? (
                 <div className="mt-3">
-                  <LuText className="text-[20px] text-slate-800 dark:text-gray-300" />
+                  <PiTextAlignLeft className="text-[20px] text-slate-800 dark:text-gray-200" />
                 </div>
               ) : null}
               {comments?.length > 0 ? (
                 <div className="mt-3 flex items-center gap-1">
-                  <BiCommentDetail className="text-[20px] text-slate-800 dark:text-gray-300" />
-                  <p className="text-slate-800 dark:text-gray-300 text-xs mb-1">
+                  <HiOutlineChatBubbleOvalLeftEllipsis className="text-[18px] text-slate-800 dark:text-gray-300" />
+                  <p className="text-slate-800 dark:text-gray-300 text-xs">
                     {comments.length}
                   </p>
                 </div>
