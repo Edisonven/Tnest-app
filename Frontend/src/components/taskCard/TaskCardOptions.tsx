@@ -134,65 +134,61 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
             </div>
           )}
           <div className="mt-5">
-            <div>
-              <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
-                Actividad
-              </h1>
-              {openActivityMenu ? (
-                <div className="mt-3 w-full">
-                  <textarea
-                    onChange={handleCommentsChange}
-                    value={taskComments}
-                    autoFocus
-                    className="w-full bg-[#22212E] max-w-[570px] border-none outline-none p-2 rounded shadow text-slate-800 dark:text-gray-300 resize-none"
-                  />
-                  <div className="flex items-center gap-3 mt-2">
+            <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
+              Actividad
+            </h1>
+            {openActivityMenu ? (
+              <div className="mt-3 w-full">
+                <textarea
+                  onChange={handleCommentsChange}
+                  value={taskComments}
+                  autoFocus
+                  className="w-full bg-[#22212E] max-w-[570px] border-none outline-none p-2 rounded shadow text-slate-800 dark:text-gray-300 resize-none"
+                />
+                <div className="flex items-center gap-3 mt-2">
+                  <button
+                    onClick={handleSendTaskComments}
+                    className="text-slate-800 dark:text-gray-300 bg-[#4D59B3] px-3 py-[7px] rounded shadow hover:brightness-125 font-medium"
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    onClick={() => setOpenActivityMenu(false)}
+                    className="text-slate-800 dark:text-gray-300 px-3 py-[7px] rounded shadow font-medium hover:bg-[#00000034]"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div
+                onClick={handleOpenActivityMenu}
+                className="mt-3 mb-2 w-full cursor-pointer bg-[#22212E] border-none outline-none p-2 rounded shadow hover:brightness-125"
+              >
+                <p className="text-slate-800 dark:text-gray-300">
+                  Escribe un comentario...
+                </p>
+              </div>
+            )}
+            <div className="task-comments-container max-h-[400px] overflow-y-auto overflow-x-hidden">
+              {filteredTask?.comments?.map((comment) => (
+                <div key={comment.id} className="mt-5">
+                  <div className="min-w-[120px] w-max max-w-[570px] bg-[#1d1b29] border-none outline-none px-3 py-2 rounded-3xl shadow">
+                    <p className="text-slate-800 dark:text-gray-300 w-full break-words">
+                      {comment.comment}
+                    </p>
+                  </div>
+                  <div className="mt-1 flex items-center gap-2 ml-3 text-slate-800 dark:text-gray-300 font-medium text-xs">
+                    <button>Editar</button>
                     <button
-                      onClick={handleSendTaskComments}
-                      className="text-slate-800 dark:text-gray-300 bg-[#4D59B3] px-3 py-[7px] rounded shadow hover:brightness-125 font-medium"
+                      className="hover:underline"
+                      onClick={() => handleDeleteTaskComment(comment.id)}
                     >
-                      Guardar
-                    </button>
-                    <button
-                      onClick={() => setOpenActivityMenu(false)}
-                      className="text-slate-800 dark:text-gray-300 px-3 py-[7px] rounded shadow font-medium hover:bg-[#00000034]"
-                    >
-                      Cancelar
+                      Eliminar
                     </button>
                   </div>
                 </div>
-              ) : (
-                <div
-                  onClick={handleOpenActivityMenu}
-                  className="mt-3 mb-2 w-full cursor-pointer bg-[#22212E] border-none outline-none p-2 rounded shadow hover:brightness-125"
-                >
-                  <p className="text-slate-800 dark:text-gray-300">
-                    Escribe un comentario...
-                  </p>
-                </div>
-              )}
-              <div>
-                <div className="task-comments-container max-h-[400px] overflow-y-auto overflow-x-hidden">
-                  {filteredTask?.comments?.map((comment) => (
-                    <div key={comment.id} className="mt-5">
-                      <div className="min-w-[120px] w-max max-w-[570px] bg-[#1d1b29] border-none outline-none px-3 py-2 rounded-3xl shadow">
-                        <p className="text-slate-800 dark:text-gray-300 w-full break-words">
-                          {comment.comment}
-                        </p>
-                      </div>
-                      <div className="mt-1 flex items-center gap-2 ml-3 text-slate-800 dark:text-gray-300 font-medium text-xs">
-                        <button>Editar</button>
-                        <button
-                          className="hover:underline"
-                          onClick={() => handleDeleteTaskComment(comment.id)}
-                        >
-                          Eliminar
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
