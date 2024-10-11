@@ -3,8 +3,8 @@ export interface TaskCardInterface {
     title: string;
     desc?: string;
     comments: Array<{
-      id: string;
-      comment: string;
+        id: string;
+        comment: string;
     }>;
     onDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
     onDrop: (id: string) => void;
@@ -14,4 +14,12 @@ export interface TaskCardInterface {
     draggingTaskIndex: number | null;
     setDraggingTaskIndex: React.Dispatch<React.SetStateAction<number | null>>;
     columnTitle: string;
-  }
+}
+
+
+
+export interface TaskCardOptionsProps {
+    setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
+    taskId: string;
+    columnTitle: string;
+}

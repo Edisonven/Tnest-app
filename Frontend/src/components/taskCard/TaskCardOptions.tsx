@@ -2,23 +2,16 @@ import "./taskCard.css";
 import { IoCloseOutline } from "react-icons/io5";
 import { useAppSelector, useAppDispatch } from "../../features/tasksSlice";
 import { ChangeEvent, useState } from "react";
-import {
-  sendTaskDescription,
-  sendTaskTitle,
-  sendTaskComments,
-} from "../../features/tasksSlice";
+import { sendTaskTitle } from "../../features/tasksSlice";
 import TaskDescription from "./TaskDescription";
 import TaskOptions from "../taskOptions/TaskOptions";
 import { BiSolidDockTop } from "react-icons/bi";
 import { TbTrashX } from "react-icons/tb";
 import TaskCoverMenu from "../taskOptions/TaskCoverMenu";
 import useDeleteTaskComment from "../../hooks/useDeleteTaskComment";
-
-interface TaskCardOptionsProps {
-  setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
-  taskId: string;
-  columnTitle: string;
-}
+import useSendTaskComments from "../../hooks/useSendTaskComments";
+import useSendTaskDescription from "../../hooks/useSendTaskDescription";
+import { TaskCardOptionsProps } from "../../types/TaskCard";
 
 const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   setOpenTaskOptions,
@@ -27,55 +20,30 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
 }) => {
   const { handleDeleteTaskComment, handleOpenCoverMenu, taskCoverOption } =
     useDeleteTaskComment(taskId);
+  const {
+    handleSendTaskComments,
+    openActivityMenu,
+    setOpenActivityMenu,
+    taskComments,
+    setTaskComments,
+    handleOpenActivityMenu,
+  } = useSendTaskComments(taskId);
+  const {
+    handleSendTaskDescription,
+    taskDescription,
+    setTaskDescription,
+    isDescriptionModified,
+    setIsDescriptionModified,
+    openDescriptionMenu,
+    setOpenDescriptionMenu,
+    handleAddATaskDescription,
+    handleEditDescription,
+  } = useSendTaskDescription(taskId);
 
   const taskOptions = useAppSelector((state) => state.tasksProps);
   const filteredTask = taskOptions.find((task) => task.id === taskId);
-  const [openDescriptionMenu, setOpenDescriptionMenu] = useState(false);
-  const [openActivityMenu, setOpenActivityMenu] = useState(false);
-  const [taskDescription, setTaskDescription] = useState("");
-  const [isDescriptionModified, setIsDescriptionModified] = useState(false);
   const [taskTitle, setTaskTitle] = useState(filteredTask?.title);
-  const [taskComments, setTaskComments] = useState("");
   const dispatch = useAppDispatch();
-
-  const handleAddATaskDescription = () => {
-    setOpenDescriptionMenu(!openDescriptionMenu);
-  };
-
-  const handleOpenActivityMenu = () => {
-    setOpenActivityMenu(!openActivityMenu);
-  };
-  const handleSendTaskDescription = () => {
-    if (taskDescription) {
-      dispatch(
-        sendTaskDescription({
-          taskId: filteredTask?.id,
-          description: taskDescription,
-        })
-      );
-      if (filteredTask) {
-        const updatedTasks = taskOptions.map((task) =>
-          task.id === filteredTask.id
-            ? { ...task, description: taskDescription }
-            : task
-        );
-
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-        setIsDescriptionModified(false);
-      }
-    } else {
-      setOpenDescriptionMenu(false);
-    }
-  };
-
-  const handleEditDescription = () => {
-    setOpenDescriptionMenu(true);
-    setIsDescriptionModified(true);
-    if (filteredTask) {
-      const editDescription = filteredTask.description;
-      setTaskDescription(editDescription);
-    }
-  };
 
   const handleCancelEdit = () => {
     setOpenDescriptionMenu(false);
@@ -98,34 +66,6 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
 
   const handleCommentsChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     setTaskComments(e.target.value);
-  };
-
-  const handleSendTaskComments = () => {
-    if (filteredTask) {
-      const id = crypto.randomUUID();
-      const updatedTasksComments = taskOptions.map((task) => {
-        if (task.id === filteredTask.id) {
-          const newComments = [
-            ...(task.comments || []),
-            { id, comment: taskComments },
-          ];
-          return { ...task, comments: newComments };
-        }
-        return task;
-      });
-
-      dispatch(
-        sendTaskComments({
-          comments: taskComments,
-          id: id,
-          taskId: filteredTask.id,
-        })
-      );
-
-      localStorage.setItem("tasks", JSON.stringify(updatedTasksComments));
-      setOpenActivityMenu(false);
-      setTaskComments("");
-    }
   };
 
   return (
