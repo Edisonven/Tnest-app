@@ -1,7 +1,7 @@
 /* Estilos para el scrollbar */
 .task-desc-paragraph::-webkit-scrollbar,
 .task-comments-container::-webkit-scrollbar {
-  width: 8px; /* Ancho del scrollbar */
+  width: 10px; /* Ancho del scrollbar */
 }
 
 /* Estilos para el track del scrollbar */

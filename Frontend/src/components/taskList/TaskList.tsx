@@ -145,7 +145,7 @@ const TaskList = ({ title, id }: taskInterface) => {
       onDragEnter={() => setActiveColumn(id)}
       onDragLeave={(e) => handleDragLeave(e)}
       id={id}
-      className={`bg-white dark:bg-[#1b1b1b] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
+      className={`bg-white dark:bg-[#141414] w-[300px] px-3 py-3 rounded-2xl shadow-lg ${
         activeColumn === id ? "outline outline-1 outline-white" : ""
       }`}
     >

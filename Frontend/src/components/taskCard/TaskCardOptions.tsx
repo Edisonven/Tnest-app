@@ -33,6 +33,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const [isDescriptionModified, setIsDescriptionModified] = useState(false);
   const [taskTitle, setTaskTitle] = useState(filteredTask?.title);
   const [taskComments, setTaskComments] = useState("");
+  const [taskCoverOption, setTaskCoverOption] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleAddATaskDescription = () => {
@@ -142,8 +143,12 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     }
   };
 
+  const handleOpenCoverMenu = () => {
+    setTaskCoverOption(!taskCoverOption);
+  };
+
   return (
-    <div className="bg-[#25334A] fixed top-[70px] left-1/2 z-50 transform -translate-x-1/2  w-[850px] min-h-[560px] max-h-[900px]  rounded shadow outline outline-1 outline-gray-700 p-4">
+    <div className="bg-[#25334A] fixed top-[55px] left-1/2 z-50 transform -translate-x-1/2  w-[850px] min-h-[560px] max-h-[900px]  rounded shadow outline outline-1 outline-gray-700 p-4">
       <IoCloseOutline
         onClick={() => setOpenTaskOptions(false)}
         className="absolute top-[8px] right-[8px] text-slate-800 dark:text-gray-300 text-[40px] cursor-pointer p-1 hover:bg-[#b4b4b42c] rounded-md duration-200"
@@ -158,7 +163,9 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
       <div className="mt-3">
         <p className="text-slate-800 dark:text-gray-300 text-sm font-normal">
           En la lista{" "}
-          <span className="uppercase font-medium bg-[#425b81] rounded px-1">{columnTitle}</span>
+          <span className="uppercase font-medium bg-[#425b81] rounded px-1">
+            {columnTitle}
+          </span>
         </p>
       </div>
       <div className="mt-4 flex justify-between gap-5">
@@ -205,7 +212,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
               )}
             </div>
           )}
-          <div className="mt-7">
+          <div className="mt-5">
             <div>
               <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
                 Actividad
@@ -236,7 +243,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
               ) : (
                 <div
                   onClick={handleOpenActivityMenu}
-                  className="mt-3 w-full cursor-pointer bg-[#22212E] border-none outline-none p-2 rounded shadow hover:brightness-125"
+                  className="mt-3 mb-2 w-full cursor-pointer bg-[#22212E] border-none outline-none p-2 rounded shadow hover:brightness-125"
                 >
                   <p className="text-slate-800 dark:text-gray-300">
                     Escribe un comentario...
@@ -270,8 +277,12 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
         </div>
         <div className="flex flex-col gap-2">
           <div className="relative">
-            <TaskOptions icon={BiSolidDockTop} title="Portada" />
-            {/*    <TaskCoverMenu /> */}
+            <TaskOptions
+              onClick={handleOpenCoverMenu}
+              icon={BiSolidDockTop}
+              title="Portada"
+            />
+            {taskCoverOption && <TaskCoverMenu />}
           </div>
           <div>
             <TaskOptions icon={TbTrashX} title="Eliminar tarjeta" />
