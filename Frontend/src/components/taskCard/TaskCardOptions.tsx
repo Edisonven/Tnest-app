@@ -6,13 +6,13 @@ import {
   sendTaskDescription,
   sendTaskTitle,
   sendTaskComments,
-  deleteComment,
 } from "../../features/tasksSlice";
 import TaskDescription from "./TaskDescription";
 import TaskOptions from "../taskOptions/TaskOptions";
 import { BiSolidDockTop } from "react-icons/bi";
 import { TbTrashX } from "react-icons/tb";
 import TaskCoverMenu from "../taskOptions/TaskCoverMenu";
+import useDeleteTaskComment from "../../hooks/useDeleteTaskComment";
 
 interface TaskCardOptionsProps {
   setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,6 +25,9 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   taskId,
   columnTitle,
 }) => {
+  const { handleDeleteTaskComment, handleOpenCoverMenu, taskCoverOption } =
+    useDeleteTaskComment(taskId);
+
   const taskOptions = useAppSelector((state) => state.tasksProps);
   const filteredTask = taskOptions.find((task) => task.id === taskId);
   const [openDescriptionMenu, setOpenDescriptionMenu] = useState(false);
@@ -33,7 +36,6 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const [isDescriptionModified, setIsDescriptionModified] = useState(false);
   const [taskTitle, setTaskTitle] = useState(filteredTask?.title);
   const [taskComments, setTaskComments] = useState("");
-  const [taskCoverOption, setTaskCoverOption] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleAddATaskDescription = () => {
@@ -124,27 +126,6 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
       setOpenActivityMenu(false);
       setTaskComments("");
     }
-  };
-
-  const handleDeleteTaskComment = (commentId: string) => {
-    if (filteredTask) {
-      const updatedTasksComments = taskOptions.map((task) => {
-        if (task.id === filteredTask.id) {
-          const updatedComments = task.comments?.filter(
-            (comment) => comment.id !== commentId
-          );
-          return { ...task, comments: updatedComments };
-        }
-        return task;
-      });
-
-      localStorage.setItem("tasks", JSON.stringify(updatedTasksComments));
-      dispatch(deleteComment({ taskId: filteredTask.id, id: commentId }));
-    }
-  };
-
-  const handleOpenCoverMenu = () => {
-    setTaskCoverOption(!taskCoverOption);
   };
 
   return (
