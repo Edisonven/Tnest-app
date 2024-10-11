@@ -3,24 +3,7 @@ import TaskCardOptions from "./TaskCardOptions";
 import { LuText } from "react-icons/lu";
 import { BiCommentDetail } from "react-icons/bi";
 import Overlay from "../overlay/Overlay";
-
-export interface TaskIterface {
-  id: string;
-  title: string;
-  desc?: string;
-  comments: Array<{
-    id: string;
-    comment: string;
-  }>;
-  onDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (id: string) => void;
-  setActiveColumn: React.Dispatch<React.SetStateAction<string | "">>;
-  draggedTaskId: string | null;
-  index: number;
-  draggingTaskIndex: number | null;
-  setDraggingTaskIndex: React.Dispatch<React.SetStateAction<number | null>>;
-  columnTitle: string;
-}
+import { TaskCardInterface } from "../../types/TaskCard";
 
 function TaskCard({
   id,
@@ -35,7 +18,7 @@ function TaskCard({
   draggingTaskIndex,
   setDraggingTaskIndex,
   columnTitle,
-}: TaskIterface) {
+}: TaskCardInterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
   const [taskId, setTaskId] = useState<string>("");
 
