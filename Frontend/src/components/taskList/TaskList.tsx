@@ -3,124 +3,35 @@ import { CgMathPlus } from "react-icons/cg";
 import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
 import TaskCard from "../taskCard/TaskCard";
-import { useAppDispatch, useAppSelector } from "../../features/tasksSlice";
-import {
-  setTaskInfo,
-  setReOrderTaks,
-  moveTaskToColumn,
-} from "../../features/tasksSlice";
 import { AnimatePresence } from "framer-motion";
 import { CreateBoardMenuContext } from "../../context/CreateBoardContext";
-
+import useTaskList from "../../hooks/useTaskList";
+import { useAppSelector } from "../../features/tasksSlice";
+import useDragAndDrop from "../../hooks/useDragAndDrop";
 export interface taskInterface {
   id: string;
   title: string;
 }
 
 const TaskList = ({ title, id }: taskInterface) => {
-  const [taskListId, setTaskListId] = useState<string | null>(null);
-  const [taskTitle, setTaskTitle] = useState("");
-  const dispatch = useAppDispatch();
-  const globalStateTasks = useAppSelector((state) => state.tasksProps);
   const {
-    draggedTaskId,
-    setDraggedTaskId,
-    draggingTaskIndex,
-    setDraggingTaskIndex,
-  } = useContext(CreateBoardMenuContext);
+    taskTitle,
+    setTaskTitle,
+    handleSendNewTask,
+    handleAddNewTask,
+    taskListId,
+    setTaskListId,
+  } = useTaskList();
+  const { handleDragStart, handleDrop, handleColumnDrop, handleDragOver } =
+    useDragAndDrop(id);
+  const { draggedTaskId, draggingTaskIndex, setDraggingTaskIndex } = useContext(
+    CreateBoardMenuContext
+  );
   const [activeColumn, setActiveColumn] = useState<string | "">("");
-
-  const handleDragStart = (draggedTaskId: string) => {
-    setDraggedTaskId(draggedTaskId);
-  };
-
-  const handleDrop = () => {
-    setDraggedTaskId(null);
-  };
-
-  const handleAddNewTask = (id: string) => {
-    setTaskListId(id);
-
-    if (taskListId === null) {
-      setTaskTitle("");
-    }
-  };
-
-  const handleSendNewTask = () => {
-    if (taskTitle.trim() !== "" && taskListId) {
-      const newTask = {
-        id: crypto.randomUUID(),
-        title: taskTitle,
-        taskListId: taskListId,
-      };
-
-      dispatch(setTaskInfo(newTask));
-      localStorage.setItem(
-        "tasks",
-        JSON.stringify([...globalStateTasks, newTask])
-      );
-      setTaskTitle("");
-      setTaskListId(null);
-    }
-  };
+  const globalStateTasks = useAppSelector((state) => state.tasksProps);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTaskTitle(e.target.value);
-  };
-
-  const handleColumnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-
-    const itemFoundIndex = globalStateTasks.findIndex(
-      (task) => task.id === draggedTaskId
-    );
-
-    if (itemFoundIndex !== -1) {
-      const itemFound = { ...globalStateTasks[itemFoundIndex] };
-
-      itemFound.taskListId = id;
-
-      const newGlobalTaskState = globalStateTasks.map((task, index) => {
-        if (index === itemFoundIndex) {
-          return itemFound;
-        }
-        return task;
-      });
-
-      dispatch(moveTaskToColumn({ taskId: draggedTaskId, newColumnId: id }));
-
-      localStorage.setItem("tasks", JSON.stringify(newGlobalTaskState));
-    }
-  };
-
-  const handleDragOver = (
-    e: React.DragEvent<HTMLDivElement>,
-    targetIndex: number
-  ) => {
-    e.preventDefault();
-
-    if (!draggedTaskId) return;
-
-    setDraggingTaskIndex(targetIndex);
-    const updatedTasks = [...globalStateTasks];
-    const draggedTaskIndex = updatedTasks.findIndex(
-      (task) => task.id === draggedTaskId
-    );
-
-    // Si el índice de la tarea arrastrada es válido y diferente del destino
-    if (draggedTaskIndex !== -1 && draggedTaskIndex !== targetIndex) {
-      // Sacar la tarea arrastrada de su posición original
-      const [draggedTask] = updatedTasks.splice(draggedTaskIndex, 1);
-
-      // Insertar la tarea arrastrada en la nueva posición
-      updatedTasks.splice(targetIndex, 0, draggedTask);
-
-      // Despachar la acción para actualizar el estado global
-      dispatch(setReOrderTaks(updatedTasks));
-
-      // Guardar los cambios en localStorage
-      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    }
   };
 
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
