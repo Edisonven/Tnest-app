@@ -69,7 +69,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   };
 
   return (
-    <div className="bg-[#25334A] fixed top-[55px] left-1/2 z-50 transform -translate-x-1/2  w-[850px] min-h-[560px] max-h-[900px]  rounded shadow outline outline-1 outline-gray-700 p-4">
+    <div className="bg-[#25334A] fixed top-[20px] left-1/2 z-50 transform -translate-x-1/2  w-[850px] min-h-[560px] max-h-[900px]  rounded shadow outline outline-1 outline-gray-700 p-4">
       <IoCloseOutline
         onClick={() => setOpenTaskOptions(false)}
         className="absolute top-[8px] right-[8px] text-slate-800 dark:text-gray-300 text-[40px] cursor-pointer p-1 hover:bg-[#b4b4b42c] rounded-md duration-200"

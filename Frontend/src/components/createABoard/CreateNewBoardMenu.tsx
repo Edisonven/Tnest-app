@@ -1,24 +1,25 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ChangeEvent, forwardRef, useEffect, useRef, useState } from "react";
+import { ChangeEvent, forwardRef, useEffect } from "react";
 import { OpenCreateBoardMenu } from "../../types/ThemeMenuProp";
 import { IoClose } from "react-icons/io5";
-import board1 from "/images/application/boards-background/board-1.png";
+
 import skeleton from "/images/application/boards-background/skeleton-2.png";
 import { background } from "./background.ts";
-import { FormEvent } from "react";
-import { useAppDispatch } from "../../features/boardBackgroundSlice.ts";
-import { setTitle, setImage } from "../../features/boardBackgroundSlice.ts";
-import { useNavigate } from "react-router-dom";
+import useSendBoardProps from "../../hooks/useSendBoardProps.tsx";
 
 const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
   ({ setOpenCreateBoardMenu, setOpenModal }, _) => {
-    const [boardImage, setBoardImage] = useState(board1);
-    const [boardTitle, setBoardTitle] = useState("");
-    const [boardCreatedAltert, setBoardCreatedAlert] = useState("");
-    const alertTimeoutRef = useRef<number | null>(null);
-    const [error, setError] = useState("");
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+    const {
+      handleSendBoardProps,
+      boardCreatedAltert,
+      boardTitle,
+      setBoardImage,
+      setBoardTitle,
+      alertTimeoutRef,
+      setError,
+      boardImage,
+      error,
+    } = useSendBoardProps(setOpenCreateBoardMenu);
 
     const handleCloseBoardMenu = () => {
       setOpenCreateBoardMenu(false);
@@ -27,52 +28,9 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
       }
     };
 
-    const handleSendBoardProps = (e: FormEvent<HTMLFormElement>): void => {
-      e.preventDefault();
-
-      const { image, title } = JSON.parse(
-        localStorage.getItem("board") || "{}"
-      );
-
-      if (image || title) {
-        setBoardCreatedAlert(
-          "Para crear más de un tablero, registrate e inicia sesión"
-        );
-        restartAlertTimeout();
-        return;
-      }
-
-      if (boardTitle.trim() === "") {
-        return setError("El título es obligatorio *");
-      } else {
-        navigate("/my-board");
-      }
-
-      dispatch(setImage(boardImage));
-      dispatch(setTitle(boardTitle));
-
-      const boardData = {
-        image: boardImage,
-        title: boardTitle.trim(),
-      };
-
-      localStorage.setItem("board", JSON.stringify(boardData));
-      setBoardTitle("");
-      setOpenCreateBoardMenu(false);
-    };
-
     const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>): void => {
       const newTitle = e.target.value;
       setBoardTitle(newTitle);
-    };
-
-    const restartAlertTimeout = () => {
-      if (alertTimeoutRef.current) {
-        clearTimeout(alertTimeoutRef.current);
-      }
-      alertTimeoutRef.current = window.setTimeout(() => {
-        setBoardCreatedAlert("");
-      }, 3000);
     };
 
     useEffect(() => {
