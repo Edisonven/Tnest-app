@@ -72,7 +72,7 @@ function Navbar({
   }, []);
 
   return (
-    <section className="bg-white dark:bg-[#141826] p-2 relative z-10 outline outline-1 outline-gray-800">
+    <section className="bg-white dark:bg-[#141826] p-2 relative z-30 outline outline-1 outline-gray-800">
       <div className="flex items-center justify-between max-w-[1800px] mx-auto">
         <div className="">
           <Link

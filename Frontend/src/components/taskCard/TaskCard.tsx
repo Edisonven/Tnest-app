@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import TaskCardOptions from "./TaskCardOptions";
-import { AnimatePresence } from "framer-motion";
 import { LuText } from "react-icons/lu";
 import { BiCommentDetail } from "react-icons/bi";
+import Overlay from "../overlay/Overlay";
 
 export interface TaskIterface {
   id: string;
@@ -96,15 +96,16 @@ function TaskCard({
           </div>
         </div>
       </div>
-      <AnimatePresence>
-        {openTaskOptions ? (
+      {openTaskOptions ? (
+        <div>
           <TaskCardOptions
             columnTitle={columnTitle}
             setOpenTaskOptions={setOpenTaskOptions}
             taskId={taskId}
           />
-        ) : null}
-      </AnimatePresence>
+          <Overlay />
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -95,7 +95,7 @@ function MyBoard() {
     <section className="select-none">
       <div>
         <img className="fixed w-full" src={image} alt="" />
-        <div className="relative z-[5]">
+        <div className="relative">
           {!image || !title ? (
             <div className="no-board flex items-center justify-center w-full">
               <p className="text-slate-800 dark:text-gray-300">
