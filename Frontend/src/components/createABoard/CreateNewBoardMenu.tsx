@@ -8,7 +8,7 @@ import { background } from "./background.ts";
 import useSendBoardProps from "../../hooks/useSendBoardProps.tsx";
 
 const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
-  ({ setOpenCreateBoardMenu, setOpenModal }, _) => {
+  ({ setOpenCreateBoardMenu, setOpenModal }, ref) => {
     const {
       handleSendBoardProps,
       boardCreatedAltert,
@@ -46,7 +46,7 @@ const CreateNewBoardMenu = forwardRef<HTMLDivElement, OpenCreateBoardMenu>(
     }, [boardTitle]);
 
     return (
-      <div>
+      <div ref={ref}>
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}

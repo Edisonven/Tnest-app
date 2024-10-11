@@ -9,10 +9,11 @@ import { BoardMenuContext } from "../../context/BoardContext";
 
 function CreateABoard() {
   const [openModal, setOpenModal] = useState(false);
-  const { openCreateBoardMenu, setOpenCreateBoardMenu } =
+  const { openCreateBoardMenu, setOpenCreateBoardMenu, homeButonRef } =
     useContext(BoardMenuContext);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const modalRef = useRef<DomRefElement>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const boardMenuRef = useRef<DomRefElement>(null);
   const navigate = useNavigate();
 
   const handleOpenBoardModal = () => {
@@ -21,13 +22,30 @@ function CreateABoard() {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (
-      buttonRef.current &&
+    const target = event.target as Node;
+
+    const isClickOutsideModal =
+      // Si existe el botón, evaluar la condición del botón; si no, sólo verifica el modal
+      (!buttonRef.current ||
+        (buttonRef.current && !buttonRef.current.contains(target))) &&
       modalRef.current &&
-      !buttonRef.current.contains(event.target as Node) &&
-      !modalRef.current.contains(event.target as Node)
-    ) {
+      !modalRef.current.contains(target);
+
+    const isClickOutsideNewBoardMenu =
+      // Si existe el botón del menú, evaluarlo; si no, sólo verifica el menú
+      (!homeButonRef.current ||
+        (homeButonRef.current && !homeButonRef.current.contains(target))) &&
+      boardMenuRef.current &&
+      !boardMenuRef.current.contains(target);
+
+    // Cierra el modal si haces clic fuera del área
+    if (isClickOutsideModal) {
       setOpenModal(false);
+    }
+
+    // Cierra el menú si haces clic fuera del área, ignorando el modal si existe
+    if (isClickOutsideNewBoardMenu && !modalRef.current) {
+      setOpenCreateBoardMenu(false);
     }
   };
 
@@ -69,6 +87,7 @@ function CreateABoard() {
       <AnimatePresence>
         {openCreateBoardMenu ? (
           <CreateNewBoardMenu
+            ref={boardMenuRef}
             setOpenCreateBoardMenu={setOpenCreateBoardMenu}
             openCreateBoardMenu={openCreateBoardMenu}
             setOpenModal={setOpenModal}

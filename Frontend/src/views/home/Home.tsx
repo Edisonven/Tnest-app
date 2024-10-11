@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 
 function Home(): JSX.Element {
   const { setOpenCreateBoardMenu } = useContext(BoardMenuContext);
+  const { homeButonRef } = useContext(BoardMenuContext);
 
   return (
     <section className="flex items-center justify-center mt-[80px]">
@@ -24,6 +25,7 @@ function Home(): JSX.Element {
               Crear Tablero
             </button> */}
             <Button
+              ref={homeButonRef}
               onClick={() => setOpenCreateBoardMenu(true)}
               sx={{
                 borderRadius: 30,

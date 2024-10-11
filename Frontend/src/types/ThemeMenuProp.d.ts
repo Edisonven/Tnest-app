@@ -7,4 +7,5 @@ export interface OpenCreateBoardMenu {
     openCreateBoardMenu?: boolean;
     setOpenCreateBoardMenu: React.Dispatch<React.SetStateAction<boolean>>;
     setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>
+    boardMenuRef?: ForwardedRef<HTMLDivElement>;
 }
