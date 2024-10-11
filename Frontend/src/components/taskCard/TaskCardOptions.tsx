@@ -1,7 +1,7 @@
 import "./taskCard.css";
 import { IoCloseOutline } from "react-icons/io5";
 import { useAppSelector, useAppDispatch } from "../../features/tasksSlice";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { sendTaskTitle } from "../../features/tasksSlice";
 import TaskDescription from "./TaskDescription";
 import TaskOptions from "../taskOptions/TaskOptions";
@@ -17,6 +17,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   setOpenTaskOptions,
   taskId,
   columnTitle,
+  isTaskCardOptionsActive,
 }) => {
   const { handleDeleteTaskComment, handleOpenCoverMenu, taskCoverOption } =
     useDeleteTaskComment(taskId);
@@ -44,6 +45,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const filteredTask = taskOptions.find((task) => task.id === taskId);
   const [taskTitle, setTaskTitle] = useState(filteredTask?.title);
   const dispatch = useAppDispatch();
+  const cardOptionsRef = useRef<HTMLDivElement | null>(null);
 
   const handleCancelEdit = () => {
     setOpenDescriptionMenu(false);
@@ -68,8 +70,31 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     setTaskComments(e.target.value);
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (isTaskCardOptionsActive) {
+      if (
+        cardOptionsRef.current &&
+        !cardOptionsRef.current.contains(event.target as Node)
+      ) {
+        setOpenTaskOptions(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isTaskCardOptionsActive]);
+
   return (
-    <div className="bg-[#25334A] fixed top-[20px] left-1/2 z-50 transform -translate-x-1/2  w-[850px] min-h-[560px] max-h-[900px]  rounded shadow outline outline-1 outline-gray-700 p-4">
+    <div
+      onClick={(e) => e.stopPropagation()}
+      ref={cardOptionsRef}
+      className="bg-[#25334A] fixed top-[20px] left-1/2 z-50 transform -translate-x-1/2  w-[850px] min-h-[560px] max-h-[900px]  rounded shadow outline outline-1 outline-gray-700 p-4"
+    >
       <IoCloseOutline
         onClick={() => setOpenTaskOptions(false)}
         className="absolute top-[8px] right-[8px] text-slate-800 dark:text-gray-300 text-[40px] cursor-pointer p-1 hover:bg-[#b4b4b42c] rounded-md duration-200"

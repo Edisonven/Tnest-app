@@ -22,4 +22,5 @@ export interface TaskCardOptionsProps {
     setOpenTaskOptions: React.Dispatch<React.SetStateAction<boolean>>;
     taskId: string;
     columnTitle: string;
+    isTaskCardOptionsActive: boolean
 }

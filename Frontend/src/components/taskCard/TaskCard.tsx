@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TaskCardOptions from "./TaskCardOptions";
 import { PiTextAlignLeft } from "react-icons/pi";
 import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
@@ -21,11 +21,18 @@ function TaskCard({
 }: TaskCardInterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
   const [taskId, setTaskId] = useState<string>("");
+  const [isTaskCardOptionsActive, setIsTaskCardOptionsActive] = useState(false);
 
   const handleOpenTaskOptions = (id: string): void => {
     setOpenTaskOptions(!openTaskOptions);
     setTaskId(id);
   };
+
+  useEffect(() => {
+    openTaskOptions
+      ? setIsTaskCardOptionsActive(true)
+      : setIsTaskCardOptionsActive(false);
+  }, [openTaskOptions]);
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -85,6 +92,7 @@ function TaskCard({
             columnTitle={columnTitle}
             setOpenTaskOptions={setOpenTaskOptions}
             taskId={taskId}
+            isTaskCardOptionsActive={isTaskCardOptionsActive}
           />
           <Overlay />
         </div>
