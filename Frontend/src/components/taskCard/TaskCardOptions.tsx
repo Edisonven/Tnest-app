@@ -12,6 +12,7 @@ import useDeleteTaskComment from "../../hooks/useDeleteTaskComment";
 import useSendTaskComments from "../../hooks/useSendTaskComments";
 import useSendTaskDescription from "../../hooks/useSendTaskDescription";
 import { TaskCardOptionsProps } from "../../types/TaskCard";
+import ConfirmDeleteModal from "../confirmDeleteModal/ConfirmDeleteModal";
 
 const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   setOpenTaskOptions,
@@ -226,8 +227,9 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
             />
             {taskCoverOption && <TaskCoverMenu />}
           </div>
-          <div>
+          <div className="relative">
             <TaskOptions icon={TbTrashX} title="Eliminar tarjeta" />
+            <ConfirmDeleteModal />
           </div>
         </div>
       </div>
