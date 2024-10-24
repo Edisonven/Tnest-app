@@ -47,6 +47,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const [taskTitle, setTaskTitle] = useState(filteredTask?.title);
   const dispatch = useAppDispatch();
   const cardOptionsRef = useRef<HTMLDivElement | null>(null);
+  const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
 
   const handleCancelEdit = () => {
     setOpenDescriptionMenu(false);
@@ -71,24 +72,34 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     setTaskComments(e.target.value);
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (isTaskCardOptionsActive) {
-      if (
-        cardOptionsRef.current &&
-        !cardOptionsRef.current.contains(event.target as Node)
-      ) {
-        setOpenTaskOptions(false);
-      }
-    }
-  };
-
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isTaskCardOptionsActive) {
+        if (
+          cardOptionsRef.current &&
+          !cardOptionsRef.current.contains(event.target as Node)
+        ) {
+          setOpenTaskOptions(false);
+        }
+      }
+    };
+
     document.addEventListener("click", handleClickOutside);
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [isTaskCardOptionsActive]);
+
+  const handleOpenConfirmDeleteModal = () => {
+    setOpenConfirmDelete(!openConfirmDelete);
+  };
+
+  useEffect(() => {
+    if (taskCoverOption) {
+      setOpenConfirmDelete(false);
+    }
+  }, [taskCoverOption]);
 
   return (
     <div
@@ -228,8 +239,12 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
             {taskCoverOption && <TaskCoverMenu />}
           </div>
           <div className="relative">
-            <TaskOptions icon={TbTrashX} title="Eliminar tarjeta" />
-            <ConfirmDeleteModal />
+            <TaskOptions
+              onClick={handleOpenConfirmDeleteModal}
+              icon={TbTrashX}
+              title="Eliminar tarjeta"
+            />
+            {openConfirmDelete && <ConfirmDeleteModal />}
           </div>
         </div>
       </div>
