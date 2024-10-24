@@ -24,4 +24,5 @@ export interface TaskCardOptionsProps {
     taskId: string;
     columnTitle: string;
     isTaskCardOptionsActive: boolean
+    cover?: string
 }

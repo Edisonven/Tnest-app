@@ -90,6 +90,7 @@ function TaskCard({
       {openTaskOptions ? (
         <div>
           <TaskCardOptions
+            cover={cover}
             columnTitle={columnTitle}
             setOpenTaskOptions={setOpenTaskOptions}
             taskId={taskId}
