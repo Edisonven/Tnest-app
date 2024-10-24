@@ -21,8 +21,12 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   isTaskCardOptionsActive,
   cover,
 }) => {
-  const { handleDeleteTaskComment, handleOpenCoverMenu, taskCoverOption } =
-    useDeleteTaskComment(taskId);
+  const {
+    handleDeleteTaskComment,
+    handleOpenCoverMenu,
+    taskCoverOption,
+    setTaskCoverOption,
+  } = useDeleteTaskComment(taskId);
   const {
     handleSendTaskComments,
     openActivityMenu,
@@ -240,7 +244,11 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                 title="Portada"
               />
               {taskCoverOption && (
-                <TaskCoverMenu taskId={taskId} cover={cover} />
+                <TaskCoverMenu
+                  taskId={taskId}
+                  cover={cover}
+                  setTaskCoverOption={setTaskCoverOption}
+                />
               )}
             </div>
             <div className="relative">

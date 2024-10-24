@@ -4,13 +4,19 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../features/boardBackgroundSlice";
+import { SetStateAction } from "react";
 
 interface TaskCoverMenuInterface {
   taskId: string;
   cover?: string;
+  setTaskCoverOption: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const TaskCoverMenu: React.FC<TaskCoverMenuInterface> = ({ taskId, cover }) => {
+const TaskCoverMenu: React.FC<TaskCoverMenuInterface> = ({
+  taskId,
+  cover,
+  setTaskCoverOption,
+}) => {
   const storedTasks = useAppSelector((state) => state.tasksProps);
   const dispatch = useAppDispatch();
 
@@ -25,6 +31,7 @@ const TaskCoverMenu: React.FC<TaskCoverMenuInterface> = ({ taskId, cover }) => {
     const taskWithCover = storedTasks.find((t) => t.id === taskId);
     if (taskWithCover) {
       dispatch(removeTaskCover({ taskId }));
+      setTaskCoverOption(false);
     }
   };
 
