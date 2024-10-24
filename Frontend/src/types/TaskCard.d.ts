@@ -14,6 +14,7 @@ export interface TaskCardInterface {
     draggingTaskIndex: number | null;
     setDraggingTaskIndex: React.Dispatch<React.SetStateAction<number | null>>;
     columnTitle: string;
+    cover?: string
 }
 
 

@@ -18,6 +18,7 @@ function TaskCard({
   draggingTaskIndex,
   setDraggingTaskIndex,
   columnTitle,
+  cover,
 }: TaskCardInterface) {
   const [openTaskOptions, setOpenTaskOptions] = useState(false);
   const [taskId, setTaskId] = useState<string>("");
@@ -59,7 +60,7 @@ function TaskCard({
             !draggedTaskId ? "hover:outline outline-1 outline-white" : ""
           }`}
         >
-          {/*     <div className="bg-yellow-600 h-[30px]"></div> */}
+          {cover && <div style={{ background: cover }} className="h-[35px]" />}
           <div
             className={`${
               draggingTaskIndex === index ? "opacity-0" : ""

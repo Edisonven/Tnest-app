@@ -236,7 +236,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
               icon={BiSolidDockTop}
               title="Portada"
             />
-            {taskCoverOption && <TaskCoverMenu />}
+            {taskCoverOption && <TaskCoverMenu taskId={taskId} />}
           </div>
           <div className="relative">
             <TaskOptions

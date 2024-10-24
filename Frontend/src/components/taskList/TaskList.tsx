@@ -68,6 +68,7 @@ const TaskList = ({ title, id }: taskInterface) => {
             task.taskListId === id ? (
               <div key={task.id} onDragOver={(e) => handleDragOver(e, index)}>
                 <TaskCard
+                  cover={task.cover}
                   draggedTaskId={draggedTaskId}
                   desc={task.description}
                   comments={task.comments}
