@@ -74,7 +74,6 @@ export const tasksSlice = createSlice({
                 });
             }
         },
-
         deleteComment: (state, action) => {
             const { taskId, id } = action.payload;
             const taskFinded = state.find((task) => task.id === taskId);
@@ -89,10 +88,17 @@ export const tasksSlice = createSlice({
                 taskFinded.cover = cover;
             }
         },
+        removeTaskCover: (state, action) => {
+            const { taskId } = action.payload;
+            const taskFinded = state.find((task) => task.id === taskId);
+            if (taskFinded) {
+                taskFinded.cover = "";
+            }
+        },
     }
 })
 
-export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle, sendTaskComments, deleteComment, sendTaskCover } = tasksSlice.actions
+export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle, sendTaskComments, deleteComment, sendTaskCover, removeTaskCover } = tasksSlice.actions
 export const tasksProps = tasksSlice.reducer
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()

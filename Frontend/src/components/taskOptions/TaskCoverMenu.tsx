@@ -1,18 +1,30 @@
 import { coverPrincipalColors } from "./coverColors";
-import { sendTaskCover } from "../../features/tasksSlice";
-import { useDispatch } from "react-redux";
+import { sendTaskCover, removeTaskCover } from "../../features/tasksSlice";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../features/boardBackgroundSlice";
 
 interface TaskCoverMenuInterface {
   taskId: string;
+  cover?: string;
 }
 
-const TaskCoverMenu: React.FC<TaskCoverMenuInterface> = ({ taskId }) => {
-  const dispatch = useDispatch();
+const TaskCoverMenu: React.FC<TaskCoverMenuInterface> = ({ taskId, cover }) => {
+  const storedTasks = useAppSelector((state) => state.tasksProps);
+  const dispatch = useAppDispatch();
 
   const handleSetCoverColor = (id: number) => {
     const colorFinded = coverPrincipalColors.find((c) => c.id === id);
     if (colorFinded) {
       dispatch(sendTaskCover({ taskId, cover: colorFinded.color_1 }));
+    }
+  };
+
+  const handleRemoveTaskCover = () => {
+    const taskWithCover = storedTasks.find((t) => t.id === taskId);
+    if (taskWithCover) {
+      dispatch(removeTaskCover({ taskId }));
     }
   };
 
@@ -23,7 +35,7 @@ const TaskCoverMenu: React.FC<TaskCoverMenuInterface> = ({ taskId }) => {
       </h1>
       <div className="mt-4">
         <h1 className="text-slate-800 dark:text-gray-300 font-medium">
-          Colores
+          Colores base
         </h1>
         <div className="mt-2 flex items-center justify-center gap-2 bg-[#0000006b] flex-wrap py-2 rounded">
           {coverPrincipalColors.map((color) => (
@@ -32,8 +44,18 @@ const TaskCoverMenu: React.FC<TaskCoverMenuInterface> = ({ taskId }) => {
               key={color.id}
               className="w-[50px] h-[30px] rounded cursor-pointer"
               style={{ backgroundColor: color.color_1 }}
-            ></div>
+            />
           ))}
+        </div>
+        <div className="mt-3">
+          {cover && (
+            <button
+              onClick={handleRemoveTaskCover}
+              className="text-slate-800 dark:text-gray-300 dark:bg-[#25334A] w-full py-[5px] rounded hover:dark:bg-[#3f6296]"
+            >
+              Quitar portada
+            </button>
+          )}
         </div>
       </div>
     </div>
