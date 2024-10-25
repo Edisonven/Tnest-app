@@ -23,6 +23,10 @@ const useSendTaskComments = (taskId: string) => {
         return task;
       });
 
+      if (taskComments.trim() === "") {
+        return setOpenActivityMenu(false);
+      }
+
       dispatch(
         sendTaskComments({
           comments: taskComments,
