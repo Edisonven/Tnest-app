@@ -60,7 +60,16 @@ function TaskCard({
             !draggedTaskId ? "hover:outline outline-1 outline-white" : ""
           }`}
         >
-          {cover && <div style={{ background: cover }} className="h-[35px]" />}
+          {cover && (
+            <div
+              style={{
+                background: `${
+                  draggingTaskIndex === index ? "#0f0909" : cover
+                }`,
+              }}
+              className="h-[35px]"
+            />
+          )}
           <div
             className={`${
               draggingTaskIndex === index ? "opacity-0" : ""
