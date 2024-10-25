@@ -1,27 +1,13 @@
-import { FaCircleUser } from "react-icons/fa6";
-import { BsGearFill } from "react-icons/bs";
 import ThemeMenu from "../themeMenu/ThemeMenu";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { forwardRef } from "react";
-import { DomRefElement, IconForwardRef } from "../../types/DomRefElement";
+import { DomRefElement } from "../../types/DomRefElement";
 import CreateABoard from "../createABoard/CreateABoard";
 import { Link } from "react-router-dom";
 import BurgerMenu from "../burgerMenu/BurgerMenu";
 import { ThemeMenuProps } from "../../types/ThemeMenuProp";
 import { MdDashboard } from "react-icons/md";
-
-const GearIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
-  <div ref={ref}>
-    <BsGearFill {...props} />
-  </div>
-));
-
-const UserIcon = forwardRef<HTMLDivElement, IconForwardRef>((props, ref) => (
-  <div ref={ref}>
-    <FaCircleUser {...props} />
-  </div>
-));
+import { GearIcon, UserIcon } from "../../utils/IconsForwardRefs";
 
 function Navbar({
   setApplicationTheme,
