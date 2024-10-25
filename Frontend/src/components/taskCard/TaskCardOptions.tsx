@@ -134,13 +134,13 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
           </p>
         </div>
         <div className="mt-4 flex justify-between gap-5">
-          <div className="w-full">
+          <div className="first-menu w-full overflow-y-auto max-h-[710px] pr-4">
             <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
               Descripción
             </h1>
             {filteredTask?.description && !isDescriptionModified ? (
               <div className="flex items-center justify-between gap-3">
-                <p className="task-desc-paragraph text-slate-800 dark:text-gray-300 mt-4 max-h-[100px] overflow-y-auto">
+                <p className="task-desc-paragraph text-slate-800 dark:text-gray-300 mt-4">
                   {filteredTask.description}
                 </p>
                 <div className="">
@@ -214,7 +214,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                   </p>
                 </div>
               )}
-              <div className="task-comments-container max-h-[400px] overflow-y-auto overflow-x-hidden">
+              <div className="task-comments-container overflow-x-hidden">
                 {filteredTask?.comments?.map((comment) => (
                   <div key={comment.id} className="mt-5">
                     <div className="min-w-[120px] w-max max-w-[570px] bg-[#1d1b29] border-none outline-none px-3 py-2 rounded-3xl shadow">
