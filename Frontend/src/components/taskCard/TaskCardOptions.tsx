@@ -133,8 +133,8 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
             </span>
           </p>
         </div>
-        <div className="mt-4 flex justify-between gap-5">
-          <div className="first-menu w-full overflow-y-auto max-h-[710px] pr-4">
+        <div className="mt-4 flex justify-between gap-3">
+          <div className="first-menu w-full overflow-y-auto max-h-[710px] pr-3">
             <h1 className="text-slate-800 dark:text-gray-300 text-[20px]">
               Descripción
             </h1>

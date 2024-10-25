@@ -54,9 +54,12 @@ function TaskCard({
         <div
           onClick={() => handleOpenTaskOptions(id)}
           key={id}
+          /*        style={{
+            opacity: draggedTaskId && draggedTaskId === id ? "0.3" : "1",
+          }} */
           className={`${
             draggingTaskIndex === index ? "bg-[#0f0909]" : "bg-slate-800"
-          }  rounded cursor-pointer hover:brightness-125 overflow-hidden ${
+          } taskcard rounded cursor-pointer hover:brightness-125 overflow-hidden ${
             !draggedTaskId ? "hover:outline outline-1 outline-white" : ""
           }`}
         >
