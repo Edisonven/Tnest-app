@@ -5,6 +5,7 @@ import {
   useAppSelector,
 } from "../../features/boardBackgroundSlice";
 import { SetStateAction } from "react";
+import { TaskArray } from "../../types/TaskArray";
 
 interface TaskCoverMenuInterface {
   taskId: string;
@@ -19,11 +20,18 @@ const TaskCoverMenu: React.FC<TaskCoverMenuInterface> = ({
 }) => {
   const storedTasks = useAppSelector((state) => state.tasksProps);
   const dispatch = useAppDispatch();
+  const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 
   const handleSetCoverColor = (id: number) => {
     const colorFinded = coverPrincipalColors.find((c) => c.id === id);
     if (colorFinded) {
       dispatch(sendTaskCover({ taskId, cover: colorFinded.color_1 }));
+
+      const updatedTasks = allTasks.map((t: TaskArray) =>
+        t.id === taskId ? { ...t, cover: colorFinded.color_1 } : t
+      );
+
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     }
   };
 
@@ -31,6 +39,10 @@ const TaskCoverMenu: React.FC<TaskCoverMenuInterface> = ({
     const taskWithCover = storedTasks.find((t) => t.id === taskId);
     if (taskWithCover) {
       dispatch(removeTaskCover({ taskId }));
+      const updatedTasks = allTasks.map((t: TaskArray) =>
+        t.id === taskId ? { ...t, cover: "" } : t
+      );
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
       setTaskCoverOption(false);
     }
   };
