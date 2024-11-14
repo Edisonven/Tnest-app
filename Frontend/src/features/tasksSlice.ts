@@ -95,10 +95,14 @@ export const tasksSlice = createSlice({
                 taskFinded.cover = "";
             }
         },
+        removeTask: (state, action) => {
+            const { taskId } = action.payload;
+            return state.filter((task) => task.id !== taskId);
+        }
     }
 })
 
-export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle, sendTaskComments, deleteComment, sendTaskCover, removeTaskCover } = tasksSlice.actions
+export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle, sendTaskComments, deleteComment, sendTaskCover, removeTaskCover, removeTask } = tasksSlice.actions
 export const tasksProps = tasksSlice.reducer
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()

@@ -1,4 +1,24 @@
-const ConfirmDeleteModal = () => {
+import { useEffect } from "react";
+import { useAppSelector } from "../../features/boardBackgroundSlice";
+import { useAppDispatch } from "../../features/tasksSlice";
+import { removeTask } from "../../features/tasksSlice";
+
+interface ConfirmDeleteModal {
+  taskId: string;
+}
+
+const ConfirmDeleteModal = ({ taskId }: ConfirmDeleteModal) => {
+  const dispatch = useAppDispatch();
+  const newArray = useAppSelector((state) => state.tasksProps);
+
+  const handleDeleteTask = () => {
+    dispatch(removeTask({ taskId }));
+  };
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(newArray));
+  }, [newArray]);
+
   return (
     <div className="absolute top-[110%] left-0 bg-gray-300 dark:bg-[#29292c] z-50 rounded outline outline-1 dark:outline-gray-700 p-3 w-[280px]">
       <h1 className="text-slate-800 dark:text-gray-300 text-sm font-medium">
@@ -10,7 +30,10 @@ const ConfirmDeleteModal = () => {
           a abrirse. esta acción es irreversible.
         </p>
       </div>
-      <button className="bg-rose-500 dark:text-slate-800 text-gray-300 font-semibold py-1 px-3 rounded w-full text-center mt-4 hover:bg-[#fc6d85]">
+      <button
+        onClick={handleDeleteTask}
+        className="bg-rose-500 dark:text-slate-800 text-gray-300 font-semibold py-1 px-3 rounded w-full text-center mt-4 hover:bg-[#fc6d85]"
+      >
         Eliminar
       </button>
     </div>

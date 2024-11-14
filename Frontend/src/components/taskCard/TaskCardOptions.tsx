@@ -257,7 +257,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                 icon={TbTrashX}
                 title="Eliminar tarjeta"
               />
-              {openConfirmDelete && <ConfirmDeleteModal />}
+              {openConfirmDelete && <ConfirmDeleteModal taskId={taskId} />}
             </div>
           </div>
         </div>
