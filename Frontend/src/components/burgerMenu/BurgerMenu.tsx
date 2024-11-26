@@ -14,18 +14,7 @@ const BurgerMenu = forwardRef<HTMLDivElement>(({}, ref) => {
       className="bg-white shadow-lg rounded dark:bg-[#141826] p-3 absolute top-[44px] right-0 w-[150px] outline outline-1 outline-gray-800"
     >
       <div className="flex flex-col items-center gap-3 w-full">
-        <Link
-          className="text-slate-800 dark:text-white w-full text-center font-medium"
-          to=""
-        >
-          Iniciar sesión
-        </Link>
-        <Link
-          className="text-slate-800 dark:text-white w-full text-center font-medium"
-          to=""
-        >
-          Registrarse
-        </Link>
+        
       </div>
       <hr className="my-2" />
       <Link

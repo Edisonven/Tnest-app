@@ -22,7 +22,7 @@ const useSendBoardProps = (
 
     if (image || title) {
       setBoardCreatedAlert(
-        "Para crear más de un tablero, registrate e inicia sesión"
+        "Ya tienes un tablero creado, si deseas crear uno nuevo, elimina el tablero existente."
       );
       restartAlertTimeout();
       return;
