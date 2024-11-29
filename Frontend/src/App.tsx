@@ -23,7 +23,7 @@ function App(): JSX.Element {
   }, [setApplicationTheme]);
 
   return (
-    <div className="app__container min-h-[100vh] bg-gradient-to-r from-blue-500 via-green-500 to-purple-500 dark:from-[#0f0f0f] dark:to-[#22263d]">
+    <div className="app__container min-h-[100vh] bg-gradient-to-r from-[#6acfc0] to-[#17695d] dark:from-[#0f0f0f] dark:to-[#22263d]">
       <Navbar
         setApplicationTheme={setApplicationTheme}
         aplicationTheme={aplicationTheme}
