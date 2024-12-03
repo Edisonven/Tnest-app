@@ -59,9 +59,11 @@ const TaskList = ({ title, id }: taskInterface) => {
         activeColumn === id ? "outline outline-1 outline-white" : ""
       }`}
     >
-      <h1 className="text-slate-800 dark:text-gray-300 mb-2 px-5 font-medium">
-        {title}
-      </h1>
+      <input
+        className="text-slate-800 dark:text-gray-300 mb-2 px-5 font-medium bg-transparent w-[90%]"
+        type="text"
+        value={title}
+      />
       <div className="flex flex-col gap-3">
         <AnimatePresence>
           {globalStateTasks.map((task, index) =>
