@@ -31,6 +31,12 @@ function MyBoard() {
   const [boardTitle, setBoardTitle] = useState(title);
   const [hideSidebarClass, setHideSidebarClass] = useState("");
   const [showSidebarMenu, setShowSidebarMenu] = useState(false);
+  const [columnTitle, setColumnTitle] = useState({
+    title_1: "Lista de tareas",
+    title_2: "En proceso",
+    title_3: "En revisión",
+    title_4: "Completado",
+  });
 
   useEffect(() => {
     const storedBoard = localStorage.getItem("board");
@@ -115,10 +121,26 @@ function MyBoard() {
                   />
                 </div>
                 <div className="flex items-start py-4 px-6 gap-4">
-                  <TaskList id={"1"} title="Lista de tareas" />
-                  <TaskList id={"2"} title="En proceso" />
-                  <TaskList id={"3"} title="En revisión" />
-                  <TaskList id={"4"} title="Completado" />
+                  <TaskList
+                    id={"1"}
+                    title={columnTitle.title_1}
+                    setColumnTitle={setColumnTitle}
+                  />
+                  <TaskList
+                    id={"2"}
+                    title={columnTitle.title_2}
+                    setColumnTitle={setColumnTitle}
+                  />
+                  <TaskList
+                    id={"3"}
+                    title={columnTitle.title_3}
+                    setColumnTitle={setColumnTitle}
+                  />
+                  <TaskList
+                    id={"4"}
+                    title={columnTitle.title_4}
+                    setColumnTitle={setColumnTitle}
+                  />
                 </div>
               </div>
               <div

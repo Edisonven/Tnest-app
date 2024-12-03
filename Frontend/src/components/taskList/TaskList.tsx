@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { SetStateAction, useContext, useState } from "react";
 import { CgMathPlus } from "react-icons/cg";
 import { ChangeEvent } from "react";
 import AddTaskCard from "../taskCard/AddTaskCard";
@@ -8,12 +8,21 @@ import { BoardMenuContext } from "../../context/BoardContext";
 import useTaskList from "../../hooks/useTaskList";
 import { useAppSelector } from "../../features/tasksSlice";
 import useDragAndDrop from "../../hooks/useDragAndDrop";
+
+interface TaskColumnInterface {
+  title_1: string;
+  title_2: string;
+  title_3: string;
+  title_4: string;
+}
+
 export interface taskInterface {
   id: string;
   title: string;
+  setColumnTitle: React.Dispatch<SetStateAction<TaskColumnInterface>>;
 }
 
-const TaskList = ({ title, id }: taskInterface) => {
+const TaskList = ({ title, id, setColumnTitle }: taskInterface) => {
   const {
     taskTitle,
     setTaskTitle,
@@ -41,6 +50,35 @@ const TaskList = ({ title, id }: taskInterface) => {
     }
   };
 
+  const handleSetNewColumnTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value;
+    if (id === "1") {
+      setColumnTitle((prevState) => ({
+        ...prevState,
+
+        title_1: newTitle,
+      }));
+    } else if (id === "2") {
+      setColumnTitle((prevState) => ({
+        ...prevState,
+
+        title_2: newTitle,
+      }));
+    } else if (id === "3") {
+      setColumnTitle((prevState) => ({
+        ...prevState,
+
+        title_3: newTitle,
+      }));
+    } else if (id === "4") {
+      setColumnTitle((prevState) => ({
+        ...prevState,
+
+        title_4: newTitle,
+      }));
+    }
+  };
+
   return (
     <div
       onDrop={() => {
@@ -63,6 +101,7 @@ const TaskList = ({ title, id }: taskInterface) => {
         className="text-slate-800 dark:text-gray-300 mb-2 px-5 font-medium bg-transparent w-[90%]"
         type="text"
         value={title}
+        onChange={handleSetNewColumnTitle}
       />
       <div className="flex flex-col gap-3">
         <AnimatePresence>
