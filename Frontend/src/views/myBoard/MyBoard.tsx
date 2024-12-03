@@ -6,21 +6,11 @@ import {
 } from "../../features/boardBackgroundSlice";
 import { setImage, setTitle } from "../../features/boardBackgroundSlice";
 import "./myBoard.css";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import AsideBoardOptions from "./AsideBoardOptions";
-import { forwardRef } from "react";
-import { ThreeDotsIconForwardRef } from "../../types/DomRefElement";
 import { AnimatePresence } from "framer-motion";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-
-const ThreeDotsIcon = forwardRef<HTMLDivElement, ThreeDotsIconForwardRef>(
-  (props, ref) => (
-    <div ref={ref}>
-      <BsThreeDotsVertical {...props} />
-    </div>
-  )
-);
+import { ThreeDotsIcon } from "../../utils/IconsForwardRefs";
 
 function MyBoard() {
   const { image, title } = useAppSelector((state) => state.background);
