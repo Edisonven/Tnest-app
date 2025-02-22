@@ -98,11 +98,23 @@ export const tasksSlice = createSlice({
         removeTask: (state, action) => {
             const { taskId } = action.payload;
             return state.filter((task) => task.id !== taskId);
+        },
+        editActivityComment: (state, action) => {
+            const { commentID, newComment, taskID } = action.payload
+            const taskActivityCommentFinded = state.find((task) => {
+                return task.id === taskID
+            })
+            if (taskActivityCommentFinded) {
+                const commentFinded = taskActivityCommentFinded.comments.find((comment) => comment.id === commentID)
+                if (commentFinded) {
+                    commentFinded.comment = newComment
+                }
+            }
         }
     }
 })
 
-export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle, sendTaskComments, deleteComment, sendTaskCover, removeTaskCover, removeTask } = tasksSlice.actions
+export const { setTaskInfo, setReOrderTaks, moveTaskToColumn, sendTaskDescription, sendTaskTitle, sendTaskComments, deleteComment, sendTaskCover, removeTaskCover, removeTask, editActivityComment } = tasksSlice.actions
 export const tasksProps = tasksSlice.reducer
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()

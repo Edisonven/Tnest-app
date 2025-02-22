@@ -2,7 +2,7 @@ import "./taskCard.css";
 import { IoCloseOutline } from "react-icons/io5";
 import { useAppSelector, useAppDispatch } from "../../features/tasksSlice";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { sendTaskTitle } from "../../features/tasksSlice";
+import { sendTaskTitle, editActivityComment } from "../../features/tasksSlice";
 import TaskDescription from "./TaskDescription";
 import TaskOptions from "../taskOptions/TaskOptions";
 import { BiSolidDockTop } from "react-icons/bi";
@@ -138,6 +138,17 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     }
   }, [taskCommentId]);
 
+  const handleSendNewActivityComment = () => {
+    dispatch(
+      editActivityComment({
+        commentID: taskCommentId,
+        newComment: taskActivityComment,
+        taskID: taskId,
+      })
+    );
+    setTaskCommentId("");
+  };
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -258,7 +269,10 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                           className="border-none outline-none  w-full bg-[#22212E] p-2 text-slate-800 dark:text-gray-300 rounded-md shadow h-[70px] resize-none"
                         />
                         <div className="flex items-center gap-3 mt-2">
-                          <button className="text-slate-800 dark:text-gray-300 bg-[#4D59B3] px-3 py-[7px] rounded shadow hover:brightness-125 font-medium">
+                          <button
+                            onClick={handleSendNewActivityComment}
+                            className="text-slate-800 dark:text-gray-300 bg-[#4D59B3] px-3 py-[7px] rounded shadow hover:brightness-125 font-medium"
+                          >
                             Guardar
                           </button>
                           <button

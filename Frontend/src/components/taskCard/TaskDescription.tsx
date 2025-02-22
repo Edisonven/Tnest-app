@@ -18,7 +18,7 @@ const TaskDescription: React.FC<TaskDescription> = ({
         onChange={(e) => setTaskDescription(e.target.value)}
         autoFocus
         className="border-none outline-none  w-full bg-[#22212E] p-2 text-slate-800 dark:text-gray-300 rounded-md shadow h-[70px] resize-none"
-      ></textarea>
+      />
       <div className="flex items-center gap-3 mt-2">
         <button
           onClick={handleSendTaskDescription}
