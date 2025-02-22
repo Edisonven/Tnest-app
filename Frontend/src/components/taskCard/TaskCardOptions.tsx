@@ -53,6 +53,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const dispatch = useAppDispatch();
   const cardOptionsRef = useRef<HTMLDivElement | null>(null);
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
+  const [taskCommentId, setTaskCommentId] = useState("");
 
   const handleCancelEdit = () => {
     setOpenDescriptionMenu(false);
@@ -105,6 +106,12 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
       setOpenConfirmDelete(false);
     }
   }, [taskCoverOption]);
+
+  const handleOpenEditTaskComment = (commentId: string): void => {
+    if (commentId) {
+      setTaskCommentId(commentId);
+    }
+  };
 
   return (
     <div
@@ -217,20 +224,49 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
               <div className="task-comments-container overflow-x-hidden">
                 {filteredTask?.comments?.map((comment) => (
                   <div key={comment.id} className="mt-5">
-                    <div className="min-w-[120px] w-max max-w-[570px] bg-[#1d1b29] border-none outline-none px-3 py-2 rounded-3xl shadow">
-                      <p className="text-slate-800 dark:text-gray-300 w-full break-words">
-                        {comment.comment}
-                      </p>
-                    </div>
-                    <div className="mt-1 flex items-center gap-2 ml-3 text-slate-800 dark:text-gray-300 font-medium text-xs">
-                      <button>Editar</button>
-                      <button
-                        className="hover:underline"
-                        onClick={() => handleDeleteTaskComment(comment.id)}
-                      >
-                        Eliminar
-                      </button>
-                    </div>
+                    {taskCommentId === comment.id ? (
+                      <div className="">
+                        <textarea
+                          value={comment.comment}
+                          autoFocus
+                          className="border-none outline-none  w-full bg-[#22212E] p-2 text-slate-800 dark:text-gray-300 rounded-md shadow h-[70px] resize-none"
+                        ></textarea>
+                        <div className="flex items-center gap-3 mt-2">
+                          <button className="text-slate-800 dark:text-gray-300 bg-[#4D59B3] px-3 py-[7px] rounded shadow hover:brightness-125 font-medium">
+                            Guardar
+                          </button>
+                          <button
+                            onClick={() => setTaskCommentId("")}
+                            className="text-slate-800 dark:text-gray-300 px-3 py-[7px] rounded shadow font-medium hover:bg-[#00000034]"
+                          >
+                            Cancelar
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="">
+                        <div className="min-w-[120px] w-max max-w-[570px] bg-[#1d1b29] border-none outline-none px-3 py-2 rounded-3xl shadow">
+                          <p className="text-slate-800 dark:text-gray-300 w-full break-words">
+                            {comment.comment}
+                          </p>
+                        </div>
+                        <div className="mt-1 flex items-center gap-2 ml-3 text-slate-800 dark:text-gray-300 font-medium text-xs">
+                          <button
+                            onClick={() =>
+                              handleOpenEditTaskComment(comment.id)
+                            }
+                          >
+                            Editar
+                          </button>
+                          <button
+                            className="hover:underline"
+                            onClick={() => handleDeleteTaskComment(comment.id)}
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
