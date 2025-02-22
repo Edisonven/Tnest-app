@@ -278,6 +278,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                         </div>
                         <div className="mt-1 flex items-center gap-2 ml-3 text-slate-800 dark:text-gray-300 font-medium text-xs">
                           <button
+                            className="hover:underline"
                             onClick={() =>
                               handleOpenEditTaskComment(comment.id)
                             }
