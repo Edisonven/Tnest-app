@@ -41,9 +41,9 @@ function Navbar({
     if (
       gearIconRef.current &&
       userMenuRef.current &&
-      // burgerRef.current &&
-      !userMenuRef.current.contains(event.target as Node) //&&
-      //!burgerRef.current.contains(event.target as Node)
+      burgerRef.current &&
+      !userMenuRef.current.contains(event.target as Node) &&
+      !burgerRef.current.contains(event.target as Node)
     ) {
       setOpenBurgerMenu(false);
     }
