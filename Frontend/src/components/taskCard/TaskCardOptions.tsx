@@ -34,6 +34,8 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     taskComments,
     setTaskComments,
     handleOpenActivityMenu,
+    taskCommentId,
+    setTaskCommentId,
   } = useSendTaskComments(taskId);
   const {
     handleSendTaskDescription,
@@ -53,7 +55,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
   const dispatch = useAppDispatch();
   const cardOptionsRef = useRef<HTMLDivElement | null>(null);
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
-  const [taskCommentId, setTaskCommentId] = useState("");
+  const [taskActivityComment, setTaskActivityComment] = useState("");
 
   const handleCancelEdit = () => {
     setOpenDescriptionMenu(false);
@@ -111,7 +113,30 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
     if (commentId) {
       setTaskCommentId(commentId);
     }
+
+    if (openActivityMenu) {
+      setOpenActivityMenu(false);
+    }
   };
+
+  const handleActivityCommentChange = (
+    e: ChangeEvent<HTMLTextAreaElement>
+  ): void => {
+    const target = e.target.value;
+    setTaskActivityComment(target);
+  };
+
+  useEffect(() => {
+    if (taskCommentId) {
+      const taskCommentFiltered = filteredTask?.comments.find(
+        (comment) => comment.id === taskCommentId
+      );
+
+      if (taskCommentFiltered) {
+        setTaskActivityComment(taskCommentFiltered?.comment);
+      }
+    }
+  }, [taskCommentId]);
 
   return (
     <div
@@ -213,7 +238,7 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                 </div>
               ) : (
                 <div
-                  onClick={handleOpenActivityMenu}
+                  onClick={() => handleOpenActivityMenu(taskCommentId)}
                   className="mt-3 mb-2 w-full cursor-pointer bg-[#22212E] border-none outline-none p-2 rounded shadow hover:brightness-125"
                 >
                   <p className="text-slate-800 dark:text-gray-300">
@@ -227,10 +252,11 @@ const TaskCardOptions: React.FC<TaskCardOptionsProps> = ({
                     {taskCommentId === comment.id ? (
                       <div className="">
                         <textarea
-                          value={comment.comment}
+                          value={taskActivityComment}
+                          onChange={handleActivityCommentChange}
                           autoFocus
                           className="border-none outline-none  w-full bg-[#22212E] p-2 text-slate-800 dark:text-gray-300 rounded-md shadow h-[70px] resize-none"
-                        ></textarea>
+                        />
                         <div className="flex items-center gap-3 mt-2">
                           <button className="text-slate-800 dark:text-gray-300 bg-[#4D59B3] px-3 py-[7px] rounded shadow hover:brightness-125 font-medium">
                             Guardar

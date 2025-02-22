@@ -6,6 +6,7 @@ const useSendTaskComments = (taskId: string) => {
   const [openActivityMenu, setOpenActivityMenu] = useState(false);
   const taskOptions = useAppSelector((state) => state.tasksProps);
   const [taskComments, setTaskComments] = useState("");
+  const [taskCommentId, setTaskCommentId] = useState("");
   const filteredTask = taskOptions.find((task) => task.id === taskId);
   const dispatch = useAppDispatch();
 
@@ -41,8 +42,11 @@ const useSendTaskComments = (taskId: string) => {
     }
   };
 
-  const handleOpenActivityMenu = () => {
+  const handleOpenActivityMenu = (commentId: string) => {
     setOpenActivityMenu(!openActivityMenu);
+    if (commentId) {
+      setTaskCommentId("");
+    }
   };
 
   return {
@@ -52,6 +56,8 @@ const useSendTaskComments = (taskId: string) => {
     taskComments,
     setTaskComments,
     handleOpenActivityMenu,
+    taskCommentId,
+    setTaskCommentId,
   };
 };
 
